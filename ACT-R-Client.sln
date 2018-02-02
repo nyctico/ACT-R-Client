@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{271FFD74-AC17-4A8C-8727-51B6CF9F8107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACT-R-Client", "ACT-R-Client\ACT-R-Client.csproj", "{271FFD74-AC17-4A8C-8727-51B6CF9F8107}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{8EDC0E13-919F-491A-ABFB-1657B61C47BC}"
 EndProject

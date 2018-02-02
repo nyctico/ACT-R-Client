@@ -50,9 +50,9 @@
     <Compile Include="Tutorials\Demo2.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\Client.csproj">
+    <ProjectReference Include="..\ACT-R-Client\ACT-R-Client.csproj">
       <Project>{271FFD74-AC17-4A8C-8727-51B6CF9F8107}</Project>
-      <Name>Client</Name>
+      <Name>ACT-R-Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
