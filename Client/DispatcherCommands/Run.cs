@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net.Mime;
 
 namespace Nyctico.Actr.Client.Data
 {

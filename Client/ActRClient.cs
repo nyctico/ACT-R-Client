@@ -25,7 +25,7 @@ namespace Nyctico.Actr.Client
         private readonly BlockingCollection<Message> _messageQueue = new BlockingCollection<Message>();
         private readonly ConcurrentDictionary<int, Result> _resultQueue = new ConcurrentDictionary<int, Result>();
         private readonly ConcurrentDictionary<string, AbstractCommand> _abstractCommands = new ConcurrentDictionary<string, AbstractCommand>();
-        private readonly ConcurrentDictionary<string, Data.MonitorCommand> _monitors = new ConcurrentDictionary<string, Data.MonitorCommand>();
+        private readonly ConcurrentDictionary<string, MonitorCommand> _monitors = new ConcurrentDictionary<string, MonitorCommand>();
         
         public ActRClient(string host, int port)
         {
@@ -63,13 +63,13 @@ namespace Nyctico.Actr.Client
             Remove(_abstractCommands[publishedName]);
         }
 
-        public void Add(Data.MonitorCommand monitor)
+        public void Add(MonitorCommand monitor)
         {
             SendMessage("monitor", monitor.ToParameterList());
             _monitors.TryAdd(monitor.CommandToMonitor+monitor.CommandToCall, monitor);
         }
 
-        public void Remove(Data.MonitorCommand monitor)
+        public void Remove(MonitorCommand monitor)
         {
             SendMessage("remove-monitor", monitor.ToParameterList());
             _monitors.TryRemove(monitor.CommandToMonitor + monitor.CommandToCall, out monitor);
@@ -222,7 +222,7 @@ namespace Nyctico.Actr.Client
         
         private Result SendMessage(string method, List<dynamic> parameters)
         {
-            Message message = new Message()
+            Message message = new Message
             {
                 Id = _idCount++,
                 Method = method,
@@ -240,7 +240,7 @@ namespace Nyctico.Actr.Client
         
         private void SendSuccessResult(int id)
         {
-            Result result = new Result()
+            Result result = new Result
             {
                 Id = id,
                 ReturnValue = new List<dynamic>{true},
@@ -252,7 +252,7 @@ namespace Nyctico.Actr.Client
         
         private void SendErrorResult(int id, string error)
         {
-            Result result = new Result()
+            Result result = new Result
             {
                 Id = id,
                 ReturnValue = null,
