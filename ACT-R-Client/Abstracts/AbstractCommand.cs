@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.Data
+namespace Nyctico.Actr.Client.Abstracts
 {
     public abstract class AbstractCommand
     {

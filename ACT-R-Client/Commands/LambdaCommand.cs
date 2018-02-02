@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nyctico.Actr.Client.Abstracts;
 
-namespace Nyctico.Actr.Client.Data
+namespace Nyctico.Actr.Client.Commands
 {
     public class LambdaCommand : AbstractCommand
     {

@@ -6,6 +6,8 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Nyctico.Actr.Client.Abstracts;
+using Nyctico.Actr.Client.Commands;
 using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client
@@ -66,7 +68,7 @@ namespace Nyctico.Actr.Client
         public void Add(MonitorCommand monitor)
         {
             SendMessage("monitor", monitor.ToParameterList());
-            _monitors.TryAdd(monitor.CommandToMonitor+monitor.CommandToCall, monitor);
+            _monitors.TryAdd(monitor.CommandToMonitor + monitor.CommandToCall, monitor);
         }
 
         public void Remove(MonitorCommand monitor)
@@ -121,16 +123,6 @@ namespace Nyctico.Actr.Client
         public Result SendDispatcherCommand(AbstractEvalCommand evaluateCommand)
         {
             return SendMessage("evaluate", evaluateCommand.ToParameterList());
-        }
-
-        public Result OpenExpWindow(OpenExpWindow openExpWindow)
-        {
-            return SendMessage("evaluate", openExpWindow.ToParameterList());
-        }
-
-        public Result AddTextToExpWindows(AddTextToWindow addTextToWindow)
-        {
-            return SendMessage("evaluate", addTextToWindow.ToParameterList());
         }
 
         private Result WaitForResult(int id)

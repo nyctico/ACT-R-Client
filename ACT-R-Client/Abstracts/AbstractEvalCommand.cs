@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.Data
+namespace Nyctico.Actr.Client.Abstracts
 {
     public abstract class AbstractEvalCommand
     {
@@ -17,9 +17,8 @@ namespace Nyctico.Actr.Client.Data
         
         protected List<dynamic> BaseParameterList()
         {
-            List<dynamic> list = new List<dynamic>();
-            
-            list.Add(Command);
+            List<dynamic> list = new List<dynamic> {Command};
+
             if (!UseModel) list.Add(UseModel); else list.Add(Model);
 
             return list;

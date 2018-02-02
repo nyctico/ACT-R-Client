@@ -1,13 +1,13 @@
 ﻿using System;
+using Nyctico.Actr.Example.Tutorials;
 
 namespace Nyctico.Actr.Example
 {
     internal static class Program
     {
 
-        public static void Main(string[] args)
+        public static void Main()
         {
-            String option;
             Boolean quitNow = false;
             while(!quitNow)
             {
@@ -15,7 +15,7 @@ namespace Nyctico.Actr.Example
                 Console.WriteLine("(1) Demo2");
                 Console.WriteLine("(q) Quit");
                 Console.Write("> ");
-                option = Console.ReadLine();
+                String option = Console.ReadLine();
                 try
                 {
                     switch (option)
@@ -32,7 +32,7 @@ namespace Nyctico.Actr.Example
                             break;
     
                         default:
-                            Console.WriteLine("Unknown Command " + option);
+                            Console.WriteLine($"Unknown Command {option}");
                             break;
                     }
                 }

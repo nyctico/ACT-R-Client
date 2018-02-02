@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nyctico.Actr.Client;
+using Nyctico.Actr.Client.Abstracts;
+using Nyctico.Actr.Client.Commands;
 using Nyctico.Actr.Client.Data;
+using Nyctico.Actr.Client.DispatcherCommands;
 
-namespace Nyctico.Actr.Example
+namespace Nyctico.Actr.Example.Tutorials
 {
     public static class Demo2
     {
@@ -12,7 +15,8 @@ namespace Nyctico.Actr.Example
         {
             using (ActRClient actr = new ActRClient("127.0.0.1", 2650))
             {
-                actr.StartTraceMonitoring(list => Console.WriteLine((string)list[1] + ": " + ((string)list[2]).Replace("\n", "")));
+                actr.StartTraceMonitoring(list => Console.WriteLine(
+                    $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
                 actr.LoadModel("ACT-R:tutorial;unit2;demo2-model.lisp");
                 actr.Reset();
                 
@@ -55,9 +59,10 @@ namespace Nyctico.Actr.Example
                     SingelInstance = "true",
                     ExecFunc = list =>
                     {
-                        Console.WriteLine("Key pressed by model: " + (string) list[3]);
+                        Console.WriteLine($"Key pressed by model: {(string) list[3]}");
                         lastPressedKey = (string) list[3];
-                    }
+                    },
+                    LispCmd = null
                 };
                 
                 actr.Add(command);

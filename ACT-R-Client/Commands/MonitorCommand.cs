@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.Data
+namespace Nyctico.Actr.Client.Commands
 {
     public class MonitorCommand
     {
@@ -8,18 +8,17 @@ namespace Nyctico.Actr.Client.Data
         public string CommandToCall { get; }
         public string MonitorStyle { set; get; }
 
-        public MonitorCommand(string commandToMonitor, string commandToCall)
+        public MonitorCommand(string commandToMonitor, string commandToCall, string monitorStyle = null)
         {
             CommandToMonitor = commandToMonitor;
             CommandToCall = commandToCall;
+            MonitorStyle = monitorStyle;
         }
         
         public List<dynamic> ToParameterList()
         {
-            List<dynamic> list = new List<dynamic>();
-            
-            list.Add(CommandToMonitor);
-            list.Add(CommandToCall);
+            List<dynamic> list = new List<dynamic> {CommandToMonitor, CommandToCall};
+
             if (MonitorStyle != null) list.Add(MonitorStyle);
             
             return list;
