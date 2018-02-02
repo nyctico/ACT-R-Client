@@ -28,7 +28,7 @@ release:
     - master
   artifacts:
     paths:
-      - build/release/Example.exe
+      - ./../../build/release/
   script:
     # The output path is relative to the position of the csproj-file
     - msbuild /p:Configuration="Release" /p:Platform="Any CPU"
