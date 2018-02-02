@@ -16,14 +16,13 @@
 image: mono:latest
 
 stages:
-  - test
-  - deploy
+  - build
 
 before_script:
   - nuget restore -NonInteractive
 
 release:
-  stage: deploy
+  stage: build
   only:
     - master
   artifacts:
@@ -32,7 +31,7 @@ release:
   script:
     # The output path is relative to the position of the csproj-file
     - msbuild /p:Configuration="Release" /p:Platform="Any CPU"
-      /p:OutputPath="./../../build/release/" "ACT-R-Client.sln"
+      /p:OutputPath="./../build/release/" "ACT-R-Client.sln"
     
 #debug:
 #  stage: test
