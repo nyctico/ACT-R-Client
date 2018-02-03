@@ -6,12 +6,13 @@ namespace Nyctico.Actr.Client.DispatcherCommands
     {
         public int Time { set; get; }
         public bool RealTime { set; get; }
-        
-        public Run(bool useModel = false, string model = null) : base("run", useModel, model)
+
+        public Run(int time, bool realTime, bool useModel = false, string model = null) : base("run", useModel, model)
         {
-            
+            Time = time;
+            RealTime = realTime;
         }
-        
+
         public override List<dynamic> ToParameterList()
         {
             List<dynamic> list = BaseParameterList();
