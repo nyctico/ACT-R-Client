@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.DispatcherCommands
 {
     public class AddTextToWindow : AbstractEvalCommand
     {
-        public List<dynamic> Window { set; get; }
+        public Device Window { set; get; }
         public string Text { set; get; }
         public int X { set; get; }
         public int Y { set; get; }
@@ -13,7 +14,7 @@ namespace Nyctico.Actr.Client.DispatcherCommands
         public int Width { set; get; }
         public int FontSize { set; get; }
 
-        public AddTextToWindow(List<dynamic> window, string text, int x, int y, string color, int height, int width, int fontSize, bool useModel = false, string model = null) : base("add-text-to-exp-window", useModel, model)
+        public AddTextToWindow(Device window, string text, int x, int y, string color, int height, int width, int fontSize, bool useModel = false, string model = null) : base("add-text-to-exp-window", useModel, model)
         {
             Window = window;
             Text = text;
@@ -29,7 +30,7 @@ namespace Nyctico.Actr.Client.DispatcherCommands
         {
             List<dynamic> list = BaseParameterList();
             
-            list.Add(Window);
+            list.Add(Window.ToJsonList());
             list.Add(Text);
             list.Add(X);
             list.Add(Y);

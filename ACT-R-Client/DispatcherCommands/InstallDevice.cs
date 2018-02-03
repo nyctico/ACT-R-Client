@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.DispatcherCommands
 {
     public class InstallDevice : AbstractEvalCommand
     {
-        public List<dynamic> Window { set; get; }
+        public Device Window { set; get; }
 
-        public InstallDevice(List<dynamic> window, bool useModel = false, string model = null) : base("install-device", useModel, model)
+        public InstallDevice(Device window, bool useModel = false, string model = null) : base("install-device", useModel, model)
         {
             Window = window;
         }
@@ -15,7 +16,7 @@ namespace Nyctico.Actr.Client.DispatcherCommands
         {
             List<dynamic> list = BaseParameterList();
             
-            list.Add(Window);
+            list.Add(Window.ToJsonList());
 
             return list;
         }

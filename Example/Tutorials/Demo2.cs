@@ -30,12 +30,9 @@ namespace Nyctico.Actr.Example.Tutorials
                 string targetItem = items[indexes.ReturnValue[0][0]];
 
                 Result windowResult = actr.SendDispatcherCommand(new OpenExpWindow("Letter difference", true, 300, 300, 300, 300));
-
-                List<dynamic> window = windowResult.ReturnValue[0].ToObject<List<dynamic>>();
+                Device window = new Device(windowResult.ReturnValue[0].ToObject<List<dynamic>>());
+                
                 actr.SendDispatcherCommand(new AddTextToWindow(window, targetItem, 125, 150, "black", 50, 75, 12));
-                
-
-                
 
                 AbstractCommand command = new LambdaCommand(KeyPressAction, "unit2-key-press", "output-key",
                     "Assignment 2 task output-key monitor");

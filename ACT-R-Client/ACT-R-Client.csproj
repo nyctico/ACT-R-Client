@@ -47,6 +47,7 @@
     <Compile Include="Commands\AbstractCommand.cs" />
     <Compile Include="Commands\LambdaCommand.cs" />
     <Compile Include="Commands\MonitorCommand.cs" />
+    <Compile Include="Data\Device.cs" />
     <Compile Include="Data\Error.cs" />
     <Compile Include="Data\Message.cs" />
     <Compile Include="Data\Result.cs" />
