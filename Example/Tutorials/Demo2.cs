@@ -39,7 +39,8 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 actr.SendDispatcherEvaluate(new AddTextToWindow(window, targetItem, 125, 150, "black", 50, 75, 12));
 
-                AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(KeyPressAction, "unit2-key-press",
+                AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),
+                    "unit2-key-press",
                     "output-key",
                     "Assignment 2 task output-key monitor");
 
@@ -52,8 +53,8 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 actr.SendDispatcherEvaluate(new Run(10, true));
 
-                actr.RemoveMonitor("output-keyunit2-key-press");
-                actr.RemoveCommand("output-key");
+                actr.RemoveDispatcherMonitor("output-keyunit2-key-press");
+                actr.RemoveDispatcherHook("output-key");
 
                 actr.StopTraceMonitoring();
                 Console.WriteLine(targetItem.ToLower().Equals(_pressedKey.ToLower()));

@@ -56,26 +56,22 @@ namespace Nyctico.Actr.Client
         public void AddDispatcherHook(AbstractDispatcherHook dispatcherHook)
         {
             var result = SendMessage("check", dispatcherHook.PublishedNameAsList);
-            if (result.ReturnValue == null || result.ReturnValue?[0] == null)
-            {
-                SendMessage("add", dispatcherHook.ToParameterList());
-                _abstractCommands.TryAdd(dispatcherHook.PrivateName, dispatcherHook);
-            }
+            if (result.ReturnValue != null && result.ReturnValue?[0] != null) return;
+            SendMessage("add", dispatcherHook.ToParameterList());
+            _abstractCommands.TryAdd(dispatcherHook.PrivateName, dispatcherHook);
         }
 
-        public void Remove(AbstractDispatcherHook dispatcherHook)
+        public void RemoveDispatcherHook(AbstractDispatcherHook dispatcherHook)
         {
             var result = SendMessage("check", dispatcherHook.PublishedNameAsList);
-            if (result.ReturnValue != null && result.ReturnValue?[0] != null)
-            {
-                SendMessage("remove", dispatcherHook.PublishedNameAsList);
-                _abstractCommands.TryRemove(dispatcherHook.PrivateName, out dispatcherHook);
-            }
+            if (result.ReturnValue == null || result.ReturnValue?[0] == null) return;
+            SendMessage("remove", dispatcherHook.PublishedNameAsList);
+            _abstractCommands.TryRemove(dispatcherHook.PrivateName, out dispatcherHook);
         }
 
-        public void RemoveCommand(string publishedName)
+        public void RemoveDispatcherHook(string publishedName)
         {
-            Remove(_abstractCommands[publishedName]);
+            RemoveDispatcherHook(_abstractCommands[publishedName]);
         }
 
         public void AddDispatcherMonitor(DispatcherMonitor dispatcherMonitor)
@@ -84,16 +80,16 @@ namespace Nyctico.Actr.Client
             _monitors.TryAdd(dispatcherMonitor.CommandToMonitor + dispatcherMonitor.CommandToCall, dispatcherMonitor);
         }
 
-        public void Remove(DispatcherMonitor dispatcherMonitor)
+        public void RemoveDispatcherMonitor(DispatcherMonitor dispatcherMonitor)
         {
             SendMessage("remove-monitor", dispatcherMonitor.ToParameterList());
             _monitors.TryRemove(dispatcherMonitor.CommandToMonitor + dispatcherMonitor.CommandToCall,
                 out dispatcherMonitor);
         }
 
-        public void RemoveMonitor(string commanToMonitorCommandToCall)
+        public void RemoveDispatcherMonitor(string commanToMonitorCommandToCall)
         {
-            Remove(_monitors[commanToMonitorCommandToCall]);
+            RemoveDispatcherMonitor(_monitors[commanToMonitorCommandToCall]);
         }
 
         public void StartTraceMonitoring(Action<List<dynamic>> traceAction)
@@ -119,11 +115,11 @@ namespace Nyctico.Actr.Client
         public void StopTraceMonitoring()
         {
             var commandName = ToString() + "_TraceMonitor";
-            RemoveMonitor("model-trace" + commandName);
-            RemoveMonitor("command-trace" + commandName);
-            RemoveMonitor("warning-trace" + commandName);
-            RemoveMonitor("general-trace" + commandName);
-            RemoveCommand("printTrace");
+            RemoveDispatcherMonitor("model-trace" + commandName);
+            RemoveDispatcherMonitor("command-trace" + commandName);
+            RemoveDispatcherMonitor("warning-trace" + commandName);
+            RemoveDispatcherMonitor("general-trace" + commandName);
+            RemoveDispatcherHook("printTrace");
         }
 
         public void Reset()
