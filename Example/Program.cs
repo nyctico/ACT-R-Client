@@ -1,22 +1,20 @@
 ﻿using System;
 using Nyctico.Actr.Example.Tutorials;
-// ReSharper disable All
 
 namespace Nyctico.Actr.Example
 {
     internal static class Program
     {
-
         public static void Main()
         {
-            Boolean quitNow = false;
-            while(!quitNow)
+            var quitNow = false;
+            while (!quitNow)
             {
                 Console.WriteLine("Which task should be performed?");
                 Console.WriteLine("(1) Demo2");
                 Console.WriteLine("(q) Quit");
                 Console.Write("> ");
-                String option = Console.ReadLine();
+                var option = Console.ReadLine();
                 try
                 {
                     switch (option)
@@ -27,11 +25,11 @@ namespace Nyctico.Actr.Example
                             Demo2.Execute();
                             Console.WriteLine("------------------------------------------------");
                             break;
-                            
+
                         case "q":
                             quitNow = true;
                             break;
-    
+
                         default:
                             Console.WriteLine($"Unknown Command {option}");
                             break;
@@ -42,7 +40,6 @@ namespace Nyctico.Actr.Example
                     Console.WriteLine(e);
                 }
             }
-            
         }
     }
 }

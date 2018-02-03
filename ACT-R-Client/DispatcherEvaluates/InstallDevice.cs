@@ -5,17 +5,18 @@ namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
     public class InstallDevice : AbstractEvalCommand
     {
-        public Device Window { set; get; }
-
-        public InstallDevice(Device window, bool useModel = false, string model = null) : base("install-device", useModel, model)
+        public InstallDevice(Device window, bool useModel = false, string model = null) : base("install-device",
+            useModel, model)
         {
             Window = window;
         }
 
+        public Device Window { set; get; }
+
         public override List<dynamic> ToParameterList()
         {
-            List<dynamic> list = BaseParameterList();
-            
+            var list = BaseParameterList();
+
             list.Add(Window.ToJsonList());
 
             return list;
