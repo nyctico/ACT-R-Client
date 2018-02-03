@@ -4,16 +4,16 @@ namespace Nyctico.Actr.Client.Data
 {
     public class Device
     {
-        public List<dynamic> device { get; }
+        public List<dynamic> Infomation { get; }
 
-        public Device(List<dynamic> device)
+        public Device(List<dynamic> infomation)
         {
-            this.device = device;
+            Infomation = infomation;
         }
         
         public List<dynamic> ToJsonList()
         {
-            return device;
+            return Infomation;
         }
     }
 }

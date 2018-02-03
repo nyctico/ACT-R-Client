@@ -7,7 +7,7 @@ namespace Nyctico.Actr.Client.Commands
     {
         private Action<List<dynamic>> _execFunc;
 
-        public LambdaCommand(Action<List<dynamic>> execFunc, string publishedName, string privateName, string documentation, bool singelInstance = true, string lispCmd = null) : base(publishedName, privateName, documentation, singelInstance, lispCmd)
+        public LambdaCommand(Action<List<dynamic>> execFunc, string publishedName, string privateName, string documentation, string multipleInstanceErrorMessage = null, string lispCmd = null) : base(publishedName, privateName, documentation, multipleInstanceErrorMessage, lispCmd)
         {
             _execFunc = execFunc;
         }
