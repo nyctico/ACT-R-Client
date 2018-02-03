@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nyctico.Actr.Client.Data;
 
-namespace Nyctico.Actr.Client.DispatcherCommands
+namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
     public class AddTextToWindow : AbstractEvalCommand
     {

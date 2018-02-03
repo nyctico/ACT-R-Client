@@ -7,8 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nyctico.Actr.Client.Data;
-using Nyctico.Actr.Client.DispatcherCommands;
+using Nyctico.Actr.Client.DispatcherEvaluates;
 using Nyctico.Actr.Client.DispatcherHooks;
+using Nyctico.Actr.Client.DispatcherMonitors;
 
 namespace Nyctico.Actr.Client
 {
@@ -27,7 +28,7 @@ namespace Nyctico.Actr.Client
         private readonly BlockingCollection<CommandMessage> _messageQueue = new BlockingCollection<CommandMessage>();
         private readonly ConcurrentDictionary<int, Result> _resultQueue = new ConcurrentDictionary<int, Result>();
         private readonly ConcurrentDictionary<string, AbstractDispatcherHook> _abstractCommands = new ConcurrentDictionary<string, AbstractDispatcherHook>();
-        private readonly ConcurrentDictionary<string, MonitorCommand> _monitors = new ConcurrentDictionary<string, MonitorCommand>();
+        private readonly ConcurrentDictionary<string, DispatcherMonitor> _monitors = new ConcurrentDictionary<string, DispatcherMonitor>();
         
         public ActRClient(string host, int port)
         {
@@ -40,7 +41,7 @@ namespace Nyctico.Actr.Client
             StartEvaluatingThread();
         }
 
-        public void Add(AbstractDispatcherHook dispatcherHook)
+        public void AddDispatcherHook(AbstractDispatcherHook dispatcherHook)
         {
             Result result = SendMessage("check", dispatcherHook.PublishedNameAsList);
             if (result.ReturnValue == null || result.ReturnValue?[0] == null)
@@ -65,16 +66,16 @@ namespace Nyctico.Actr.Client
             Remove(_abstractCommands[publishedName]);
         }
 
-        public void Add(MonitorCommand monitor)
+        public void AddDispatcherMonitor(DispatcherMonitor dispatcherMonitor)
         {
-            SendMessage("monitor", monitor.ToParameterList());
-            _monitors.TryAdd(monitor.CommandToMonitor + monitor.CommandToCall, monitor);
+            SendMessage("monitor", dispatcherMonitor.ToParameterList());
+            _monitors.TryAdd(dispatcherMonitor.CommandToMonitor + dispatcherMonitor.CommandToCall, dispatcherMonitor);
         }
 
-        public void Remove(MonitorCommand monitor)
+        public void Remove(DispatcherMonitor dispatcherMonitor)
         {
-            SendMessage("remove-monitor", monitor.ToParameterList());
-            _monitors.TryRemove(monitor.CommandToMonitor + monitor.CommandToCall, out monitor);
+            SendMessage("remove-monitor", dispatcherMonitor.ToParameterList());
+            _monitors.TryRemove(dispatcherMonitor.CommandToMonitor + dispatcherMonitor.CommandToCall, out dispatcherMonitor);
         }
 
         public void RemoveMonitor(string commanToMonitorCommandToCall)
@@ -86,19 +87,19 @@ namespace Nyctico.Actr.Client
         {
             string commandName = ToString() + "_TraceMonitor";
             AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(traceAction, commandName, "printTrace", "Trace monitoring");
-            Add(dispatcherHook);
+            AddDispatcherHook(dispatcherHook);
             
-            MonitorCommand modelMonitor = new MonitorCommand("model-trace", commandName);
-            Add(modelMonitor);
+            DispatcherMonitor modelDispatcherMonitor = new DispatcherMonitor("model-trace", commandName);
+            AddDispatcherMonitor(modelDispatcherMonitor);
 
-            MonitorCommand commandMonitor = new MonitorCommand("command-trace", commandName);
-            Add(commandMonitor);
+            DispatcherMonitor dispatcherMonitor = new DispatcherMonitor("command-trace", commandName);
+            AddDispatcherMonitor(dispatcherMonitor);
 
-            MonitorCommand warningMonitor = new MonitorCommand("warning-trace", commandName);
-            Add(warningMonitor);
+            DispatcherMonitor warningDispatcherMonitor = new DispatcherMonitor("warning-trace", commandName);
+            AddDispatcherMonitor(warningDispatcherMonitor);
 
-            MonitorCommand generalMonitor = new MonitorCommand("general-trace", commandName);
-            Add(generalMonitor);
+            DispatcherMonitor generalDispatcherMonitor = new DispatcherMonitor("general-trace", commandName);
+            AddDispatcherMonitor(generalDispatcherMonitor);
         }
 
         public void StopTraceMonitoring()
@@ -116,7 +117,7 @@ namespace Nyctico.Actr.Client
             SendMessage("evaluate", new List<dynamic>{"reset"});
         }
 
-        public Result SendDispatcherCommand(AbstractEvalCommand evaluateCommand)
+        public Result SendDispatcherEvaluate(AbstractEvalCommand evaluateCommand)
         {
             return SendMessage("evaluate", evaluateCommand.ToParameterList());
         }

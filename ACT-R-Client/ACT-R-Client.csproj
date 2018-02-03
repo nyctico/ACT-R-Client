@@ -46,17 +46,17 @@
     <Compile Include="ActRClient.cs" />
     <Compile Include="DispatcherHooks\AbstractDispatcherHook.cs" />
     <Compile Include="DispatcherHooks\LambdaDispatcherHook.cs" />
-    <Compile Include="DispatcherHooks\MonitorCommand.cs" />
     <Compile Include="Data\Device.cs" />
     <Compile Include="Data\Error.cs" />
     <Compile Include="Data\CommandMessage.cs" />
     <Compile Include="Data\Result.cs" />
-    <Compile Include="DispatcherCommands\AbstractEvalCommand.cs" />
-    <Compile Include="DispatcherCommands\AddTextToWindow.cs" />
-    <Compile Include="DispatcherCommands\InstallDevice.cs" />
-    <Compile Include="DispatcherCommands\OpenExpWindow.cs" />
-    <Compile Include="DispatcherCommands\PermuteList.cs" />
-    <Compile Include="DispatcherCommands\Run.cs" />
+    <Compile Include="DispatcherEvaluates\AbstractEvalCommand.cs" />
+    <Compile Include="DispatcherEvaluates\AddTextToWindow.cs" />
+    <Compile Include="DispatcherEvaluates\InstallDevice.cs" />
+    <Compile Include="DispatcherEvaluates\OpenExpWindow.cs" />
+    <Compile Include="DispatcherEvaluates\PermuteList.cs" />
+    <Compile Include="DispatcherEvaluates\Run.cs" />
+    <Compile Include="DispatcherMonitors\DispatcherMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Nyctico.Actr.Client;
 using Nyctico.Actr.Client.Data;
-using Nyctico.Actr.Client.DispatcherCommands;
+using Nyctico.Actr.Client.DispatcherEvaluates;
 using Nyctico.Actr.Client.DispatcherHooks;
+using Nyctico.Actr.Client.DispatcherMonitors;
 
 namespace Nyctico.Actr.Example.Tutorials
 {
@@ -25,26 +26,26 @@ namespace Nyctico.Actr.Example.Tutorials
                     "M","N","P","Q","R","S","T","V","W",
                     "X","Y","Z"};
 
-                Result indexes = actr.SendDispatcherCommand(new PermuteList(Enumerable.Range(0, items.Length - 1).ToList()));
+                Result indexes = actr.SendDispatcherEvaluate(new PermuteList(Enumerable.Range(0, items.Length - 1).ToList()));
 
                 string targetItem = items[indexes.ReturnValue[0][0]];
 
-                Result windowResult = actr.SendDispatcherCommand(new OpenExpWindow("Letter difference", true, 300, 300, 300, 300));
+                Result windowResult = actr.SendDispatcherEvaluate(new OpenExpWindow("Letter difference", true, 300, 300, 300, 300));
                 Device window = new Device(windowResult.ReturnValue[0].ToObject<List<dynamic>>());
                 
-                actr.SendDispatcherCommand(new AddTextToWindow(window, targetItem, 125, 150, "black", 50, 75, 12));
+                actr.SendDispatcherEvaluate(new AddTextToWindow(window, targetItem, 125, 150, "black", 50, 75, 12));
 
                 AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(KeyPressAction, "unit2-key-press", "output-key",
                     "Assignment 2 task output-key monitor");
                 
-                actr.Add(dispatcherHook);
+                actr.AddDispatcherHook(dispatcherHook);
                 
-                MonitorCommand modelMonitor = new MonitorCommand("output-key", "unit2-key-press");
-                actr.Add(modelMonitor);
+                DispatcherMonitor modelDispatcherMonitor = new DispatcherMonitor("output-key", "unit2-key-press");
+                actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
-                actr.SendDispatcherCommand(new InstallDevice(window));
+                actr.SendDispatcherEvaluate(new InstallDevice(window));
 
-                actr.SendDispatcherCommand(new Run(10, true));
+                actr.SendDispatcherEvaluate(new Run(10, true));
                 
                 actr.RemoveMonitor("output-keyunit2-key-press");
                 actr.RemoveCommand("output-key");

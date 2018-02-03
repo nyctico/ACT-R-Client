@@ -1,5 +1,6 @@
 ﻿using System;
 using Nyctico.Actr.Example.Tutorials;
+// ReSharper disable All
 
 namespace Nyctico.Actr.Example
 {

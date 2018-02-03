@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.DispatcherHooks
+namespace Nyctico.Actr.Client.DispatcherMonitors
 {
-    public class MonitorCommand
+    public class DispatcherMonitor
     {
         public string CommandToMonitor { get; }
         public string CommandToCall { get; }
         public string MonitorStyle { set; get; }
 
-        public MonitorCommand(string commandToMonitor, string commandToCall, string monitorStyle = null)
+        public DispatcherMonitor(string commandToMonitor, string commandToCall, string monitorStyle = null)
         {
             CommandToMonitor = commandToMonitor;
             CommandToCall = commandToCall;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.DispatcherCommands
+namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
     public class OpenExpWindow : AbstractEvalCommand
     {
