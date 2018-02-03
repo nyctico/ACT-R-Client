@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.Abstracts
+namespace Nyctico.Actr.Client.DispatcherCommands
 {
     public abstract class AbstractEvalCommand
     {

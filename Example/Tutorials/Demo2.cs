@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.Abstracts;
 using Nyctico.Actr.Client.Commands;
 using Nyctico.Actr.Client.Data;
 using Nyctico.Actr.Client.DispatcherCommands;

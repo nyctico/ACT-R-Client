@@ -43,14 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstracts\AbstractCommand.cs" />
-    <Compile Include="Abstracts\AbstractEvalCommand.cs" />
     <Compile Include="ActRClient.cs" />
+    <Compile Include="Commands\AbstractCommand.cs" />
     <Compile Include="Commands\LambdaCommand.cs" />
     <Compile Include="Commands\MonitorCommand.cs" />
     <Compile Include="Data\Error.cs" />
     <Compile Include="Data\Message.cs" />
     <Compile Include="Data\Result.cs" />
+    <Compile Include="DispatcherCommands\AbstractEvalCommand.cs" />
     <Compile Include="DispatcherCommands\AddTextToWindow.cs" />
     <Compile Include="DispatcherCommands\InstallDevice.cs" />
     <Compile Include="DispatcherCommands\OpenExpWindow.cs" />

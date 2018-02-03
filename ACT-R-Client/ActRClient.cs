@@ -6,9 +6,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Nyctico.Actr.Client.Abstracts;
 using Nyctico.Actr.Client.Commands;
 using Nyctico.Actr.Client.Data;
+using Nyctico.Actr.Client.DispatcherCommands;
 
 namespace Nyctico.Actr.Client
 {
