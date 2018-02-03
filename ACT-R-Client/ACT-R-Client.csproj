@@ -44,12 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActRClient.cs" />
-    <Compile Include="Commands\AbstractCommand.cs" />
-    <Compile Include="Commands\LambdaCommand.cs" />
-    <Compile Include="Commands\MonitorCommand.cs" />
+    <Compile Include="DispatcherHooks\AbstractDispatcherHook.cs" />
+    <Compile Include="DispatcherHooks\LambdaDispatcherHook.cs" />
+    <Compile Include="DispatcherHooks\MonitorCommand.cs" />
     <Compile Include="Data\Device.cs" />
     <Compile Include="Data\Error.cs" />
-    <Compile Include="Data\Message.cs" />
+    <Compile Include="Data\CommandMessage.cs" />
     <Compile Include="Data\Result.cs" />
     <Compile Include="DispatcherCommands\AbstractEvalCommand.cs" />
     <Compile Include="DispatcherCommands\AddTextToWindow.cs" />

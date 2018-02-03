@@ -6,9 +6,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Nyctico.Actr.Client.Commands;
 using Nyctico.Actr.Client.Data;
 using Nyctico.Actr.Client.DispatcherCommands;
+using Nyctico.Actr.Client.DispatcherHooks;
 
 namespace Nyctico.Actr.Client
 {
@@ -24,9 +24,9 @@ namespace Nyctico.Actr.Client
 
         private readonly string _host;
         private readonly int _port;
-        private readonly BlockingCollection<Message> _messageQueue = new BlockingCollection<Message>();
+        private readonly BlockingCollection<CommandMessage> _messageQueue = new BlockingCollection<CommandMessage>();
         private readonly ConcurrentDictionary<int, Result> _resultQueue = new ConcurrentDictionary<int, Result>();
-        private readonly ConcurrentDictionary<string, AbstractCommand> _abstractCommands = new ConcurrentDictionary<string, AbstractCommand>();
+        private readonly ConcurrentDictionary<string, AbstractDispatcherHook> _abstractCommands = new ConcurrentDictionary<string, AbstractDispatcherHook>();
         private readonly ConcurrentDictionary<string, MonitorCommand> _monitors = new ConcurrentDictionary<string, MonitorCommand>();
         
         public ActRClient(string host, int port)
@@ -40,23 +40,23 @@ namespace Nyctico.Actr.Client
             StartEvaluatingThread();
         }
 
-        public void Add(AbstractCommand command)
+        public void Add(AbstractDispatcherHook dispatcherHook)
         {
-            Result result = SendMessage("check", command.PublishedNameAsList);
+            Result result = SendMessage("check", dispatcherHook.PublishedNameAsList);
             if (result.ReturnValue == null || result.ReturnValue?[0] == null)
             {
-                SendMessage("add", command.ToParameterList());
-                _abstractCommands.TryAdd(command.PrivateName, command);
+                SendMessage("add", dispatcherHook.ToParameterList());
+                _abstractCommands.TryAdd(dispatcherHook.PrivateName, dispatcherHook);
             }
         }
 
-        public void Remove(AbstractCommand command)
+        public void Remove(AbstractDispatcherHook dispatcherHook)
         {
-            Result result = SendMessage("check", command.PublishedNameAsList);
+            Result result = SendMessage("check", dispatcherHook.PublishedNameAsList);
             if (result.ReturnValue != null && result.ReturnValue?[0] != null)
             {
-                SendMessage("remove", command.PublishedNameAsList);
-                _abstractCommands.TryRemove(command.PrivateName, out command);
+                SendMessage("remove", dispatcherHook.PublishedNameAsList);
+                _abstractCommands.TryRemove(dispatcherHook.PrivateName, out dispatcherHook);
             }
         }
 
@@ -85,8 +85,8 @@ namespace Nyctico.Actr.Client
         public void StartTraceMonitoring(Action<List<dynamic>> traceAction)
         {
             string commandName = ToString() + "_TraceMonitor";
-            AbstractCommand command = new LambdaCommand(traceAction, commandName, "printTrace", "Trace monitoring");
-            Add(command);
+            AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(traceAction, commandName, "printTrace", "Trace monitoring");
+            Add(dispatcherHook);
             
             MonitorCommand modelMonitor = new MonitorCommand("model-trace", commandName);
             Add(modelMonitor);
@@ -161,7 +161,7 @@ namespace Nyctico.Actr.Client
                             }
                             else
                             {
-                                _messageQueue.Add(JsonConvert.DeserializeObject<Message>(tmp));
+                                _messageQueue.Add(JsonConvert.DeserializeObject<CommandMessage>(tmp));
                             }
                             break;
                         }
@@ -178,7 +178,7 @@ namespace Nyctico.Actr.Client
             {
                 while (_running)
                 {
-                    Message msg = _messageQueue.Take();
+                    CommandMessage msg = _messageQueue.Take();
                     
                     switch (msg.Method)
                     {
@@ -194,7 +194,7 @@ namespace Nyctico.Actr.Client
             _evaluateTask.Start();
         }
 
-        private void Evaluate(Message msg)
+        private void Evaluate(CommandMessage msg)
         {
             try
             {
@@ -210,15 +210,15 @@ namespace Nyctico.Actr.Client
         
         private Result SendMessage(string method, List<dynamic> parameters)
         {
-            Message message = new Message
+            CommandMessage commandMessage = new CommandMessage
             {
                 Id = _idCount++,
                 Method = method,
                 Parameters = parameters
             };
-            _streamWriter.Write(message.ToJson());
+            _streamWriter.Write(commandMessage.ToJson());
             _streamWriter.Flush();
-            Result result = WaitForResult(message.Id);
+            Result result = WaitForResult(commandMessage.Id);
             if (result.Error != null)
             {
                 throw new InvalidOperationException(result.Error.Message);

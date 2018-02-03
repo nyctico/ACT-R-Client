@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.Commands
+namespace Nyctico.Actr.Client.DispatcherHooks
 {
     public class MonitorCommand
     {

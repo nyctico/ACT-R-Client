@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 
-namespace Nyctico.Actr.Client.Commands
+namespace Nyctico.Actr.Client.DispatcherHooks
 {
-    public abstract class AbstractCommand
+    public abstract class AbstractDispatcherHook
     {
         private string PublishedName { set; get; }
         public List<object> PublishedNameAsList => new List<object> {PublishedName};
@@ -12,7 +11,7 @@ namespace Nyctico.Actr.Client.Commands
         public string MultipleInstanceErrorMessage { set; get; }
         public string LispCmd { set; get; }
 
-        protected AbstractCommand(string publishedName, string privateName, string documentation, string multipleInstanceErrorMessage=null, string lispCmd=null)
+        protected AbstractDispatcherHook(string publishedName, string privateName, string documentation, string multipleInstanceErrorMessage=null, string lispCmd=null)
         {
             PublishedName = publishedName;
             PrivateName = privateName;

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Nyctico.Actr.Client.Data
 {
-    public class Message
+    public class CommandMessage
     {
         [JsonProperty(PropertyName = "method")]
         public string Method { set; get; }

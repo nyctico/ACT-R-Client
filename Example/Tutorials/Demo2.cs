@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.Commands;
 using Nyctico.Actr.Client.Data;
 using Nyctico.Actr.Client.DispatcherCommands;
+using Nyctico.Actr.Client.DispatcherHooks;
 
 namespace Nyctico.Actr.Example.Tutorials
 {
@@ -34,10 +34,10 @@ namespace Nyctico.Actr.Example.Tutorials
                 
                 actr.SendDispatcherCommand(new AddTextToWindow(window, targetItem, 125, 150, "black", 50, 75, 12));
 
-                AbstractCommand command = new LambdaCommand(KeyPressAction, "unit2-key-press", "output-key",
+                AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(KeyPressAction, "unit2-key-press", "output-key",
                     "Assignment 2 task output-key monitor");
                 
-                actr.Add(command);
+                actr.Add(dispatcherHook);
                 
                 MonitorCommand modelMonitor = new MonitorCommand("output-key", "unit2-key-press");
                 actr.Add(modelMonitor);
