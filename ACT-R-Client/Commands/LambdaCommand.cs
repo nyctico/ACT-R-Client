@@ -5,17 +5,16 @@ namespace Nyctico.Actr.Client.Commands
 {
     public class LambdaCommand : AbstractCommand
     {
-        public Action<List<dynamic>> ExecFunc { set; get; }
-        public LambdaCommand(string publishedName, string privateName, string documentation)
+        private Action<List<dynamic>> _execFunc;
+
+        public LambdaCommand(Action<List<dynamic>> execFunc, string publishedName, string privateName, string documentation, bool singelInstance = true, string lispCmd = null) : base(publishedName, privateName, documentation, singelInstance, lispCmd)
         {
-            PublishedName = publishedName;
-            PrivateName = privateName;
-            Documentation = documentation;
+            _execFunc = execFunc;
         }
 
         public override void Execute(List<dynamic> parameters)
         {
-            ExecFunc(parameters);
+            _execFunc(parameters);
         }
     }
 }

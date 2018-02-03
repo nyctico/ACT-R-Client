@@ -85,11 +85,7 @@ namespace Nyctico.Actr.Client
         public void StartTraceMonitoring(Action<List<dynamic>> traceAction)
         {
             string commandName = ToString() + "_TraceMonitor";
-            AbstractCommand command = new LambdaCommand(commandName, "printTrace", "Trace monitoring")
-                {
-                    SingelInstance = "true",
-                    ExecFunc = traceAction
-                };
+            AbstractCommand command = new LambdaCommand(traceAction, commandName, "printTrace", "Trace monitoring");
             Add(command);
             
             MonitorCommand modelMonitor = new MonitorCommand("model-trace", commandName);

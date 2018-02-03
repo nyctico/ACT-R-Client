@@ -52,17 +52,16 @@ namespace Nyctico.Actr.Example.Tutorials
                     FontSize = 12
                 });
                 
-                string lastPressedKey = "";
-                AbstractCommand command = new LambdaCommand("unit2-key-press", "output-key", "Assignment 2 task output-key monitor")
+                string pressedKey = "";
+
+                void KeyPressAction(List<dynamic> list)
                 {
-                    SingelInstance = "true",
-                    ExecFunc = list =>
-                    {
-                        Console.WriteLine($"Key pressed by model: {(string) list[3]}");
-                        lastPressedKey = (string) list[3];
-                    },
-                    LispCmd = null
-                };
+                    pressedKey = (string) list[3];
+                    Console.WriteLine($"Key pressed by model: {pressedKey}");
+                }
+
+                AbstractCommand command = new LambdaCommand(KeyPressAction, "unit2-key-press", "output-key",
+                    "Assignment 2 task output-key monitor");
                 
                 actr.Add(command);
                 
@@ -84,7 +83,7 @@ namespace Nyctico.Actr.Example.Tutorials
                 actr.RemoveCommand("output-key");
                 
                 actr.StopTraceMonitoring();
-                Console.WriteLine(targetItem.ToLower().Equals(lastPressedKey.ToLower()));
+                Console.WriteLine(targetItem.ToLower().Equals(pressedKey.ToLower()));
             }
         }
     }
