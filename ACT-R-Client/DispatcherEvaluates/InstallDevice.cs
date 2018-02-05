@@ -3,7 +3,7 @@ using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public class InstallDevice : AbstractEvalCommand
+    public class InstallDevice : AbstractDispatcherEvaluate
     {
         public InstallDevice(Device window, bool useModel = false, string model = null) : base("install-device",
             useModel, model)

@@ -3,10 +3,12 @@ using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public class AddTextToWindow : AbstractEvalCommand
+    public class AddTextToWindow : AbstractDispatcherEvaluate
     {
-        public AddTextToWindow(Device window, string text, int x, int y, string color, int height, int width,
-            int fontSize, bool useModel = false, string model = null) : base("add-text-to-exp-window", useModel, model)
+        public AddTextToWindow(Device window, string text, int x, int y, string color = "black", int height = 50,
+            int width = 75,
+            int fontSize = 12, bool useModel = false, string model = null) : base("add-text-to-exp-window", useModel,
+            model)
         {
             Window = window;
             Text = text;

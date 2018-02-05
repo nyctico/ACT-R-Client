@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public class Run : AbstractEvalCommand
+    public class Run : AbstractDispatcherEvaluate
     {
         public Run(int time, bool realTime, bool useModel = false, string model = null) : base("run", useModel, model)
         {

@@ -2,9 +2,9 @@
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public abstract class AbstractEvalCommand
+    public abstract class AbstractDispatcherEvaluate
     {
-        public AbstractEvalCommand(string command, bool useModel = false, string model = null)
+        public AbstractDispatcherEvaluate(string command, bool useModel = false, string model = null)
         {
             Command = command;
             UseModel = useModel;

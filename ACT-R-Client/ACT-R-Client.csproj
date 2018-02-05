@@ -44,13 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActRClient.cs" />
+    <Compile Include="DispatcherEvaluates\ActrRandom.cs" />
+    <Compile Include="DispatcherEvaluates\Correlation.cs" />
+    <Compile Include="DispatcherEvaluates\MeanDeviation.cs" />
+    <Compile Include="DispatcherEvaluates\NewToneSound.cs" />
+    <Compile Include="DispatcherEvaluates\ScheduleSimpleEventRelative.cs" />
     <Compile Include="DispatcherHooks\AbstractDispatcherHook.cs" />
     <Compile Include="DispatcherHooks\LambdaDispatcherHook.cs" />
     <Compile Include="Data\Device.cs" />
     <Compile Include="Data\Error.cs" />
     <Compile Include="Data\CommandMessage.cs" />
     <Compile Include="Data\Result.cs" />
-    <Compile Include="DispatcherEvaluates\AbstractEvalCommand.cs" />
+    <Compile Include="DispatcherEvaluates\AbstractDispatcherEvaluate.cs" />
     <Compile Include="DispatcherEvaluates\AddTextToWindow.cs" />
     <Compile Include="DispatcherEvaluates\InstallDevice.cs" />
     <Compile Include="DispatcherEvaluates\OpenExpWindow.cs" />

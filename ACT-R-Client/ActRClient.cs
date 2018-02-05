@@ -69,9 +69,12 @@ namespace Nyctico.Actr.Client
             _abstractCommands.TryRemove(dispatcherHook.PrivateName, out dispatcherHook);
         }
 
-        public void RemoveDispatcherHook(string publishedName)
+        public void RemoveDispatcherHook(string privateName)
         {
-            RemoveDispatcherHook(_abstractCommands[publishedName]);
+            AbstractDispatcherHook abstractDispatcherHook;
+            if (!_abstractCommands.TryRemove(privateName, out abstractDispatcherHook))
+                throw new KeyNotFoundException("DispatcherHook not found!");
+            RemoveDispatcherHook(abstractDispatcherHook);
         }
 
         public void AddDispatcherMonitor(DispatcherMonitor dispatcherMonitor)
@@ -89,7 +92,10 @@ namespace Nyctico.Actr.Client
 
         public void RemoveDispatcherMonitor(string commanToMonitorCommandToCall)
         {
-            RemoveDispatcherMonitor(_monitors[commanToMonitorCommandToCall]);
+            DispatcherMonitor dispatcherMonitor;
+            if (!_monitors.TryRemove(commanToMonitorCommandToCall, out dispatcherMonitor))
+                throw new KeyNotFoundException("Monitor not found!");
+            RemoveDispatcherMonitor(dispatcherMonitor);
         }
 
         public void StartTraceMonitoring(Action<List<dynamic>> traceAction)
@@ -127,7 +133,7 @@ namespace Nyctico.Actr.Client
             SendMessage("evaluate", new List<dynamic> {"reset"});
         }
 
-        public Result SendDispatcherEvaluate(AbstractEvalCommand evaluateCommand)
+        public Result SendDispatcherEvaluate(AbstractDispatcherEvaluate evaluateCommand)
         {
             return SendMessage("evaluate", evaluateCommand.ToParameterList());
         }

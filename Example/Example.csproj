@@ -48,6 +48,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tutorials\Demo2.cs" />
+    <Compile Include="Tutorials\Sperling.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ACT-R-Client\ACT-R-Client.csproj">

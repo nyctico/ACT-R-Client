@@ -2,15 +2,15 @@
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public class PermuteList : AbstractEvalCommand
+    public class PermuteList : AbstractDispatcherEvaluate
     {
-        public PermuteList(List<int> indexes, bool useModel = false, string model = null) : base("permute-list",
+        public PermuteList(List<dynamic> indexes, bool useModel = false, string model = null) : base("permute-list",
             useModel, model)
         {
             Indexes = indexes;
         }
 
-        public List<int> Indexes { set; get; }
+        public List<dynamic> Indexes { set; get; }
 
         public override List<dynamic> ToParameterList()
         {

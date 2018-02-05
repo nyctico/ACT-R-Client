@@ -4,7 +4,8 @@ namespace Nyctico.Actr.Client.DispatcherHooks
 {
     public abstract class AbstractDispatcherHook
     {
-        protected AbstractDispatcherHook(string publishedName, string privateName, string documentation,
+        protected AbstractDispatcherHook(string publishedName, string privateName,
+            string documentation = "No documentation provided.",
             string multipleInstanceErrorMessage = null, string lispCmd = null)
         {
             PublishedName = publishedName;
@@ -14,7 +15,7 @@ namespace Nyctico.Actr.Client.DispatcherHooks
             LispCmd = lispCmd;
         }
 
-        private string PublishedName { get; }
+        public string PublishedName { get; }
         public List<object> PublishedNameAsList => new List<object> {PublishedName};
         public string PrivateName { set; get; }
         public string Documentation { set; get; }

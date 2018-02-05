@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public class OpenExpWindow : AbstractEvalCommand
+    public class OpenExpWindow : AbstractDispatcherEvaluate
     {
-        public OpenExpWindow(string title, bool visible, int width, int height, int x, int y, bool useModel = false,
+        public OpenExpWindow(string title, bool visible, int width = 300, int height = 300, int x = 300, int y = 300,
+            bool useModel = false,
             string model = null) : base("open-exp-window", useModel, model)
         {
             Title = title;

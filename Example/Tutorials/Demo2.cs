@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Nyctico.Actr.Client;
 using Nyctico.Actr.Client.Data;
 using Nyctico.Actr.Client.DispatcherEvaluates;
@@ -28,16 +27,18 @@ namespace Nyctico.Actr.Example.Tutorials
                 actr.LoadModel("ACT-R:tutorial;unit2;demo2-model.lisp");
                 actr.Reset();
 
+                var numberList = new List<dynamic>();
+                for (var i = 0; i < items.Length; ++i) numberList.Add(i);
                 var indexes =
-                    actr.SendDispatcherEvaluate(new PermuteList(Enumerable.Range(0, items.Length - 1).ToList()));
+                    actr.SendDispatcherEvaluate(new PermuteList(numberList));
 
                 var targetItem = items[indexes.ReturnValue[0][0]];
 
                 var windowResult =
-                    actr.SendDispatcherEvaluate(new OpenExpWindow("Letter difference", true, 300, 300, 300, 300));
+                    actr.SendDispatcherEvaluate(new OpenExpWindow("Letter difference", true));
                 var window = new Device(windowResult.ReturnValue[0].ToObject<List<dynamic>>());
 
-                actr.SendDispatcherEvaluate(new AddTextToWindow(window, targetItem, 125, 150, "black", 50, 75, 12));
+                actr.SendDispatcherEvaluate(new AddTextToWindow(window, targetItem, 125, 150));
 
                 AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),
                     "unit2-key-press",
