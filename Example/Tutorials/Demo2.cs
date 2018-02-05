@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.Data;
-using Nyctico.Actr.Client.DispatcherEvaluates;
 using Nyctico.Actr.Client.DispatcherHooks;
 using Nyctico.Actr.Client.DispatcherMonitors;
 
@@ -28,16 +26,13 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 var numberList = new List<dynamic>();
                 for (var i = 0; i < items.Length; ++i) numberList.Add(i);
-                var indexes =
-                    actr.SendDispatcherEvaluate(new PermuteList(numberList));
+                var indexes = actr.PermuteList(numberList);
 
-                var targetItem = items[indexes.ReturnValue[0]];
+                var targetItem = items[indexes[0]];
 
-                var windowResult =
-                    actr.SendDispatcherEvaluate(new OpenExpWindow("Letter difference", true));
-                var window = new Device(windowResult.ReturnValue.ToObject<List<dynamic>>());
+                var window = actr.OpenExpWindow("Letter difference", true);
 
-                actr.SendDispatcherEvaluate(new AddTextToWindow(window, targetItem, 125, 150));
+                actr.AddTextToWindow(window, targetItem, 125, 150);
 
                 AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),
                     "unit2-key-press",
@@ -45,13 +40,11 @@ namespace Nyctico.Actr.Example.Tutorials
                     "Assignment 2 task output-key monitor");
 
                 actr.AddDispatcherHook(dispatcherHook);
-
                 var modelDispatcherMonitor = new DispatcherMonitor("output-key", "unit2-key-press");
                 actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
-                actr.SendDispatcherEvaluate(new InstallDevice(window));
-
-                actr.SendDispatcherEvaluate(new Run(10, true));
+                actr.InstallDevice(window);
+                actr.Run(10, true);
 
                 actr.RemoveDispatcherMonitor("output-keyunit2-key-press");
                 actr.RemoveDispatcherHook("output-key");

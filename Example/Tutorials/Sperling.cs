@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.Data;
-using Nyctico.Actr.Client.DispatcherEvaluates;
 using Nyctico.Actr.Client.DispatcherHooks;
 using Nyctico.Actr.Client.DispatcherMonitors;
 
@@ -28,8 +26,8 @@ namespace Nyctico.Actr.Example.Tutorials
                 var expData = new List<dynamic> {3.03, 2.4, 2.03, 1.5};
                 for (var i = 0; i < Results.Count; ++i) Results[i] = Results[i] / numberOfRuns;
 
-                actr.SendDispatcherEvaluate(new Correlation(Results, expData));
-                actr.SendDispatcherEvaluate(new MeanDeviation(Results, expData));
+                actr.Correlation(Results, expData);
+                actr.MeanDeviation(Results, expData);
 
                 Console.WriteLine("Condition    Current Participant   Original Experiment");
                 for (var i = 0; i < Results.Count; ++i)
@@ -41,7 +39,7 @@ namespace Nyctico.Actr.Example.Tutorials
         private static void OneBlock(ActRClient actr, bool runInRealTime)
         {
             var result = new List<double>();
-            var permuteList = actr.SendDispatcherEvaluate(new PermuteList(Onsets)).ReturnValue;
+            var permuteList = actr.PermuteList(Onsets);
 
             foreach (double r in permuteList) result.Add(Trial(actr, runInRealTime, r));
             result.Sort((d, d1) => d1.CompareTo(d));
@@ -57,11 +55,9 @@ namespace Nyctico.Actr.Example.Tutorials
 
             int freq;
 
-            long row = actr.SendDispatcherEvaluate(new ActrRandom(3)).ReturnValue;
+            var row = actr.ActrRandom(3);
 
-            var windowResult =
-                actr.SendDispatcherEvaluate(new OpenExpWindow("Sperling Experiment", runInRealTime));
-            var window = new Device(windowResult.ReturnValue.ToObject<List<dynamic>>());
+            var window = actr.OpenExpWindow("Sperling Experiment", runInRealTime);
 
             var letters = new List<dynamic>
             {
@@ -87,17 +83,17 @@ namespace Nyctico.Actr.Example.Tutorials
                 "Y",
                 "Z"
             };
-            letters = actr.SendDispatcherEvaluate(new PermuteList(letters)).ReturnValue.ToObject<List<dynamic>>();
+            letters = actr.PermuteList(letters);
             for (var i = 0; i < 3; ++i)
             for (var j = 0; j < 4; ++j)
             {
                 var txt = letters[i + j * 4];
                 if (i == row)
                     _answers.Add(txt);
-                actr.SendDispatcherEvaluate(new AddTextToWindow(window, txt, 75 + j * 50, 101 + i * 50));
+                actr.AddTextToWindow(window, txt, 75 + j * 50, 101 + i * 50);
             }
 
-            actr.SendDispatcherEvaluate(new InstallDevice(window));
+            actr.InstallDevice(window);
             switch (row)
             {
                 case 0:
@@ -111,21 +107,20 @@ namespace Nyctico.Actr.Example.Tutorials
                     break;
             }
 
-            actr.SendDispatcherEvaluate(new NewToneSound(freq, 0.5, onset));
-            actr.SendDispatcherEvaluate(new ScheduleSimpleEventRelative(
-                900 + actr.SendDispatcherEvaluate(new ActrRandom(200)).ReturnValue, "clear-exp-window",
-                new List<dynamic> {window.Infomation[2]}));
+            actr.NewToneSound(freq, 0.5, onset);
+            actr.ScheduleSimpleEventRelative(
+                900 + actr.ActrRandom(200), "clear-exp-window",
+                new List<dynamic> {window.Infomation[2]});
 
             AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),
                 "sperling-response",
                 "KeyPressAction",
                 "Sperling task key press response monitor");
             actr.AddDispatcherHook(dispatcherHook);
-
             var modelDispatcherMonitor = new DispatcherMonitor("output-key", "sperling-response");
             actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
-            actr.SendDispatcherEvaluate(new Run(30, runInRealTime));
+            actr.Run(30, runInRealTime);
 
             actr.RemoveDispatcherMonitor("output-keysperling-response");
             actr.RemoveDispatcherHook("KeyPressAction");

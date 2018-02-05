@@ -117,9 +117,12 @@ namespace Nyctico.Actr.Client
             var generalDispatcherMonitor = new DispatcherMonitor("general-trace", commandName);
             AddDispatcherMonitor(generalDispatcherMonitor);
         }
-        
-        public void StartTraceMonitoring() => StartTraceMonitoring(list => Console.WriteLine(
-            $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
+
+        public void StartTraceMonitoring()
+        {
+            StartTraceMonitoring(list => Console.WriteLine(
+                $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
+        }
 
         public void StopTraceMonitoring()
         {
@@ -268,6 +271,71 @@ namespace Nyctico.Actr.Client
         public void LoadModel(string modelName)
         {
             SendMessage("evaluate", new List<dynamic> {"load-act-r-model", false, modelName});
+        }
+
+        public List<dynamic> PermuteList(List<dynamic> list, bool useModel = false, string model = null)
+        {
+            return SendDispatcherEvaluate(new PermuteList(list, useModel, model)).ReturnValue.ToObject<List<dynamic>>();
+        }
+
+        public Device OpenExpWindow(string title, bool isVisible, int width = 300, int height = 300, int x = 300,
+            int y = 300,
+            bool useModel = false,
+            string model = null)
+        {
+            return new Device(
+                SendDispatcherEvaluate(new OpenExpWindow(title, isVisible, width, height, x, y, useModel, model))
+                    .ReturnValue.ToObject<List<dynamic>>());
+        }
+
+        public void AddTextToWindow(Device window, string text, int x, int y, string color = "black", int height = 50,
+            int width = 75,
+            int fontSize = 12, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new AddTextToWindow(window, text, x, y, color, height, width, fontSize, useModel,
+                model));
+        }
+
+        public double Correlation(List<dynamic> results, List<dynamic> data, bool output = true, bool useModel = false,
+            string model = null)
+        {
+            return SendDispatcherEvaluate(new Correlation(results, data, output, useModel, model)).ReturnValue;
+        }
+
+        public double MeanDeviation(List<dynamic> results, List<dynamic> data, bool output = true,
+            bool useModel = false,
+            string model = null)
+        {
+            return SendDispatcherEvaluate(new MeanDeviation(results, data, output, useModel, model)).ReturnValue;
+        }
+
+        public long ActrRandom(long value, bool useModel = false, string model = null)
+        {
+            return SendDispatcherEvaluate(new ActrRandom(value, useModel, model)).ReturnValue;
+        }
+
+        public void InstallDevice(Device device, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new InstallDevice(device, useModel, model));
+        }
+
+        public void Run(int time, bool realTime, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new Run(time, realTime, useModel, model));
+        }
+
+        public void NewToneSound(int frequence, double duration, double? onset = null, bool timeInMs = false,
+            bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new NewToneSound(frequence, duration, onset, timeInMs, useModel, model));
+        }
+
+        public void ScheduleSimpleEventRelative(long timeDelay, string action, List<dynamic> parameters = null,
+            string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
+            string model = null)
+        {
+            SendDispatcherEvaluate(new ScheduleSimpleEventRelative(timeDelay, action, parameters, module, priority,
+                maintenance, useModel, model));
         }
     }
 }
