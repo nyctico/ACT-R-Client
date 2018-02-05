@@ -32,11 +32,11 @@ namespace Nyctico.Actr.Example.Tutorials
                 var indexes =
                     actr.SendDispatcherEvaluate(new PermuteList(numberList));
 
-                var targetItem = items[indexes.ReturnValue[0][0]];
+                var targetItem = items[indexes.ReturnValue[0]];
 
                 var windowResult =
                     actr.SendDispatcherEvaluate(new OpenExpWindow("Letter difference", true));
-                var window = new Device(windowResult.ReturnValue[0].ToObject<List<dynamic>>());
+                var window = new Device(windowResult.ReturnValue.ToObject<List<dynamic>>());
 
                 actr.SendDispatcherEvaluate(new AddTextToWindow(window, targetItem, 125, 150));
 

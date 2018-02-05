@@ -56,7 +56,7 @@ namespace Nyctico.Actr.Client
         public void AddDispatcherHook(AbstractDispatcherHook dispatcherHook)
         {
             var result = SendMessage("check", dispatcherHook.PublishedNameAsList);
-            if (result.ReturnValue != null && result.ReturnValue?[0] != null) return;
+            if (result.ReturnList != null && result.ReturnValue != null) return;
             SendMessage("add", dispatcherHook.ToParameterList());
             _abstractCommands.TryAdd(dispatcherHook.PrivateName, dispatcherHook);
         }
@@ -64,7 +64,7 @@ namespace Nyctico.Actr.Client
         public void RemoveDispatcherHook(AbstractDispatcherHook dispatcherHook)
         {
             var result = SendMessage("check", dispatcherHook.PublishedNameAsList);
-            if (result.ReturnValue == null || result.ReturnValue?[0] == null) return;
+            if (result.ReturnList == null || result.ReturnValue == null) return;
             SendMessage("remove", dispatcherHook.PublishedNameAsList);
             _abstractCommands.TryRemove(dispatcherHook.PrivateName, out dispatcherHook);
         }
@@ -243,7 +243,7 @@ namespace Nyctico.Actr.Client
             var result = new Result
             {
                 Id = id,
-                ReturnValue = new List<dynamic> {true},
+                ReturnList = new List<dynamic> {true},
                 Error = null
             };
             _streamWriter.Write(result.ToJson());
@@ -255,7 +255,7 @@ namespace Nyctico.Actr.Client
             var result = new Result
             {
                 Id = id,
-                ReturnValue = null,
+                ReturnList = null,
                 Error = new Error(error)
             };
             _streamWriter.Write(result.ToJson());

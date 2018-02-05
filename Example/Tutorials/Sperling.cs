@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using Nyctico.Actr.Client;
 using Nyctico.Actr.Client.Data;
 using Nyctico.Actr.Client.DispatcherEvaluates;
@@ -43,7 +42,7 @@ namespace Nyctico.Actr.Example.Tutorials
         private static void OneBlock(ActRClient actr, bool runInRealTime)
         {
             var result = new List<double>();
-            var permuteList = actr.SendDispatcherEvaluate(new PermuteList(Onsets)).ReturnValue[0];
+            var permuteList = actr.SendDispatcherEvaluate(new PermuteList(Onsets)).ReturnValue;
 
             foreach (double r in permuteList) result.Add(Trial(actr, runInRealTime, r));
             result.Sort((d, d1) => d1.CompareTo(d));
@@ -59,11 +58,11 @@ namespace Nyctico.Actr.Example.Tutorials
 
             int freq;
 
-            long row = actr.SendDispatcherEvaluate(new ActrRandom(3)).ReturnValue[0];
+            long row = actr.SendDispatcherEvaluate(new ActrRandom(3)).ReturnValue;
 
             var windowResult =
                 actr.SendDispatcherEvaluate(new OpenExpWindow("Sperling Experiment", runInRealTime));
-            var window = new Device(windowResult.ReturnValue[0].ToObject<List<dynamic>>());
+            var window = new Device(windowResult.ReturnValue.ToObject<List<dynamic>>());
 
             var letters = new List<dynamic>
             {
@@ -89,8 +88,7 @@ namespace Nyctico.Actr.Example.Tutorials
                 "Y",
                 "Z"
             };
-            letters = ((JArray) actr.SendDispatcherEvaluate(new PermuteList(letters)).ReturnValue[0])
-                .ToObject<List<dynamic>>();
+            letters = actr.SendDispatcherEvaluate(new PermuteList(letters)).ReturnValue.ToObject<List<dynamic>>();
             for (var i = 0; i < 3; ++i)
             for (var j = 0; j < 4; ++j)
             {
@@ -116,7 +114,7 @@ namespace Nyctico.Actr.Example.Tutorials
 
             actr.SendDispatcherEvaluate(new NewToneSound(freq, 0.5, onset));
             actr.SendDispatcherEvaluate(new ScheduleSimpleEventRelative(
-                900 + actr.SendDispatcherEvaluate(new ActrRandom(200)).ReturnValue[0], "clear-exp-window",
+                900 + actr.SendDispatcherEvaluate(new ActrRandom(200)).ReturnValue, "clear-exp-window",
                 new List<dynamic> {window.Infomation[2]}));
 
             AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),

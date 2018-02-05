@@ -6,7 +6,10 @@ namespace Nyctico.Actr.Client.Data
     public class Result
     {
         [JsonProperty(PropertyName = "result")]
-        public List<dynamic> ReturnValue { set; get; }
+        public List<dynamic> ReturnList { set; get; }
+
+        [JsonIgnore]
+        public dynamic ReturnValue => ReturnList[0];
 
         [JsonProperty(PropertyName = "error")]
         public Error Error { set; get; }
