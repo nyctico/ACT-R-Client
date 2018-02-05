@@ -19,8 +19,7 @@ namespace Nyctico.Actr.Example.Tutorials
         {
             using (var actr = new ActRClient("127.0.0.1", 2650))
             {
-                actr.StartTraceMonitoring(list => Console.WriteLine(
-                    $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
+                actr.StartTraceMonitoring();
                 actr.LoadModel("ACT-R:tutorial;unit3;sperling-model.lisp");
                 actr.Reset();
 

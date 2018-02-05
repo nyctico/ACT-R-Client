@@ -117,6 +117,9 @@ namespace Nyctico.Actr.Client
             var generalDispatcherMonitor = new DispatcherMonitor("general-trace", commandName);
             AddDispatcherMonitor(generalDispatcherMonitor);
         }
+        
+        public void StartTraceMonitoring() => StartTraceMonitoring(list => Console.WriteLine(
+            $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
 
         public void StopTraceMonitoring()
         {
