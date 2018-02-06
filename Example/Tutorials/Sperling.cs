@@ -18,7 +18,7 @@ namespace Nyctico.Actr.Example.Tutorials
             using (var actr = new ActRClient("127.0.0.1", 2650))
             {
                 actr.StartTraceMonitoring();
-                actr.LoadModel("ACT-R:tutorial;unit3;sperling-model.lisp");
+                actr.LoadActrModel("ACT-R:tutorial;unit3;sperling-model.lisp");
                 actr.Reset();
 
                 for (var i = 0; i < numberOfRuns; ++i) OneBlock(actr, realTime);

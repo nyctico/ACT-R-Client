@@ -21,7 +21,7 @@ namespace Nyctico.Actr.Example.Tutorials
             using (var actr = new ActRClient("127.0.0.1", 2650))
             {
                 actr.StartTraceMonitoring();
-                actr.LoadModel("ACT-R:tutorial;unit2;demo2-model.lisp");
+                actr.LoadActrModel("ACT-R:tutorial;unit2;demo2-model.lisp");
                 actr.Reset();
 
                 var numberList = new List<dynamic>();

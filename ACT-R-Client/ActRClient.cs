@@ -268,9 +268,14 @@ namespace Nyctico.Actr.Client
             _streamWriter.Flush();
         }
 
-        public void LoadModel(string modelName)
+        public void LoadActrModel(string path, bool useModel = false, string model = null)
         {
-            SendMessage("evaluate", new List<dynamic> {"load-act-r-model", false, modelName});
+            SendDispatcherEvaluate(new LoadActrModel(path, useModel, model));
+        }
+        
+        public void LoadActrCode(string path, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new LoadActrCode(path, useModel, model));
         }
 
         public List<dynamic> PermuteList(List<dynamic> list, bool useModel = false, string model = null)
@@ -294,6 +299,23 @@ namespace Nyctico.Actr.Client
         {
             SendDispatcherEvaluate(new AddTextToWindow(window, text, x, y, color, height, width, fontSize, useModel,
                 model));
+        }
+        
+        public void AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null , int height = 50,
+            int width = 75,
+            string color = "gray", bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new AddButtonToExpWindow(window, text, x, y,action, height, width, color, useModel,
+                model));
+        }
+                
+        public void RemoveItemsFromExpWindow(Device window, List<dynamic> items, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new RemoveItemsFromExpWindow(window, items, useModel, model));
+        }
+        public void ClearExpWindow(Device window, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ClearExpWindow(window, useModel, model));
         }
 
         public double Correlation(List<dynamic> results, List<dynamic> data, bool output = true, bool useModel = false,
@@ -319,7 +341,7 @@ namespace Nyctico.Actr.Client
             SendDispatcherEvaluate(new InstallDevice(device, useModel, model));
         }
 
-        public void Run(int time, bool realTime, bool useModel = false, string model = null)
+        public void Run(int time, bool realTime=false, bool useModel = false, string model = null)
         {
             SendDispatcherEvaluate(new Run(time, realTime, useModel, model));
         }
@@ -329,6 +351,18 @@ namespace Nyctico.Actr.Client
         {
             SendDispatcherEvaluate(new NewToneSound(frequence, duration, onset, timeInMs, useModel, model));
         }
+        
+        public void NewWordSound(string word, double? onset = null, string location = "external", bool timeInMs = false,
+            bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new NewWordSound(word, onset, location, timeInMs, useModel, model));
+        }
+        
+        public void NewDigitSound(long digit, double? onset = null, bool timeInMs = false,
+            bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new NewDigitSound(digit, onset, timeInMs, useModel, model));
+        }
 
         public void ScheduleSimpleEventRelative(long timeDelay, string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
@@ -336,6 +370,156 @@ namespace Nyctico.Actr.Client
         {
             SendDispatcherEvaluate(new ScheduleSimpleEventRelative(timeDelay, action, parameters, module, priority,
                 maintenance, useModel, model));
+        }
+        
+        public void Reload(bool compile=false, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new Reload(compile));
+        }
+        
+        public void RunFullTime(int time, bool realTime=false, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new RunFullTime(time, realTime, useModel, model));
+        }
+        
+        public void RunUntilTime(int time, bool realTime=false, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new RunUntilTime(time, realTime, useModel, model));
+        }
+        
+        public void RunNEvents(long eventCount, bool realTime=false, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new RunNEvents(eventCount, realTime, useModel, model));
+        }
+        
+        public void RunUntilCondition(string condition, bool realTime=false, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new RunUntilCondition(condition, realTime, useModel, model));
+        }
+        
+        public void BufferChunk(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new BufferChunk(parameters, useModel, model));
+        }
+        
+        public List<dynamic> BufferStatus(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            return SendDispatcherEvaluate(new BufferStatus(parameters, useModel, model)).ReturnValue;
+        }
+        
+        public List<dynamic> BufferRead(string buffer, bool useModel = false, string model = null)
+        {
+            return SendDispatcherEvaluate(new BufferRead(buffer, useModel, model)).ReturnValue;
+        }
+        
+        public void ClearBuffer(string buffer, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ClearBuffer(buffer, useModel, model));
+        }
+        
+        public void Whynot(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new Whynot(parameters, useModel, model));
+        }
+        
+        public void WhynotDm(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new WhynotDm(parameters, useModel, model));
+        }
+        
+        public void Penable(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new Penable(parameters, useModel, model));
+        }
+        
+        public void Pdisable(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new Pdisable(parameters, useModel, model));
+        }
+        
+        public void GoalFocus(string goal=null, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new GoalFocus(goal, useModel, model));
+        }
+        
+        public void PrintWarning(string warning, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new PrintWarning(warning, useModel, model));
+        }
+        
+        public void ActrOutput(string output, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ActrOutput(output, useModel, model));
+        }
+        
+        public void PrintVisicon(bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new PrintVisicon(useModel, model));
+        }
+        
+        public void GetTime(bool modelTime=true, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new GetTime(modelTime, useModel, model));
+        }
+        
+        public void DefineChunks(List<dynamic> chunks, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new DefineChunks(chunks, useModel, model));
+        }
+        
+        public void AddDm(List<dynamic> chunks, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new AddDm(chunks, useModel, model));
+        }
+        
+        public void PprintChunks(List<dynamic> chunks, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new PprintChunks(chunks, useModel, model));
+        }
+        
+        public void ChunkSlotValue(string chunkName, string slotName, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ChunkSlotValue(chunkName, slotName, useModel, model));
+        }
+        
+        public void SetChunkSlotValue(string chunkName, string slotName, string newValue, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new SetChunkSlotValue(chunkName, slotName,newValue, useModel, model));
+        }
+        
+        public void ModChunk(string chunkName, List<dynamic> mods, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ModChunk(chunkName, mods, useModel, model));
+        }
+        
+        public void ModFocus(List<dynamic> mods, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ModFocus(mods, useModel, model));
+        }
+        
+        public void ChunkP(string chunkName, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ChunkP(chunkName, useModel, model));
+        }
+
+        public void CopyChunk(string chunkName, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new CopyChunk(chunkName, useModel, model));
+        }
+        
+        public void ExtendPossibleSlots(string chunkName, bool warn=true, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ExtendPossibleSlots(chunkName, warn, useModel, model));
+        }
+        
+        public void ModelOutput(string output, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new ModelOutput(output, useModel, model));
+        }
+        
+        public void SetBufferChunk(string bufferName, string chunkName, bool requested=true, bool useModel = false, string model = null)
+        {
+            SendDispatcherEvaluate(new SetBufferChunk(bufferName, chunkName, requested, useModel, model));
         }
     }
 }

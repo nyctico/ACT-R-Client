@@ -2,17 +2,17 @@
 
 namespace Nyctico.Actr.Client.DispatcherEvaluates
 {
-    public class Run : AbstractDispatcherEvaluate
+    public class RunFullTime : AbstractDispatcherEvaluate
     {
-        public Run(int time, bool realTime=false, bool useModel = false, string model = null) : base("run", useModel, model)
+        public int Time { set; get; }
+        public bool RealTime { set; get; }
+
+        public RunFullTime(int time, bool realTime=false, bool useModel = false, string model = null) : base("run-full-time", useModel, model)
         {
             Time = time;
             RealTime = realTime;
         }
-
-        public int Time { set; get; }
-        public bool RealTime { set; get; }
-
+        
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
