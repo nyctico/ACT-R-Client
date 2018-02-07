@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.DispatcherHooks;
-using Nyctico.Actr.Client.DispatcherMonitors;
+using Nyctico.Actr.Client.HookRequests;
+using Nyctico.Actr.Client.MonitorRequests;
 
 namespace Nyctico.Actr.Example.Tutorials
 {
@@ -112,12 +112,12 @@ namespace Nyctico.Actr.Example.Tutorials
                 900 + actr.ActrRandom(200), "clear-exp-window",
                 new List<dynamic> {window.Infomation[2]});
 
-            AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),
+            AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                 "sperling-response",
                 "KeyPressAction",
                 "Sperling task key press response monitor");
-            actr.AddDispatcherHook(dispatcherHook);
-            var modelDispatcherMonitor = new DispatcherMonitor("output-key", "sperling-response");
+            actr.AddDispatcherHook(hookRequest);
+            var modelDispatcherMonitor = new MonitorRequest("output-key", "sperling-response");
             actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
             actr.Run(30, runInRealTime);

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.DispatcherHooks;
-using Nyctico.Actr.Client.DispatcherMonitors;
+using Nyctico.Actr.Client.HookRequests;
+using Nyctico.Actr.Client.MonitorRequests;
 
 namespace Nyctico.Actr.Example.Tutorials
 {
@@ -34,13 +34,13 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 actr.AddTextToWindow(window, targetItem, 125, 150);
 
-                AbstractDispatcherHook dispatcherHook = new LambdaDispatcherHook(list => KeyPressAction(list),
+                AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                     "unit2-key-press",
                     "output-key",
                     "Assignment 2 task output-key monitor");
 
-                actr.AddDispatcherHook(dispatcherHook);
-                var modelDispatcherMonitor = new DispatcherMonitor("output-key", "unit2-key-press");
+                actr.AddDispatcherHook(hookRequest);
+                var modelDispatcherMonitor = new MonitorRequest("output-key", "unit2-key-press");
                 actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
                 actr.InstallDevice(window);
