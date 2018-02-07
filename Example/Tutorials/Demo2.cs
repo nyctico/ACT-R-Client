@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Nyctico.Actr.Client;
 using Nyctico.Actr.Client.HookRequests;
 using Nyctico.Actr.Client.MonitorRequests;
@@ -10,8 +11,9 @@ namespace Nyctico.Actr.Example.Tutorials
     {
         private static string _pressedKey = "";
 
-        public static void Execute()
+        public static void Execute(bool human = false)
         {
+            _pressedKey = "";
             var items = new[]
             {
                 "B", "C", "D", "F", "G", "H", "J", "K", "L",
@@ -43,8 +45,15 @@ namespace Nyctico.Actr.Example.Tutorials
                 var modelDispatcherMonitor = new MonitorRequest("output-key", "unit2-key-press");
                 actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
-                actr.InstallDevice(window);
-                actr.Run(10, true);
+                if (!human)
+                {
+                    actr.InstallDevice(window);
+                    actr.Run(10, true);
+                }
+                else
+                {
+                    while (_pressedKey.Equals("")) Thread.Sleep(1);
+                }
 
                 actr.RemoveDispatcherMonitor("output-keyunit2-key-press");
                 actr.RemoveDispatcherHook("output-key");

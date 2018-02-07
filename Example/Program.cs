@@ -21,10 +21,7 @@ namespace Nyctico.Actr.Example
                     switch (option)
                     {
                         case "2":
-                            Console.WriteLine("Starting Demo2");
-                            Console.WriteLine("------------------------------------------------");
-                            Demo2.Execute();
-                            Console.WriteLine("------------------------------------------------");
+                            StartDemo2();
                             break;
 
                         case "3":
@@ -44,6 +41,38 @@ namespace Nyctico.Actr.Example
                 {
                     Console.WriteLine(e);
                 }
+            }
+        }
+
+        private static void StartDemo2()
+        {
+            Console.WriteLine("(1) Human");
+            Console.WriteLine("(2) Model");
+            Console.WriteLine("(q) Quit");
+            Console.Write("> ");
+            var option = Console.ReadLine();
+            switch (option)
+            {
+                case "1":
+                    Console.WriteLine($"Starting Demo2 with human participant");
+                    Console.WriteLine("------------------------------------------------");
+                    Demo2.Execute(true);
+                    Console.WriteLine("------------------------------------------------");
+                    break;
+
+                case "2":
+                    Console.WriteLine($"Starting Demo2 with model participant");
+                    Console.WriteLine("------------------------------------------------");
+                    Demo2.Execute(false);
+                    Console.WriteLine("------------------------------------------------");
+                    break;
+
+                case "q":
+                    return;
+
+                default:
+                    Console.WriteLine($"Unknown Command {option}");
+                    break;
             }
         }
 
