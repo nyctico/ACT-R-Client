@@ -2,16 +2,17 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class ExtendPossibleSlots: AbstractEvaluationRequest
+    public class ExtendPossibleSlots : AbstractEvaluationRequest
     {
-        public string ChunkName { get; set; }
-        public bool Warn { get; set; }
-
-        public ExtendPossibleSlots(string chunkName, bool warn=true, bool useModel = false, string model = null) : base("extend-possible-slots", useModel, model)
+        public ExtendPossibleSlots(string chunkName, bool warn = true, bool useModel = false, string model = null) :
+            base("extend-possible-slots", useModel, model)
         {
             ChunkName = chunkName;
             Warn = warn;
         }
+
+        public string ChunkName { get; set; }
+        public bool Warn { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

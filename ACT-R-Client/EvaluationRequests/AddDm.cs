@@ -2,14 +2,14 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class AddDm: AbstractEvaluationRequest
+    public class AddDm : AbstractEvaluationRequest
     {
-        public List<dynamic> Chunks { get; set; }
-
         public AddDm(List<dynamic> chunks, bool useModel = false, string model = null) : base("add-dm", useModel, model)
         {
             Chunks = chunks;
         }
+
+        public List<dynamic> Chunks { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

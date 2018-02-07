@@ -4,7 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Run : AbstractEvaluationRequest
     {
-        public Run(int time, bool realTime=false, bool useModel = false, string model = null) : base("run", useModel, model)
+        public Run(int time, bool realTime = false, bool useModel = false, string model = null) : base("run", useModel,
+            model)
         {
             Time = time;
             RealTime = realTime;

@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class ClearBuffer: AbstractEvaluationRequest
+    public class ClearBuffer : AbstractEvaluationRequest
     {
-        public string Buffer { get; set; }
-
-        public ClearBuffer(string buffer=null, bool useModel = false, string model = null) : base("clear-buffer", useModel, model)
+        public ClearBuffer(string buffer = null, bool useModel = false, string model = null) : base("clear-buffer",
+            useModel, model)
         {
             Buffer = buffer;
         }
+
+        public string Buffer { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

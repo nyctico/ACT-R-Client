@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class GetTime: AbstractEvaluationRequest
+    public class GetTime : AbstractEvaluationRequest
     {
-        public bool ModelTime { get; set; }
-
-        public GetTime(bool modelTime=true, bool useModel = false, string model = null) : base("get-time", useModel, model)
+        public GetTime(bool modelTime = true, bool useModel = false, string model = null) : base("get-time", useModel,
+            model)
         {
             ModelTime = modelTime;
         }
+
+        public bool ModelTime { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

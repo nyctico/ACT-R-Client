@@ -2,16 +2,17 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class ChunkSlotValue: AbstractEvaluationRequest
+    public class ChunkSlotValue : AbstractEvaluationRequest
     {
-        public string ChunkName { get; set; }
-        public string SlotName { get; set; }
-
-        public ChunkSlotValue(string chunkName, string slotName, bool useModel = false, string model = null) : base("chunk-slot-value", useModel, model)
+        public ChunkSlotValue(string chunkName, string slotName, bool useModel = false, string model = null) : base(
+            "chunk-slot-value", useModel, model)
         {
             ChunkName = chunkName;
             SlotName = slotName;
         }
+
+        public string ChunkName { get; set; }
+        public string SlotName { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class GoalFocus: AbstractEvaluationRequest
+    public class GoalFocus : AbstractEvaluationRequest
     {
-        public string Goal { get; set; }
-
-        public GoalFocus(string goal=null, bool useModel = false, string model = null) : base("goal-focus", useModel, model)
+        public GoalFocus(string goal = null, bool useModel = false, string model = null) : base("goal-focus", useModel,
+            model)
         {
             Goal = goal;
         }
+
+        public string Goal { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

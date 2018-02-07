@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class PrintWarning: AbstractEvaluationRequest
+    public class PrintWarning : AbstractEvaluationRequest
     {
-        public string Warning { get; set; }
-
-        public PrintWarning(string warning=null, bool useModel = false, string model = null) : base("print-warning", useModel, model)
+        public PrintWarning(string warning = null, bool useModel = false, string model = null) : base("print-warning",
+            useModel, model)
         {
             Warning = warning;
         }
+
+        public string Warning { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

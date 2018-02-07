@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class Pdisable: AbstractEvaluationRequest
+    public class Pdisable : AbstractEvaluationRequest
     {
-        public List<dynamic> Parameters { get; set; }
-
-        public Pdisable(List<dynamic> parameters, bool useModel = false, string model = null) : base("pdisable", useModel, model)
+        public Pdisable(List<dynamic> parameters, bool useModel = false, string model = null) : base("pdisable",
+            useModel, model)
         {
             Parameters = parameters;
         }
+
+        public List<dynamic> Parameters { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

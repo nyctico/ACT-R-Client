@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class BufferStatus: AbstractEvaluationRequest
+    public class BufferStatus : AbstractEvaluationRequest
     {
-        public List<dynamic> Parameters { get; set; }
-
-        public BufferStatus(List<dynamic> parameters, bool useModel = false, string model = null) : base("buffer-status", useModel, model)
+        public BufferStatus(List<dynamic> parameters, bool useModel = false, string model = null) : base(
+            "buffer-status", useModel, model)
         {
             Parameters = parameters;
         }
+
+        public List<dynamic> Parameters { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

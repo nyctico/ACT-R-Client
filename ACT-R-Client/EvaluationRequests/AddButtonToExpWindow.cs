@@ -5,9 +5,11 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class AddButtonToExpWindow : AbstractEvaluationRequest
     {
-        public AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null, int height = 50,
+        public AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null,
+            int height = 50,
             int width = 75,
-            string color = "gray", bool useModel = false, string model = null) : base("add-button-to-exp-window", useModel,
+            string color = "gray", bool useModel = false, string model = null) : base("add-button-to-exp-window",
+            useModel,
             model)
         {
             Window = window;

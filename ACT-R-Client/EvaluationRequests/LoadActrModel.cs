@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class LoadActrModel: AbstractEvaluationRequest
+    public class LoadActrModel : AbstractEvaluationRequest
     {
-        public string Path { get; set; }
-
-        public LoadActrModel(string path, bool useModel = false, string model = null) : base("load-act-r-model", useModel, model)
+        public LoadActrModel(string path, bool useModel = false, string model = null) : base("load-act-r-model",
+            useModel, model)
         {
             Path = path;
         }
+
+        public string Path { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

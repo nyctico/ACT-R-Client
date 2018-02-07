@@ -272,7 +272,7 @@ namespace Nyctico.Actr.Client
         {
             SendEvaluationRequest(new LoadActrModel(path, useModel, model));
         }
-        
+
         public void LoadActrCode(string path, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new LoadActrCode(path, useModel, model));
@@ -300,19 +300,22 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new AddTextToWindow(window, text, x, y, color, height, width, fontSize, useModel,
                 model));
         }
-        
-        public void AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null , int height = 50,
+
+        public void AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null,
+            int height = 50,
             int width = 75,
             string color = "gray", bool useModel = false, string model = null)
         {
-            SendEvaluationRequest(new AddButtonToExpWindow(window, text, x, y,action, height, width, color, useModel,
+            SendEvaluationRequest(new AddButtonToExpWindow(window, text, x, y, action, height, width, color, useModel,
                 model));
         }
-                
-        public void RemoveItemsFromExpWindow(Device window, List<dynamic> items, bool useModel = false, string model = null)
+
+        public void RemoveItemsFromExpWindow(Device window, List<dynamic> items, bool useModel = false,
+            string model = null)
         {
             SendEvaluationRequest(new RemoveItemsFromExpWindow(window, items, useModel, model));
         }
+
         public void ClearExpWindow(Device window, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ClearExpWindow(window, useModel, model));
@@ -341,7 +344,7 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new InstallDevice(device, useModel, model));
         }
 
-        public void Run(int time, bool realTime=false, bool useModel = false, string model = null)
+        public void Run(int time, bool realTime = false, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Run(time, realTime, useModel, model));
         }
@@ -351,13 +354,13 @@ namespace Nyctico.Actr.Client
         {
             SendEvaluationRequest(new NewToneSound(frequence, duration, onset, timeInMs, useModel, model));
         }
-        
+
         public void NewWordSound(string word, double? onset = null, string location = "external", bool timeInMs = false,
             bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new NewWordSound(word, onset, location, timeInMs, useModel, model));
         }
-        
+
         public void NewDigitSound(long digit, double? onset = null, bool timeInMs = false,
             bool useModel = false, string model = null)
         {
@@ -371,132 +374,134 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new ScheduleSimpleEventRelative(timeDelay, action, parameters, module, priority,
                 maintenance, useModel, model));
         }
-        
-        public void Reload(bool compile=false, bool useModel = false, string model = null)
+
+        public void Reload(bool compile = false, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Reload(compile));
         }
-        
-        public void RunFullTime(int time, bool realTime=false, bool useModel = false, string model = null)
+
+        public void RunFullTime(int time, bool realTime = false, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new RunFullTime(time, realTime, useModel, model));
         }
-        
-        public void RunUntilTime(int time, bool realTime=false, bool useModel = false, string model = null)
+
+        public void RunUntilTime(int time, bool realTime = false, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new RunUntilTime(time, realTime, useModel, model));
         }
-        
-        public void RunNEvents(long eventCount, bool realTime=false, bool useModel = false, string model = null)
+
+        public void RunNEvents(long eventCount, bool realTime = false, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new RunNEvents(eventCount, realTime, useModel, model));
         }
-        
-        public void RunUntilCondition(string condition, bool realTime=false, bool useModel = false, string model = null)
+
+        public void RunUntilCondition(string condition, bool realTime = false, bool useModel = false,
+            string model = null)
         {
             SendEvaluationRequest(new RunUntilCondition(condition, realTime, useModel, model));
         }
-        
+
         public void BufferChunk(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new BufferChunk(parameters, useModel, model));
         }
-        
+
         public List<dynamic> BufferStatus(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             return SendEvaluationRequest(new BufferStatus(parameters, useModel, model)).ReturnValue;
         }
-        
+
         public List<dynamic> BufferRead(string buffer, bool useModel = false, string model = null)
         {
             return SendEvaluationRequest(new BufferRead(buffer, useModel, model)).ReturnValue;
         }
-        
+
         public void ClearBuffer(string buffer, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ClearBuffer(buffer, useModel, model));
         }
-        
+
         public void Whynot(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Whynot(parameters, useModel, model));
         }
-        
+
         public void WhynotDm(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new WhynotDm(parameters, useModel, model));
         }
-        
+
         public void Penable(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Penable(parameters, useModel, model));
         }
-        
+
         public void Pdisable(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Pdisable(parameters, useModel, model));
         }
-        
-        public void GoalFocus(string goal=null, bool useModel = false, string model = null)
+
+        public void GoalFocus(string goal = null, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new GoalFocus(goal, useModel, model));
         }
-        
+
         public void PrintWarning(string warning, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintWarning(warning, useModel, model));
         }
-        
+
         public void ActrOutput(string output, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ActrOutput(output, useModel, model));
         }
-        
+
         public void PrintVisicon(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintVisicon(useModel, model));
         }
-        
-        public void GetTime(bool modelTime=true, bool useModel = false, string model = null)
+
+        public void GetTime(bool modelTime = true, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new GetTime(modelTime, useModel, model));
         }
-        
+
         public void DefineChunks(List<dynamic> chunks, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new DefineChunks(chunks, useModel, model));
         }
-        
+
         public void AddDm(List<dynamic> chunks, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new AddDm(chunks, useModel, model));
         }
-        
+
         public void PprintChunks(List<dynamic> chunks, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PprintChunks(chunks, useModel, model));
         }
-        
+
         public void ChunkSlotValue(string chunkName, string slotName, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ChunkSlotValue(chunkName, slotName, useModel, model));
         }
-        
-        public void SetChunkSlotValue(string chunkName, string slotName, string newValue, bool useModel = false, string model = null)
+
+        public void SetChunkSlotValue(string chunkName, string slotName, string newValue, bool useModel = false,
+            string model = null)
         {
-            SendEvaluationRequest(new SetChunkSlotValue(chunkName, slotName,newValue, useModel, model));
+            SendEvaluationRequest(new SetChunkSlotValue(chunkName, slotName, newValue, useModel, model));
         }
-        
+
         public void ModChunk(string chunkName, List<dynamic> mods, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ModChunk(chunkName, mods, useModel, model));
         }
-        
+
         public void ModFocus(List<dynamic> mods, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ModFocus(mods, useModel, model));
         }
-        
+
         public void ChunkP(string chunkName, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ChunkP(chunkName, useModel, model));
@@ -506,18 +511,19 @@ namespace Nyctico.Actr.Client
         {
             SendEvaluationRequest(new CopyChunk(chunkName, useModel, model));
         }
-        
-        public void ExtendPossibleSlots(string chunkName, bool warn=true, bool useModel = false, string model = null)
+
+        public void ExtendPossibleSlots(string chunkName, bool warn = true, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ExtendPossibleSlots(chunkName, warn, useModel, model));
         }
-        
+
         public void ModelOutput(string output, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ModelOutput(output, useModel, model));
         }
-        
-        public void SetBufferChunk(string bufferName, string chunkName, bool requested=true, bool useModel = false, string model = null)
+
+        public void SetBufferChunk(string bufferName, string chunkName, bool requested = true, bool useModel = false,
+            string model = null)
         {
             SendEvaluationRequest(new SetBufferChunk(bufferName, chunkName, requested, useModel, model));
         }

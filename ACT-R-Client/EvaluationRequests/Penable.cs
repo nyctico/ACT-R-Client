@@ -2,14 +2,15 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class Penable: AbstractEvaluationRequest
+    public class Penable : AbstractEvaluationRequest
     {
-        public List<dynamic> Parameters { get; set; }
-
-        public Penable(List<dynamic> parameters, bool useModel = false, string model = null) : base("penable", useModel, model)
+        public Penable(List<dynamic> parameters, bool useModel = false, string model = null) : base("penable", useModel,
+            model)
         {
             Parameters = parameters;
         }
+
+        public List<dynamic> Parameters { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
