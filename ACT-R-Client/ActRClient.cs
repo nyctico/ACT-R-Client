@@ -288,9 +288,9 @@ namespace Nyctico.Actr.Client
             bool useModel = false,
             string model = null)
         {
-            return new Device(
-                SendEvaluationRequest(new OpenExpWindow(title, isVisible, width, height, x, y, useModel, model))
-                    .ReturnValue.ToObject<List<dynamic>>());
+            List<dynamic> returnValue = SendEvaluationRequest(new OpenExpWindow(title, isVisible, width, height, x, y, useModel, model))
+                .ReturnValue.ToObject<List<dynamic>>();
+            return new Device(returnValue[0],returnValue[1],returnValue[2]);
         }
 
         public void AddTextToWindow(Device window, string text, int x, int y, string color = "black", int height = 50,
@@ -307,6 +307,19 @@ namespace Nyctico.Actr.Client
             string color = "gray", bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new AddButtonToExpWindow(window, text, x, y, action, height, width, color, useModel,
+                model));
+        }
+        
+        public Line AddLineToExpWindow(Device window, int[] start, int[] end, string color = null, bool useModel = false, string model = null)
+        {
+            var returnValue = SendEvaluationRequest(new AddLineToExpWindow(window, start, end, color, useModel,
+                model)).ReturnValue.ToObject<List<dynamic>>();
+            return new Line(returnValue[0],returnValue[1]);
+        }
+        
+        public void ModifyLineForExpWindow(Line line, int[] start, int[] end, string color = null, bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new ModifyLineForExpWindow(line, start, end, color, useModel,
                 model));
         }
 
@@ -526,6 +539,6 @@ namespace Nyctico.Actr.Client
             string model = null)
         {
             SendEvaluationRequest(new SetBufferChunk(bufferName, chunkName, requested, useModel, model));
-        }
+        }        
     }
 }

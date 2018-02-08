@@ -110,7 +110,7 @@ namespace Nyctico.Actr.Example.Tutorials
             actr.NewToneSound(freq, 0.5, onset);
             actr.ScheduleSimpleEventRelative(
                 900 + actr.ActrRandom(200), "clear-exp-window",
-                new List<dynamic> {window.Infomation[2]});
+                new List<dynamic> {window.Title});
 
             AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                 "sperling-response",
