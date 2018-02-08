@@ -389,6 +389,14 @@ namespace Nyctico.Actr.Client
                 maintenance, useModel, model));
         }
         
+        public void ScheduleSimpleEventNow(string action, List<dynamic> parameters = null,
+            string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
+            string model = null)
+        {
+            SendEvaluationRequest(new ScheduleSimpleEventNow(action, parameters, module, priority,
+                maintenance, useModel, model));
+        }
+        
         public void ScheduleSimpleEvent(long time, string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
             string model = null)
@@ -553,6 +561,36 @@ namespace Nyctico.Actr.Client
         public void StartHandAtMouse(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new StartHandAtMouse(useModel, model));
+        }
+        
+        public void MpShowQueue(bool indicateTraced, bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new MpShowQueue(indicateTraced, useModel, model));
+        }
+        
+        public void PrintDmFinsts(bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new PrintDmFinsts(useModel, model));
+        }
+        
+        public void Spp(List<dynamic> parameters, bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new Spp(parameters, useModel, model));
+        }
+        
+        public void MpModels(bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new MpModels(useModel, model));
+        }
+        
+        public void AllProductions(bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new AllProductions(useModel, model));
+        }
+        
+        public void Buffers(bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new Buffers(useModel, model));
         }
     }
 }
