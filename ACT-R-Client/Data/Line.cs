@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.Data
 {
-    public class Line
+    public class Line : IItem
     {
         public Line(string windowTitle, string id)
         {

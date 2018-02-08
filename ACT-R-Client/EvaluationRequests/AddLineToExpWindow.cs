@@ -5,7 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class AddLineToExpWindow : AbstractEvaluationRequest
     {
-        public AddLineToExpWindow(Device window, int[] start, int[] end, string color = null, bool useModel = false, string model = null) : base("add-line-to-exp-window", useModel,
+        public AddLineToExpWindow(Window window, int[] start, int[] end, string color = null, bool useModel = false, string model = null) : base("add-line-to-exp-window", useModel,
             model)
         {
             Window = window;
@@ -14,7 +14,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             Color = color;
         }
 
-        public Device Window { set; get; }
+        public Window Window { set; get; }
         public int[] Start { set; get; }
         public int[] End { set; get; }
         public string Color { set; get; }

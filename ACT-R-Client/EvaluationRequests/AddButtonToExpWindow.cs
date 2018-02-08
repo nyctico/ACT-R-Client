@@ -5,7 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class AddButtonToExpWindow : AbstractEvaluationRequest
     {
-        public AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null,
+        public AddButtonToExpWindow(Window window, string text, int x, int y, List<dynamic> action = null,
             int height = 50,
             int width = 75,
             string color = "gray", bool useModel = false, string model = null) : base("add-button-to-exp-window",
@@ -22,7 +22,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             Color = color;
         }
 
-        public Device Window { set; get; }
+        public Window Window { set; get; }
         public string Text { set; get; }
         public int X { set; get; }
         public int Y { set; get; }

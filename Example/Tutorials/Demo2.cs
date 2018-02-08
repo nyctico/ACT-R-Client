@@ -36,20 +36,6 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 actr.AddTextToWindow(window, targetItem, 125, 150);
                 
-                var line1 = actr.AddLineToExpWindow(window,new int[]{10,10},new int[]{
-                    20,20
-                });
-                
-                var line2 = actr.AddLineToExpWindow(window,new int[]{30,30},new int[]{
-                    40,40
-                }, "green");
-                
-                var line3 = actr.AddLineToExpWindow(window,new int[]{50,50},new int[]{
-                    60,60
-                }, "red");
-
-                actr.ModifyLineForExpWindow(line3,new int[]{50,50},new int[]{100,100},"blue");
-                
                 AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                     "unit2-key-press",
                     "output-key",

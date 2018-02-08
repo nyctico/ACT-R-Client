@@ -5,19 +5,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class InstallDevice : AbstractEvaluationRequest
     {
-        public InstallDevice(Device device, bool useModel = false, string model = null) : base("install-device",
+        public InstallDevice(Window window, bool useModel = false, string model = null) : base("install-device",
             useModel, model)
         {
-            Device = device;
+            Window = window;
         }
 
-        public Device Device { set; get; }
+        public Window Window { set; get; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Device.ToJsonList());
+            list.Add(Window.ToJsonList());
 
             return list;
         }

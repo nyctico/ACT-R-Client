@@ -2,9 +2,9 @@
 
 namespace Nyctico.Actr.Client.Data
 {
-    public class Device
+    public class Window : IItem
     {
-        public Device(string modul, string method, string title)
+        public Window(string modul, string method, string title)
         {
             Modul = modul;
             Method = method;

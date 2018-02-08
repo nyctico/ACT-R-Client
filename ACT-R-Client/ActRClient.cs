@@ -283,17 +283,17 @@ namespace Nyctico.Actr.Client
             return SendEvaluationRequest(new PermuteList(list, useModel, model)).ReturnValue.ToObject<List<dynamic>>();
         }
 
-        public Device OpenExpWindow(string title, bool isVisible, int width = 300, int height = 300, int x = 300,
+        public Window OpenExpWindow(string title, bool isVisible, int width = 300, int height = 300, int x = 300,
             int y = 300,
             bool useModel = false,
             string model = null)
         {
             List<dynamic> returnValue = SendEvaluationRequest(new OpenExpWindow(title, isVisible, width, height, x, y, useModel, model))
                 .ReturnValue.ToObject<List<dynamic>>();
-            return new Device(returnValue[0],returnValue[1],returnValue[2]);
+            return new Window(returnValue[0],returnValue[1],returnValue[2]);
         }
 
-        public void AddTextToWindow(Device window, string text, int x, int y, string color = "black", int height = 50,
+        public void AddTextToWindow(Window window, string text, int x, int y, string color = "black", int height = 50,
             int width = 75,
             int fontSize = 12, bool useModel = false, string model = null)
         {
@@ -301,7 +301,7 @@ namespace Nyctico.Actr.Client
                 model));
         }
 
-        public void AddButtonToExpWindow(Device window, string text, int x, int y, List<dynamic> action = null,
+        public void AddButtonToExpWindow(Window window, string text, int x, int y, List<dynamic> action = null,
             int height = 50,
             int width = 75,
             string color = "gray", bool useModel = false, string model = null)
@@ -310,7 +310,7 @@ namespace Nyctico.Actr.Client
                 model));
         }
         
-        public Line AddLineToExpWindow(Device window, int[] start, int[] end, string color = null, bool useModel = false, string model = null)
+        public Line AddLineToExpWindow(Window window, int[] start, int[] end, string color = null, bool useModel = false, string model = null)
         {
             var returnValue = SendEvaluationRequest(new AddLineToExpWindow(window, start, end, color, useModel,
                 model)).ReturnValue.ToObject<List<dynamic>>();
@@ -323,13 +323,14 @@ namespace Nyctico.Actr.Client
                 model));
         }
 
-        public void RemoveItemsFromExpWindow(Device window, List<dynamic> items, bool useModel = false,
+        public void RemoveItemFromExpWindow(Window window, IItem item, bool useModel = false,
             string model = null)
         {
-            SendEvaluationRequest(new RemoveItemsFromExpWindow(window, items, useModel, model));
+            var removeItemsFromExpWindow = new RemoveItemFromExpWindow(window, item, useModel, model);
+            SendEvaluationRequest(removeItemsFromExpWindow);
         }
 
-        public void ClearExpWindow(Device window, bool useModel = false, string model = null)
+        public void ClearExpWindow(Window window, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ClearExpWindow(window, useModel, model));
         }
@@ -352,9 +353,9 @@ namespace Nyctico.Actr.Client
             return SendEvaluationRequest(new ActrRandom(value, useModel, model)).ReturnValue;
         }
 
-        public void InstallDevice(Device device, bool useModel = false, string model = null)
+        public void InstallDevice(Window window, bool useModel = false, string model = null)
         {
-            SendEvaluationRequest(new InstallDevice(device, useModel, model));
+            SendEvaluationRequest(new InstallDevice(window, useModel, model));
         }
 
         public void Run(int time, bool realTime = false, bool useModel = false, string model = null)
@@ -385,6 +386,14 @@ namespace Nyctico.Actr.Client
             string model = null)
         {
             SendEvaluationRequest(new ScheduleSimpleEventRelative(timeDelay, action, parameters, module, priority,
+                maintenance, useModel, model));
+        }
+        
+        public void ScheduleSimpleEvent(long time, string action, List<dynamic> parameters = null,
+            string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
+            string model = null)
+        {
+            SendEvaluationRequest(new ScheduleSimpleEvent(time, action, parameters, module, priority,
                 maintenance, useModel, model));
         }
 
@@ -539,6 +548,11 @@ namespace Nyctico.Actr.Client
             string model = null)
         {
             SendEvaluationRequest(new SetBufferChunk(bufferName, chunkName, requested, useModel, model));
-        }        
+        }
+        
+        public void StartHandAtMouse(bool useModel = false, string model = null)
+        {
+            SendEvaluationRequest(new StartHandAtMouse(useModel, model));
+        }
     }
 }

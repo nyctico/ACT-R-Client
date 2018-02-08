@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActRClient.cs" />
+    <Compile Include="Data\IItem.cs" />
     <Compile Include="Data\Line.cs" />
     <Compile Include="EvaluationRequests\ActrOutput.cs" />
     <Compile Include="EvaluationRequests\ActrRandom.cs" />
@@ -79,19 +80,21 @@
     <Compile Include="EvaluationRequests\PrintVisicon.cs" />
     <Compile Include="EvaluationRequests\PrintWarning.cs" />
     <Compile Include="EvaluationRequests\Reload.cs" />
-    <Compile Include="EvaluationRequests\RemoveItemsFromExpWindow.cs" />
+    <Compile Include="EvaluationRequests\RemoveItemFromExpWindow.cs" />
     <Compile Include="EvaluationRequests\RunFullTime.cs" />
     <Compile Include="EvaluationRequests\RunNEvents.cs" />
     <Compile Include="EvaluationRequests\RunUntilCondition.cs" />
     <Compile Include="EvaluationRequests\RunUntilTime.cs" />
+    <Compile Include="EvaluationRequests\ScheduleSimpleEvent.cs" />
     <Compile Include="EvaluationRequests\ScheduleSimpleEventRelative.cs" />
     <Compile Include="EvaluationRequests\SetBufferChunk.cs" />
     <Compile Include="EvaluationRequests\SetChunkSlotValue.cs" />
+    <Compile Include="EvaluationRequests\StartHandAtMouse.cs" />
     <Compile Include="EvaluationRequests\Whynot.cs" />
     <Compile Include="EvaluationRequests\WhynotDm.cs" />
     <Compile Include="HookRequests\AbstractHookRequest.cs" />
     <Compile Include="HookRequests\LambdaHookRequest.cs" />
-    <Compile Include="Data\Device.cs" />
+    <Compile Include="Data\Window.cs" />
     <Compile Include="Data\Error.cs" />
     <Compile Include="Data\Hook.cs" />
     <Compile Include="Data\Result.cs" />

@@ -5,13 +5,13 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ClearExpWindow : AbstractEvaluationRequest
     {
-        public ClearExpWindow(Device window = null, bool useModel = false, string model = null) : base(
+        public ClearExpWindow(Window window = null, bool useModel = false, string model = null) : base(
             "clear-exp-window", useModel, model)
         {
             Window = window;
         }
 
-        public Device Window { set; get; }
+        public Window Window { set; get; }
 
         public override List<dynamic> ToParameterList()
         {
