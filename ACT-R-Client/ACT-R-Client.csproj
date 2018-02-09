@@ -143,7 +143,6 @@
     <Compile Include="EvaluationRequests\StopRecordingHistory.cs" />
     <Compile Include="EvaluationRequests\TriggerReward.cs" />
     <Compile Include="EvaluationRequests\UndefineModule.cs" />
-    <Compile Include="odule.cs" />
     <Compile Include="EvaluationRequests\UsedProductionBuffers.cs" />
     <Compile Include="EvaluationRequests\Whynot.cs" />
     <Compile Include="EvaluationRequests\WhynotDm.cs" />
