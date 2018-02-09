@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class LoadActrModel : AbstractEvaluationRequest
     {
-        public LoadActrModel(string path, bool useModel = false, string model = null) : base("load-act-r-model",
-            useModel, model)
+        public LoadActrModel(string path, string model = null) : base("load-act-r-model",
+            model)
         {
             Path = path;
         }

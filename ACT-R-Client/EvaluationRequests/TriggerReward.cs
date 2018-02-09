@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class TriggerReward : AbstractEvaluationRequest
     {
-        public TriggerReward(string reward, bool maintenance = false, bool useModel = false, string model = null) :
-            base("trigger-reward", useModel,
+        public TriggerReward(string reward, bool maintenance = false, string model = null) :
+            base("trigger-reward",
                 model)
         {
             Reward = reward;

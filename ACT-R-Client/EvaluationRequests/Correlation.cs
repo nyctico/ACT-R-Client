@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Correlation : AbstractEvaluationRequest
     {
-        public Correlation(List<dynamic> results, List<dynamic> data, bool output = true, bool useModel = false,
-            string model = null) : base("correlation", useModel, model)
+        public Correlation(List<dynamic> results, List<dynamic> data, bool output = true,
+            string model = null) : base("correlation", model)
         {
             Results = results;
             Data = data;

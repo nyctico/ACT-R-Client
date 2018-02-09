@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class CompleteAllModuleRequests : AbstractEvaluationRequest
     {
-        public CompleteAllModuleRequests(string moduleName, bool useModel = false,
-            string model = null) : base("complete-all-module-requests", useModel, model)
+        public CompleteAllModuleRequests(string moduleName,
+            string model = null) : base("complete-all-module-requests", model)
         {
             ModuleName = moduleName;
         }

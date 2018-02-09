@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ExtendPossibleSlots : AbstractEvaluationRequest
     {
-        public ExtendPossibleSlots(string chunkName, bool warn = true, bool useModel = false, string model = null) :
-            base("extend-possible-slots", useModel, model)
+        public ExtendPossibleSlots(string chunkName, bool warn = true, string model = null) :
+            base("extend-possible-slots", model)
         {
             ChunkName = chunkName;
             Warn = warn;

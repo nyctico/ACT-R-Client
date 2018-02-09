@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Penable : AbstractEvaluationRequest
     {
-        public Penable(List<dynamic> parameters, bool useModel = false, string model = null) : base("penable", useModel,
+        public Penable(List<dynamic> parameters, string model = null) : base("penable",
             model)
         {
             Parameters = parameters;

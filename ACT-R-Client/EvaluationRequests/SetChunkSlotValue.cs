@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SetChunkSlotValue : AbstractEvaluationRequest
     {
-        public SetChunkSlotValue(string chunkName, string slotName, string newValue, bool useModel = false,
-            string model = null) : base("set-chunk-slot-value", useModel, model)
+        public SetChunkSlotValue(string chunkName, string slotName, string newValue,
+            string model = null) : base("set-chunk-slot-value", model)
         {
             ChunkName = chunkName;
             SlotName = slotName;

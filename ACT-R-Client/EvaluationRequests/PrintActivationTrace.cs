@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintActivationTrace : AbstractEvaluationRequest
     {
-        public PrintActivationTrace(int time, bool ms = true, bool useModel = false, string model = null) : base(
-            "print-activation-trace", useModel,
+        public PrintActivationTrace(int time, bool ms = true, string model = null) : base(
+            "print-activation-trace",
             model)
         {
             Time = time;

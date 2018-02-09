@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class GoalFocus : AbstractEvaluationRequest
     {
-        public GoalFocus(string goal = null, bool useModel = false, string model = null) : base("goal-focus", useModel,
+        public GoalFocus(string goal = null, string model = null) : base("goal-focus",
             model)
         {
             Goal = goal;

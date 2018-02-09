@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ActrRandom : AbstractEvaluationRequest
     {
-        public ActrRandom(long value, bool useModel = false, string model = null) : base("act-r-random", useModel,
+        public ActrRandom(long value, string model = null) : base("act-r-random",
             model)
         {
             Value = value;

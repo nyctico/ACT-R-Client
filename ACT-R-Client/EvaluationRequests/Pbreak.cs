@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Pbreak : AbstractEvaluationRequest
     {
-        public Pbreak(bool useModel = false, string model = null) : base("pbreak", useModel, model)
+        public Pbreak(string model = null) : base("pbreak", model)
         {
         }
 

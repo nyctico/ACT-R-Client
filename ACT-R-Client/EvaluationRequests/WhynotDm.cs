@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class WhynotDm : AbstractEvaluationRequest
     {
-        public WhynotDm(List<dynamic> parameters, bool useModel = false, string model = null) : base("whynot-dm",
-            useModel, model)
+        public WhynotDm(List<dynamic> parameters, string model = null) : base("whynot-dm",
+            model)
         {
             Parameters = parameters;
         }

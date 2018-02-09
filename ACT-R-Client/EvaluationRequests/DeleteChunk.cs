@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DeleteChunk : AbstractEvaluationRequest
     {
-        public DeleteChunk(string name, bool useModel = false, string model = null) : base("delete-chunk", useModel,
+        public DeleteChunk(string name, string model = null) : base("delete-chunk",
             model)
         {
             Name = name;

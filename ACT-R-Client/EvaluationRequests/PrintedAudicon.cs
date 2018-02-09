@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintedAudicon : AbstractEvaluationRequest
     {
-        public PrintedAudicon(bool useModel = false, string model = null) : base("printed-audicon", useModel, model)
+        public PrintedAudicon(string model = null) : base("printed-audicon", model)
         {
         }
 

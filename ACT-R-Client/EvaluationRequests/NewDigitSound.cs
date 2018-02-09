@@ -5,7 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class NewDigitSound : AbstractEvaluationRequest
     {
         public NewDigitSound(long digit, double? onset = null, bool timeInMs = false,
-            bool useModel = false, string model = null) : base("new-digit-sound", useModel, model)
+            string model = null) : base("new-digit-sound", model)
         {
             Digit = digit;
             Onset = onset;

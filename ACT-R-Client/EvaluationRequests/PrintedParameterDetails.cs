@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintedParameterDetails : AbstractEvaluationRequest
     {
-        public PrintedParameterDetails(string parameter, bool useModel = false, string model = null) : base(
-            "printed-parameter-details", useModel,
+        public PrintedParameterDetails(string parameter, string model = null) : base(
+            "printed-parameter-details",
             model)
         {
             Parameter = parameter;

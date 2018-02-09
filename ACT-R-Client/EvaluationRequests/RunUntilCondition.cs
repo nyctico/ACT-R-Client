@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class RunUntilCondition : AbstractEvaluationRequest
     {
-        public RunUntilCondition(string condition, bool realTime = false, bool useModel = false, string model = null) :
-            base("run-until-condition", useModel, model)
+        public RunUntilCondition(string condition, bool realTime = false, string model = null) :
+            base("run-until-condition", model)
         {
             Condition = condition;
             RealTime = realTime;

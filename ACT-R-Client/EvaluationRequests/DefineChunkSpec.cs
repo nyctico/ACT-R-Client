@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineChunkSpec : AbstractEvaluationRequest
     {
-        public DefineChunkSpec(List<dynamic> spec, bool useModel = false, string model = null) : base(
-            "define-chunk-spec", useModel,
+        public DefineChunkSpec(List<dynamic> spec, string model = null) : base(
+            "define-chunk-spec",
             model)
         {
             Spec = spec;

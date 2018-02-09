@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class MeanDeviation : AbstractEvaluationRequest
     {
-        public MeanDeviation(List<dynamic> results, List<dynamic> data, bool output = true, bool useModel = false,
-            string model = null) : base("mean-deviation", useModel, model)
+        public MeanDeviation(List<dynamic> results, List<dynamic> data, bool output = true,
+            string model = null) : base("mean-deviation", model)
         {
             Results = results;
             Data = data;

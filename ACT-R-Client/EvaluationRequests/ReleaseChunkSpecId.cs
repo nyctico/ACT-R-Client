@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ReleaseChunkSpecId : AbstractEvaluationRequest
     {
-        public ReleaseChunkSpecId(string specId, bool useModel = false, string model = null) : base(
-            "release-chunk-spec-id", useModel,
+        public ReleaseChunkSpecId(string specId, string model = null) : base(
+            "release-chunk-spec-id",
             model)
         {
             SpecId = specId;

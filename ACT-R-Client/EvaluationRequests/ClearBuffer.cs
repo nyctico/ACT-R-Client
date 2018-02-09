@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ClearBuffer : AbstractEvaluationRequest
     {
-        public ClearBuffer(string buffer = null, bool useModel = false, string model = null) : base("clear-buffer",
-            useModel, model)
+        public ClearBuffer(string buffer = null, string model = null) : base("clear-buffer",
+            model)
         {
             Buffer = buffer;
         }

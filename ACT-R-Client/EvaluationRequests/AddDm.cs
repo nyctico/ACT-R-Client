@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class AddDm : AbstractEvaluationRequest
     {
-        public AddDm(List<dynamic> chunks, bool useModel = false, string model = null) : base("add-dm", useModel, model)
+        public AddDm(List<dynamic> chunks, string model = null) : base("add-dm", model)
         {
             Chunks = chunks;
         }

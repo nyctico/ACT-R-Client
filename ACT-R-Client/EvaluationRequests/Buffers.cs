@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Buffers : AbstractEvaluationRequest
     {
-        public Buffers(bool useModel = false, string model = null) : base("buffers", useModel, model)
+        public Buffers(string model = null) : base("buffers", model)
         {
         }
 

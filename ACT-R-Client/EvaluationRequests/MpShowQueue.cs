@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class MpShowQueue : AbstractEvaluationRequest
     {
-        public MpShowQueue(bool indicateTraced = false, bool useModel = false, string model = null) : base(
-            "mp-show-queue", useModel,
+        public MpShowQueue(bool indicateTraced = false, string model = null) : base(
+            "mp-show-queue",
             model)
         {
             IndicateTraced = indicateTraced;

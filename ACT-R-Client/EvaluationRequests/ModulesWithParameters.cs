@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModulesWithParameters : AbstractEvaluationRequest
     {
-        public ModulesWithParameters(bool useModel = false, string model = null) : base("modules-with-parameters",
-            useModel, model)
+        public ModulesWithParameters(string model = null) : base("modules-with-parameters",
+            model)
         {
         }
 

@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ActrOutput : AbstractEvaluationRequest
     {
-        public ActrOutput(string output = null, bool useModel = false, string model = null) : base("act-r-output",
-            useModel, model)
+        public ActrOutput(string output = null, string model = null) : base("act-r-output",
+            model)
         {
             Output = output;
         }

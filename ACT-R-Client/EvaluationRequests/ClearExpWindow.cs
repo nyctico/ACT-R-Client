@@ -5,8 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ClearExpWindow : AbstractEvaluationRequest
     {
-        public ClearExpWindow(Window window = null, bool useModel = false, string model = null) : base(
-            "clear-exp-window", useModel, model)
+        public ClearExpWindow(Window window = null, string model = null) : base(
+            "clear-exp-window", model)
         {
             Window = window;
         }

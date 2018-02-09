@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class RunNEvents : AbstractEvaluationRequest
     {
-        public RunNEvents(long eventCount, bool realTime = false, bool useModel = false, string model = null) : base(
-            "run-n-events", useModel, model)
+        public RunNEvents(long eventCount, bool realTime = false, string model = null) : base(
+            "run-n-events", model)
         {
             EventCount = eventCount;
             RealTime = realTime;

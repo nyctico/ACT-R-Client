@@ -5,8 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class ScheduleSimpleSetBufferChunk : AbstractEvaluationRequest
     {
         public ScheduleSimpleSetBufferChunk(string buffer, string chunk, int time,
-            string module = "NONE", int priority = 0, bool requested = true, bool useModel = false,
-            string model = null) : base("schedule-simple-set-buffer-chunk", useModel, model)
+            string module = "NONE", int priority = 0, bool requested = true,
+            string model = null) : base("schedule-simple-set-buffer-chunk", model)
         {
             Buffer = buffer;
             Chunk = chunk;

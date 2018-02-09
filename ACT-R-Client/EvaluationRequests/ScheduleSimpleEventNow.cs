@@ -5,8 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class ScheduleSimpleEventNow : AbstractEvaluationRequest
     {
         public ScheduleSimpleEventNow(string action, List<dynamic> parameters = null,
-            string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
-            string model = null) : base("schedule-simple-event-now", useModel, model)
+            string module = "NONE", int priority = 0, bool maintenance = false,
+            string model = null) : base("schedule-simple-event-now", model)
         {
             Action = action;
             Parameters = parameters;

@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PprintChunks : AbstractEvaluationRequest
     {
-        public PprintChunks(List<dynamic> chunks, bool useModel = false, string model = null) : base("pprint-chunks",
-            useModel, model)
+        public PprintChunks(List<dynamic> chunks, string model = null) : base("pprint-chunks",
+            model)
         {
             Chunks = chunks;
         }

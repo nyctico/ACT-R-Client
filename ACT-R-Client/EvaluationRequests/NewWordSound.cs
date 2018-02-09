@@ -5,7 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class NewWordSound : AbstractEvaluationRequest
     {
         public NewWordSound(string word, double? onset = null, string location = "external", bool timeInMs = false,
-            bool useModel = false, string model = null) : base("new-word-sound", useModel, model)
+            string model = null) : base("new-word-sound", model)
         {
             Word = word;
             Onset = onset;

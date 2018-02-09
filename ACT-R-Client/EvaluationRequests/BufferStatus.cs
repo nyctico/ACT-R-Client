@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class BufferStatus : AbstractEvaluationRequest
     {
-        public BufferStatus(List<dynamic> parameters, bool useModel = false, string model = null) : base(
-            "buffer-status", useModel, model)
+        public BufferStatus(List<dynamic> parameters, string model = null) : base(
+            "buffer-status", model)
         {
             Parameters = parameters;
         }

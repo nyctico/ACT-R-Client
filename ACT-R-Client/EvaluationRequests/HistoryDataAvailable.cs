@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class HistoryDataAvailable : AbstractEvaluationRequest
     {
-        public HistoryDataAvailable(string history, bool file, List<dynamic> parameters, bool useModel = false,
-            string model = null) : base("history-data-available", useModel,
+        public HistoryDataAvailable(string history, bool file, List<dynamic> parameters,
+            string model = null) : base("history-data-available",
             model)
         {
             History = history;

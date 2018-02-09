@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ChunkP : AbstractEvaluationRequest
     {
-        public ChunkP(string chunkName, bool useModel = false, string model = null) : base("chunk-p", useModel, model)
+        public ChunkP(string chunkName, string model = null) : base("chunk-p", model)
         {
             ChunkName = chunkName;
         }

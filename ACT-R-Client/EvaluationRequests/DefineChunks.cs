@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineChunks : AbstractEvaluationRequest
     {
-        public DefineChunks(List<dynamic> chunks, bool useModel = false, string model = null) : base("define-chunks",
-            useModel, model)
+        public DefineChunks(List<dynamic> chunks, string model = null) : base("define-chunks",
+            model)
         {
             Chunks = chunks;
         }

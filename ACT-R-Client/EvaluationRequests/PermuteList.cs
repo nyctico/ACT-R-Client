@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PermuteList : AbstractEvaluationRequest
     {
-        public PermuteList(List<dynamic> indexes, bool useModel = false, string model = null) : base("permute-list",
-            useModel, model)
+        public PermuteList(List<dynamic> indexes, string model = null) : base("permute-list",
+            model)
         {
             Indexes = indexes;
         }

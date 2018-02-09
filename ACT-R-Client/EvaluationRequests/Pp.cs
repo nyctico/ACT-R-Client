@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Pp : AbstractEvaluationRequest
     {
-        public Pp(List<dynamic> parameters, bool useModel = false, string model = null) : base("pp", useModel,
+        public Pp(List<dynamic> parameters, string model = null) : base("pp",
             model)
         {
             Parameters = parameters;

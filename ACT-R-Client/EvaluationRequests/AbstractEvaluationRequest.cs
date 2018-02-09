@@ -4,10 +4,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public abstract class AbstractEvaluationRequest
     {
-        public AbstractEvaluationRequest(string command, bool useModel = false, string model = null)
+        public AbstractEvaluationRequest(string command, string model = null)
         {
             Command = command;
-            UseModel = useModel;
             Model = model;
         }
 
@@ -19,7 +18,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         {
             var list = new List<dynamic> {Command};
 
-            if (!UseModel) list.Add(UseModel);
+            if (Model == null) list.Add(false);
             else list.Add(Model);
 
             return list;

@@ -5,7 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class NewToneSound : AbstractEvaluationRequest
     {
         public NewToneSound(int frequence, double duration, double? onset = null, bool timeInMs = false,
-            bool useModel = false, string model = null) : base("new-tone-sound", useModel, model)
+            string model = null) : base("new-tone-sound", model)
         {
             Frequence = frequence;
             Duration = duration;

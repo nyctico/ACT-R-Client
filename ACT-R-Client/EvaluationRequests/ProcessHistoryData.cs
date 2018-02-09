@@ -5,8 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class ProcessHistoryData : AbstractEvaluationRequest
     {
         public ProcessHistoryData(string processor, bool file, List<dynamic> dataParameters,
-            List<dynamic> processorParameters, bool useModel = false, string model = null) : base(
-            "process-history-data", useModel,
+            List<dynamic> processorParameters, string model = null) : base(
+            "process-history-data",
             model)
         {
             Processor = Processor;

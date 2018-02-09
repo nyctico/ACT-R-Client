@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintedVisicon : AbstractEvaluationRequest
     {
-        public PrintedVisicon(bool useModel = false, string model = null) : base("printed-visicon", useModel, model)
+        public PrintedVisicon(string model = null) : base("printed-visicon", model)
         {
         }
 

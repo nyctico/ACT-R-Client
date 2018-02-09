@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SavedActivationHistory : AbstractEvaluationRequest
     {
-        public SavedActivationHistory(bool useModel = false, string model = null) : base("saved-activation-history",
-            useModel, model)
+        public SavedActivationHistory(string model = null) : base("saved-activation-history",
+            model)
         {
         }
 

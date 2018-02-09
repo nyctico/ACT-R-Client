@@ -7,7 +7,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     {
         public AddTextToWindow(Window window, string text, int x, int y, string color = "black", int height = 50,
             int width = 75,
-            int fontSize = 12, bool useModel = false, string model = null) : base("add-text-to-exp-window", useModel,
+            int fontSize = 12, string model = null) : base("add-text-to-exp-window",
             model)
         {
             Window = window;

@@ -5,8 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class OpenExpWindow : AbstractEvaluationRequest
     {
         public OpenExpWindow(string title, bool visible, int width = 300, int height = 300, int x = 300, int y = 300,
-            bool useModel = false,
-            string model = null) : base("open-exp-window", useModel, model)
+            string model = null) : base("open-exp-window", model)
         {
             Title = title;
             Visible = visible;

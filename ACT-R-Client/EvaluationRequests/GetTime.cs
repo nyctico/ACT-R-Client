@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class GetTime : AbstractEvaluationRequest
     {
-        public GetTime(bool modelTime = true, bool useModel = false, string model = null) : base("get-time", useModel,
+        public GetTime(bool modelTime = true, string model = null) : base("get-time",
             model)
         {
             ModelTime = modelTime;

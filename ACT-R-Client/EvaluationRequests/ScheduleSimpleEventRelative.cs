@@ -5,8 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
     public class ScheduleSimpleEventRelative : AbstractEvaluationRequest
     {
         public ScheduleSimpleEventRelative(long timeDelay, string action, List<dynamic> parameters = null,
-            string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
-            string model = null) : base("schedule-simple-event-relative", useModel, model)
+            string module = "NONE", int priority = 0, bool maintenance = false,
+            string model = null) : base("schedule-simple-event-relative", model)
         {
             TimeDelay = timeDelay;
             Action = action;

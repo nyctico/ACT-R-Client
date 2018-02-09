@@ -5,8 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModifyLineForExpWindow : AbstractEvaluationRequest
     {
-        public ModifyLineForExpWindow(Line line, int[] start, int[] end, string color, bool useModel = false,
-            string model = null) : base("modify-line-for-exp-window", useModel, model)
+        public ModifyLineForExpWindow(Line line, int[] start, int[] end, string color,
+            string model = null) : base("modify-line-for-exp-window", model)
         {
             Line = line;
             Start = start;

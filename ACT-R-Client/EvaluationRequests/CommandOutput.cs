@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class CommandOutput : AbstractEvaluationRequest
     {
-        public CommandOutput(string command = null, bool useModel = false, string model = null) : base("command-output",
-            useModel, model)
+        public CommandOutput(string command = null, string model = null) : base("command-output",
+            model)
         {
             command = command;
         }

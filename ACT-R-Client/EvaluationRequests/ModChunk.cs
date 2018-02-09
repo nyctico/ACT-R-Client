@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModChunk : AbstractEvaluationRequest
     {
-        public ModChunk(string chunkName, List<dynamic> mods, bool useModel = false, string model = null) : base(
-            "mod-chunk", useModel, model)
+        public ModChunk(string chunkName, List<dynamic> mods, string model = null) : base(
+            "mod-chunk", model)
         {
             ChunkName = chunkName;
             Mods = mods;

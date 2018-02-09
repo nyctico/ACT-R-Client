@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SetBufferChunk : AbstractEvaluationRequest
     {
-        public SetBufferChunk(string bufferName, string chunkName, bool requested = true, bool useModel = false,
-            string model = null) : base("set-buffer-chunk", useModel, model)
+        public SetBufferChunk(string bufferName, string chunkName, bool requested = true,
+            string model = null) : base("set-buffer-chunk", model)
         {
             BufferName = bufferName;
             ChunkName = chunkName;

@@ -4,8 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class StopRecordingHistory : AbstractEvaluationRequest
     {
-        public StopRecordingHistory(List<dynamic> parameters, bool useModel = false, string model = null) : base(
-            "stop-recording-history", useModel,
+        public StopRecordingHistory(List<dynamic> parameters, string model = null) : base(
+            "stop-recording-history",
             model)
         {
             Parameters = parameters;
