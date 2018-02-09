@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class Punbreak: AbstractEvaluationRequest
+    public class Punbreak : AbstractEvaluationRequest
     {
         public Punbreak(bool useModel = false, string model = null) : base("punbreak", useModel, model)
         {

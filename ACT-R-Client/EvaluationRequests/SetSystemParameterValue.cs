@@ -2,10 +2,11 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class SetSystemParameterValue: AbstractEvaluationRequest
+    public class SetSystemParameterValue : AbstractEvaluationRequest
     {
-        public SetSystemParameterValue(string parameter,string value, bool useModel = false, string model = null) : base("set-system-parameter-value", useModel,
-            model)
+        public SetSystemParameterValue(string parameter, string value, bool useModel = false, string model = null) :
+            base("set-system-parameter-value", useModel,
+                model)
         {
             Parameter = parameter;
             Value = value;

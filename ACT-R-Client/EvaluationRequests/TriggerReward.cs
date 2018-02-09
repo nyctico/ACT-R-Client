@@ -2,10 +2,11 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class TriggerReward: AbstractEvaluationRequest
+    public class TriggerReward : AbstractEvaluationRequest
     {
-        public TriggerReward(string reward,bool maintenance = false, bool useModel = false, string model = null) : base("trigger-reward", useModel,
-            model)
+        public TriggerReward(string reward, bool maintenance = false, bool useModel = false, string model = null) :
+            base("trigger-reward", useModel,
+                model)
         {
             Reward = reward;
             Maintenance = maintenance;

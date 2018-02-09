@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class Dm: AbstractEvaluationRequest
+    public class Dm : AbstractEvaluationRequest
     {
         public Dm(List<dynamic> parameters, bool useModel = false, string model = null) : base("dm", useModel,
             model)

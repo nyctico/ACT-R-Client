@@ -12,10 +12,10 @@ namespace Nyctico.Actr.Client.Data
 
         public string WindowTitle { set; get; }
         public string ID { set; get; }
-        
+
         public List<dynamic> ToJsonList()
         {
-            List<dynamic> list = new List<dynamic>();
+            var list = new List<dynamic>();
 
             list.Add(WindowTitle);
             list.Add(ID);

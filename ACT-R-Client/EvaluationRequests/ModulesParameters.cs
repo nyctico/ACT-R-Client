@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class ModulesParameters: AbstractEvaluationRequest
+    public class ModulesParameters : AbstractEvaluationRequest
     {
-        public ModulesParameters(string module, bool useModel = false, string model = null) : base("modules-parameters", useModel,
+        public ModulesParameters(string module, bool useModel = false, string model = null) : base("modules-parameters",
+            useModel,
             model)
         {
             Module = module;

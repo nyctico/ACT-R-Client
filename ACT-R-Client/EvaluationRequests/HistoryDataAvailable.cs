@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class HistoryDataAvailable: AbstractEvaluationRequest
+    public class HistoryDataAvailable : AbstractEvaluationRequest
     {
-        public HistoryDataAvailable(string history, bool file, List<dynamic> parameters, bool useModel = false, string model = null) : base("history-data-available", useModel,
+        public HistoryDataAvailable(string history, bool file, List<dynamic> parameters, bool useModel = false,
+            string model = null) : base("history-data-available", useModel,
             model)
         {
             History = history;

@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class SimulateRetrievalRequest: AbstractEvaluationRequest
+    public class SimulateRetrievalRequest : AbstractEvaluationRequest
     {
-        public SimulateRetrievalRequest(List<dynamic> spec, bool useModel = false, string model = null) : base("simulate-retrieval-request", useModel,
+        public SimulateRetrievalRequest(List<dynamic> spec, bool useModel = false, string model = null) : base(
+            "simulate-retrieval-request", useModel,
             model)
         {
             Spec = spec;

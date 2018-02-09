@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
@@ -289,9 +288,10 @@ namespace Nyctico.Actr.Client
             bool useModel = false,
             string model = null)
         {
-            List<dynamic> returnValue = SendEvaluationRequest(new OpenExpWindow(title, isVisible, width, height, x, y, useModel, model))
-                .ReturnValue.ToObject<List<dynamic>>();
-            return new Window(returnValue[0],returnValue[1],returnValue[2]);
+            List<dynamic> returnValue =
+                SendEvaluationRequest(new OpenExpWindow(title, isVisible, width, height, x, y, useModel, model))
+                    .ReturnValue.ToObject<List<dynamic>>();
+            return new Window(returnValue[0], returnValue[1], returnValue[2]);
         }
 
         public void AddTextToWindow(Window window, string text, int x, int y, string color = "black", int height = 50,
@@ -310,15 +310,17 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new AddButtonToExpWindow(window, text, x, y, action, height, width, color, useModel,
                 model));
         }
-        
-        public Line AddLineToExpWindow(Window window, int[] start, int[] end, string color = null, bool useModel = false, string model = null)
+
+        public Line AddLineToExpWindow(Window window, int[] start, int[] end, string color = null,
+            bool useModel = false, string model = null)
         {
             var returnValue = SendEvaluationRequest(new AddLineToExpWindow(window, start, end, color, useModel,
                 model)).ReturnValue.ToObject<List<dynamic>>();
-            return new Line(returnValue[0],returnValue[1]);
+            return new Line(returnValue[0], returnValue[1]);
         }
-        
-        public void ModifyLineForExpWindow(Line line, int[] start, int[] end, string color = null, bool useModel = false, string model = null)
+
+        public void ModifyLineForExpWindow(Line line, int[] start, int[] end, string color = null,
+            bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ModifyLineForExpWindow(line, start, end, color, useModel,
                 model));
@@ -389,7 +391,7 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new ScheduleSimpleEventRelative(timeDelay, action, parameters, module, priority,
                 maintenance, useModel, model));
         }
-        
+
         public void ScheduleSimpleEventNow(string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
             string model = null)
@@ -397,7 +399,7 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new ScheduleSimpleEventNow(action, parameters, module, priority,
                 maintenance, useModel, model));
         }
-        
+
         public void ScheduleSimpleEvent(long time, string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false, bool useModel = false,
             string model = null)
@@ -558,187 +560,191 @@ namespace Nyctico.Actr.Client
         {
             SendEvaluationRequest(new SetBufferChunk(bufferName, chunkName, requested, useModel, model));
         }
-        
+
         public void StartHandAtMouse(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new StartHandAtMouse(useModel, model));
         }
-        
+
         public void MpShowQueue(bool indicateTraced, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new MpShowQueue(indicateTraced, useModel, model));
         }
-        
+
         public void PrintDmFinsts(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintDmFinsts(useModel, model));
         }
-        
+
         public void Spp(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Spp(parameters, useModel, model));
         }
-        
+
         public void MpModels(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new MpModels(useModel, model));
         }
-        
+
         public void AllProductions(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new AllProductions(useModel, model));
         }
-        
+
         public void Buffers(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Buffers(useModel, model));
         }
-        
+
         public void PrintedVisicon(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintedVisicon(useModel, model));
         }
-        
+
         public void PrintAudicon(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintAudicon(useModel, model));
         }
-        
+
         public void PrintedAudicon(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintedAudicon(useModel, model));
         }
-        
+
         public void PrintedParameterDetails(string parameter, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintedParameterDetails(parameter, useModel, model));
         }
-        
+
         public void SortedModuleNames(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new SortedModuleNames(useModel, model));
         }
-        
+
         public void ModulesParameters(string module, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ModulesParameters(module, useModel, model));
         }
-        
+
         public void ModulesWithParameters(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ModulesWithParameters(useModel, model));
         }
-        
+
         public void UsedProductionBuffers(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new UsedProductionBuffers(useModel, model));
         }
-        
+
         public void RecordHistory(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new RecordHistory(parameters, useModel, model));
         }
-        
+
         public void StopRecordingHistory(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new StopRecordingHistory(parameters, useModel, model));
         }
-        
+
         public void GetHistoryData(string history, List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new GetHistoryData(history, parameters, useModel, model));
         }
-        
-        public void ProcessHistoryData(string processor, bool file, List<dynamic> dataParameters, List<dynamic> processorParameters, bool useModel = false, string model = null)
+
+        public void ProcessHistoryData(string processor, bool file, List<dynamic> dataParameters,
+            List<dynamic> processorParameters, bool useModel = false, string model = null)
         {
-            SendEvaluationRequest(new ProcessHistoryData(processor,file, dataParameters,processorParameters, useModel, model));
+            SendEvaluationRequest(new ProcessHistoryData(processor, file, dataParameters, processorParameters, useModel,
+                model));
         }
-        
-        public void SaveHistoryData(string history, bool file, string comments, List<dynamic> parameters, bool useModel = false, string model = null)
+
+        public void SaveHistoryData(string history, bool file, string comments, List<dynamic> parameters,
+            bool useModel = false, string model = null)
         {
-            SendEvaluationRequest(new SaveHistoryData(history,file, comments,parameters, useModel, model));
+            SendEvaluationRequest(new SaveHistoryData(history, file, comments, parameters, useModel, model));
         }
-        
+
         public void Dm(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Dm(parameters, useModel, model));
         }
-        
+
         public void Sdm(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Sdm(parameters, useModel, model));
         }
-        
+
         public void GetParameterValue(string parameter, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new GetParameterValue(parameter, useModel, model));
         }
-        
-        public void SetParameterValue(string parameter,string value, bool useModel = false, string model = null)
+
+        public void SetParameterValue(string parameter, string value, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new SetParameterValue(parameter, value, useModel, model));
         }
-        
+
         public void GetSystemParameterValue(string parameter, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new GetSystemParameterValue(parameter, useModel, model));
         }
-        
-        public void SetSystemParameterValue(string parameter,string value, bool useModel = false, string model = null)
+
+        public void SetSystemParameterValue(string parameter, string value, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new SetSystemParameterValue(parameter, value, useModel, model));
         }
-        
+
         public void Sdp(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Sdp(parameters, useModel, model));
         }
-        
+
         public void SimulateRetrievalRequest(List<dynamic> spec, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new SimulateRetrievalRequest(spec, useModel, model));
         }
-        
+
         public void SavedActivationHistory(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new SavedActivationHistory(useModel, model));
         }
-        
+
         public void PrintActivationTrace(int time, bool ms = true, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintActivationTrace(time, ms, useModel, model));
         }
-        
-        public void PrintChunkActivationTrace(string chunkName, int time, bool ms=true, bool useModel = false, string model = null)
+
+        public void PrintChunkActivationTrace(string chunkName, int time, bool ms = true, bool useModel = false,
+            string model = null)
         {
             SendEvaluationRequest(new PrintChunkActivationTrace(chunkName, time, ms, useModel, model));
         }
-        
+
         public void Pp(List<dynamic> parameters, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Pp(parameters, useModel, model));
         }
-        
-        public void TriggerReward(string reward,bool maintenance = false, bool useModel = false, string model = null)
+
+        public void TriggerReward(string reward, bool maintenance = false, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new TriggerReward(reward, maintenance, useModel, model));
         }
-        
+
         public void DefineChunkSpec(List<dynamic> spec, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new DefineChunkSpec(spec, useModel, model));
         }
-        
+
         public void ChunkSpecToChunkDef(string specId, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ChunkSpecToChunkDef(specId, useModel, model));
         }
-        
+
         public void ReleaseChunkSpecId(string specId, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ReleaseChunkSpecId(specId, useModel, model));
         }
-        
+
         public void ScheduleSimpleEventAfterModule(string afterModule, string action, List<dynamic> parameters = null,
             string module = "NONE", bool maintenance = false, bool useModel = false,
             string model = null)
@@ -746,90 +752,91 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(new ScheduleSimpleEventAfterModule(afterModule, action, parameters, module,
                 maintenance, useModel, model));
         }
-        
+
         public void ScheduleSimpleSetBufferChunk(string buffer, string chunk, int time,
             string module = "NONE", int priority = 0, bool requested = false, bool useModel = false,
             string model = null)
         {
-            SendEvaluationRequest(new ScheduleSimpleSetBufferChunk(buffer,chunk,time, module, priority,
+            SendEvaluationRequest(new ScheduleSimpleSetBufferChunk(buffer, chunk, time, module, priority,
                 requested, useModel, model));
         }
-        
-        public void ScheduleSimpleModBufferChunk(string buffer,List<dynamic> modListOrSpec, int time,
+
+        public void ScheduleSimpleModBufferChunk(string buffer, List<dynamic> modListOrSpec, int time,
             string module = "NONE", int priority = 0, bool useModel = false,
             string model = null)
         {
-            SendEvaluationRequest(new ScheduleSimpleModBufferChunk(buffer,modListOrSpec,time, module, priority,
+            SendEvaluationRequest(new ScheduleSimpleModBufferChunk(buffer, modListOrSpec, time, module, priority,
                 useModel, model));
         }
-        
+
         public void UndefineModule(string name, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new UndefineModule(name, useModel, model));
         }
-        
+
         public void DeleteChunk(string name, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new DeleteChunk(name, useModel, model));
         }
-        
+
         public void PurgeChunk(string name, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PurgeChunk(name, useModel, model));
         }
-        
-        public void DefineModule(string name, List<dynamic> buffers,List<dynamic> parameters,string version, string doc, string inter, bool useModel = false, string model = null)
+
+        public void DefineModule(string name, List<dynamic> buffers, List<dynamic> parameters, string version,
+            string doc, string inter, bool useModel = false, string model = null)
         {
-            SendEvaluationRequest(new DefineModule(name, buffers, parameters,version,doc,inter));
+            SendEvaluationRequest(new DefineModule(name, buffers, parameters, version, doc, inter));
         }
-        
+
         public void CompleteRequest(string specId, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new CompleteRequest(specId, useModel, model));
         }
-        
+
         public void CompleteAllBufferRequests(string bufferName, bool useModel = false,
             string model = null)
         {
             SendEvaluationRequest(new CompleteAllBufferRequests(bufferName, useModel, model));
         }
-        
+
         public void CompleteAllModuleRequests(string moduleName, bool useModel = false,
             string model = null)
         {
             SendEvaluationRequest(new CompleteAllModuleRequests(moduleName, useModel, model));
         }
-        
+
         public void CommandOutput(string command, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new CommandOutput(command, useModel, model));
         }
-        
+
         public void ChunkCopiedFrom(string chunkName, bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new ChunkCopiedFrom(chunkName, useModel, model));
         }
-        
+
         public void MpTime(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new MpTime(useModel, model));
         }
-        
+
         public void MpTimeMs(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new MpTimeMs(useModel, model));
         }
-        
+
         public void PrintBoldResponseData(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new PrintBoldResponseData(useModel, model));
         }
-        
+
         public void Pbreak(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Pbreak(useModel, model));
         }
-        
+
         public void Punbreak(bool useModel = false, string model = null)
         {
             SendEvaluationRequest(new Punbreak(useModel, model));

@@ -2,10 +2,11 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class GetHistoryData: AbstractEvaluationRequest
+    public class GetHistoryData : AbstractEvaluationRequest
     {
-        public GetHistoryData(string history, List<dynamic> parameters, bool useModel = false, string model = null) : base("get-history-data", useModel,
-            model)
+        public GetHistoryData(string history, List<dynamic> parameters, bool useModel = false, string model = null) :
+            base("get-history-data", useModel,
+                model)
         {
             History = history;
             Parameters = parameters;

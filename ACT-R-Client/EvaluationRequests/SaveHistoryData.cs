@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class SaveHistoryData: AbstractEvaluationRequest
+    public class SaveHistoryData : AbstractEvaluationRequest
     {
-        public SaveHistoryData(string history, bool file, string comments, List<dynamic> parameters, bool useModel = false, string model = null) : base("save-history-datae", useModel,
+        public SaveHistoryData(string history, bool file, string comments, List<dynamic> parameters,
+            bool useModel = false, string model = null) : base("save-history-datae", useModel,
             model)
         {
             History = history;

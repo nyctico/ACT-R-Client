@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class DefineModule: AbstractEvaluationRequest
+    public class DefineModule : AbstractEvaluationRequest
     {
-        public DefineModule(string name, List<dynamic> buffers,List<dynamic> parameters,string version, string doc, string inter, bool useModel = false, string model = null) : base("define-module", useModel,
+        public DefineModule(string name, List<dynamic> buffers, List<dynamic> parameters, string version, string doc,
+            string inter, bool useModel = false, string model = null) : base("define-module", useModel,
             model)
         {
             Name = name;

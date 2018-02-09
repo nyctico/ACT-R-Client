@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class ChunkSpecToChunkDef: AbstractEvaluationRequest
+    public class ChunkSpecToChunkDef : AbstractEvaluationRequest
     {
-        public ChunkSpecToChunkDef(string specId, bool useModel = false, string model = null) : base("chunk-spec-to-chunk-def", useModel,
+        public ChunkSpecToChunkDef(string specId, bool useModel = false, string model = null) : base(
+            "chunk-spec-to-chunk-def", useModel,
             model)
         {
             SpecId = specId;

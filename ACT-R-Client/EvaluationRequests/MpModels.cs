@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class MpModels: AbstractEvaluationRequest
+    public class MpModels : AbstractEvaluationRequest
     {
         public MpModels(bool useModel = false, string model = null) : base("mp-models", useModel, model)
         {

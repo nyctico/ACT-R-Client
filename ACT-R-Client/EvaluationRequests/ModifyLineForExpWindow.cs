@@ -5,7 +5,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModifyLineForExpWindow : AbstractEvaluationRequest
     {
-        public ModifyLineForExpWindow(Line line, int[] start, int[] end, string color, bool useModel = false, string model = null) : base("modify-line-for-exp-window", useModel, model)
+        public ModifyLineForExpWindow(Line line, int[] start, int[] end, string color, bool useModel = false,
+            string model = null) : base("modify-line-for-exp-window", useModel, model)
         {
             Line = line;
             Start = start;
@@ -25,7 +26,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Line.ToJsonList());
             list.Add(Start);
             list.Add(End);
-            if(Color != null)list.Add(Color);
+            if (Color != null) list.Add(Color);
 
             return list;
         }

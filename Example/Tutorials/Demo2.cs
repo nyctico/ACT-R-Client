@@ -35,7 +35,7 @@ namespace Nyctico.Actr.Example.Tutorials
                 var window = actr.OpenExpWindow("Letter difference", true);
 
                 actr.AddTextToWindow(window, targetItem, 125, 150);
-                
+
                 AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                     "unit2-key-press",
                     "output-key",

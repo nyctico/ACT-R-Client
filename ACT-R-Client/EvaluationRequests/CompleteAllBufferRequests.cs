@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class CompleteAllBufferRequests: AbstractEvaluationRequest
+    public class CompleteAllBufferRequests : AbstractEvaluationRequest
     {
         public CompleteAllBufferRequests(string bufferName, bool useModel = false,
             string model = null) : base("complete-all-buffer-requests", useModel, model)

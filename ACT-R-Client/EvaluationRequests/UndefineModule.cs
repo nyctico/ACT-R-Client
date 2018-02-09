@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class UndefineModule: AbstractEvaluationRequest
+    public class UndefineModule : AbstractEvaluationRequest
     {
-        public UndefineModule(string name, bool useModel = false, string model = null) : base("undefine-module", useModel,
+        public UndefineModule(string name, bool useModel = false, string model = null) : base("undefine-module",
+            useModel,
             model)
         {
             Name = name;

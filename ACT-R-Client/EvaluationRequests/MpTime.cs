@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class MpTime: AbstractEvaluationRequest
+    public class MpTime : AbstractEvaluationRequest
     {
         public MpTime(bool useModel = false, string model = null) : base("mp-time", useModel, model)
         {

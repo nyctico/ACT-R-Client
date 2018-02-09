@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class AllProductions: AbstractEvaluationRequest
+    public class AllProductions : AbstractEvaluationRequest
     {
         public AllProductions(bool useModel = false, string model = null) : base("all-productions", useModel, model)
         {

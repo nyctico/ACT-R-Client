@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class UsedProductionBuffers: AbstractEvaluationRequest
+    public class UsedProductionBuffers : AbstractEvaluationRequest
     {
-        public UsedProductionBuffers(bool useModel = false, string model = null) : base("used-production-buffers", useModel, model)
+        public UsedProductionBuffers(bool useModel = false, string model = null) : base("used-production-buffers",
+            useModel, model)
         {
         }
 

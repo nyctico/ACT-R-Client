@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ScheduleSimpleModBufferChunk : AbstractEvaluationRequest
     {
-        public ScheduleSimpleModBufferChunk(string buffer,List<dynamic> modListOrSpec, int time,
+        public ScheduleSimpleModBufferChunk(string buffer, List<dynamic> modListOrSpec, int time,
             string module = "NONE", int priority = 0, bool useModel = false,
             string model = null) : base("schedule-simple-mod-buffer-chunk", useModel, model)
         {

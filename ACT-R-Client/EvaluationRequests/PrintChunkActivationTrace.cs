@@ -4,7 +4,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintChunkActivationTrace : AbstractEvaluationRequest
     {
-        public PrintChunkActivationTrace(string chunkName,int time, bool ms = true, bool useModel = false, string model = null) : base("print-chunk-activation-trace", useModel, model)
+        public PrintChunkActivationTrace(string chunkName, int time, bool ms = true, bool useModel = false,
+            string model = null) : base("print-chunk-activation-trace", useModel, model)
         {
             ChunkName = chunkName;
             Time = time;

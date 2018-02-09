@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class CompleteRequest: AbstractEvaluationRequest
+    public class CompleteRequest : AbstractEvaluationRequest
     {
-        public CompleteRequest(string specId, bool useModel = false, string model = null) : base("complete-request", useModel,
+        public CompleteRequest(string specId, bool useModel = false, string model = null) : base("complete-request",
+            useModel,
             model)
         {
             SpecId = specId;

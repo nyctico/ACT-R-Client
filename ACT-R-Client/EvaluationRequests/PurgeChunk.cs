@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class PurgeChunk: AbstractEvaluationRequest
+    public class PurgeChunk : AbstractEvaluationRequest
     {
         public PurgeChunk(string name, bool useModel = false, string model = null) : base("purge-chunk", useModel,
             model)

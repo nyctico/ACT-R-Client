@@ -2,9 +2,10 @@
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
-    public class GetParameterValue: AbstractEvaluationRequest
+    public class GetParameterValue : AbstractEvaluationRequest
     {
-        public GetParameterValue(string parameter, bool useModel = false, string model = null) : base("get-parameter-value", useModel,
+        public GetParameterValue(string parameter, bool useModel = false, string model = null) : base(
+            "get-parameter-value", useModel,
             model)
         {
             Parameter = parameter;
