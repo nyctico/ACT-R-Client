@@ -59,8 +59,10 @@ namespace Nyctico.Actr.Client
         public void Dispose()
         {
             _running = false;
-            _streamReader.Close();
-            _streamWriter.Close();
+            _queueTask.Dispose();
+            _evaluateTask.Dispose();
+            _streamReader.Dispose();
+            _streamWriter.Dispose();
             _socket.Close();
         }
 
