@@ -4,20 +4,20 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintedParameterDetails : AbstractEvaluationRequest
     {
-        public PrintedParameterDetails(string parameter, string model = null) : base(
+        public PrintedParameterDetails(string parameterName, string model = null) : base(
             "printed-parameter-details",
             model)
         {
-            Parameter = parameter;
+            ParameterName = parameterName;
         }
 
-        public string Parameter { get; set; }
+        public string ParameterName { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Parameter);
+            list.Add(ParameterName);
 
             return list;
         }

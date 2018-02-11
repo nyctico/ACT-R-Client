@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PprintChunks : AbstractEvaluationRequest
     {
-        public PprintChunks(List<dynamic> chunks, string model = null) : base("pprint-chunks",
+        public PprintChunks(List<string> chunkNames, string model = null) : base("pprint-chunks",
             model)
         {
-            Chunks = chunks;
+            ChunkNames = chunkNames;
         }
 
-        public List<dynamic> Chunks { get; set; }
+        public List<string> ChunkNames { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Chunks);
+            list.Add(ChunkNames);
 
             return list;
         }

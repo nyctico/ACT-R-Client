@@ -4,20 +4,20 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ChunkSpecToChunkDef : AbstractEvaluationRequest
     {
-        public ChunkSpecToChunkDef(string specId, string model = null) : base(
+        public ChunkSpecToChunkDef(string chunkSpecId, string model = null) : base(
             "chunk-spec-to-chunk-def",
             model)
         {
-            SpecId = specId;
+            ChunkSpecId = chunkSpecId;
         }
 
-        public string SpecId { get; set; }
+        public string ChunkSpecId { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(SpecId);
+            list.Add(ChunkSpecId);
 
             return list;
         }

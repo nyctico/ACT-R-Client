@@ -4,30 +4,27 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ProcessHistoryData : AbstractEvaluationRequest
     {
-        public ProcessHistoryData(string processor, bool file, List<dynamic> dataParameters,
-            List<dynamic> processorParameters, string model = null) : base(
+        public ProcessHistoryData(string processor, string fileName = null, List<dynamic> parameters = null,
+            string model = null) : base(
             "process-history-data",
             model)
         {
-            Processor = Processor;
-            File = file;
-            DataParameters = dataParameters;
-            ProcessorParameters = processorParameters;
+            Processor = processor;
+            FileName = fileName;
+            Parameters = parameters;
         }
 
         public string Processor { get; set; }
-        public bool File { get; set; }
-        public List<dynamic> DataParameters { get; set; }
-        public List<dynamic> ProcessorParameters { get; set; }
+        public string FileName { get; set; }
+        public List<dynamic> Parameters { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Processor);
-            list.Add(File);
-            list.Add(DataParameters);
-            list.Add(ProcessorParameters);
+            list.Add(FileName);
+            list.Add(Parameters);
 
             return list;
         }

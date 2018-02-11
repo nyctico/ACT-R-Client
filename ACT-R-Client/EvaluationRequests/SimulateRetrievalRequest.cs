@@ -4,20 +4,20 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SimulateRetrievalRequest : AbstractEvaluationRequest
     {
-        public SimulateRetrievalRequest(List<dynamic> spec, string model = null) : base(
+        public SimulateRetrievalRequest(List<dynamic> requestDetails, string model = null) : base(
             "simulate-retrieval-request",
             model)
         {
-            Spec = spec;
+            RequestDetails = requestDetails;
         }
 
-        public List<dynamic> Spec { get; set; }
+        public List<dynamic> RequestDetails { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Spec);
+            list.Add(RequestDetails);
 
             return list;
         }

@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.Data
 {
-    public class Window : IItem
+    public class Window : IDevice
     {
         public Window(string modul, string method, string title)
         {

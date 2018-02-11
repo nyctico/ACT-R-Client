@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class WhynotDm : AbstractEvaluationRequest
     {
-        public WhynotDm(List<dynamic> parameters, string model = null) : base("whynot-dm",
+        public WhynotDm(List<string> chunkNames, string model = null) : base("whynot-dm",
             model)
         {
-            Parameters = parameters;
+            ChunkNames = chunkNames;
         }
 
-        public List<dynamic> Parameters { get; set; }
+        public List<string> ChunkNames { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Parameters);
+            list.Add(ChunkNames);
 
             return list;
         }

@@ -7,18 +7,18 @@ namespace Nyctico.Actr.Client.Data
         public Line(string windowTitle, string id)
         {
             WindowTitle = windowTitle;
-            ID = id;
+            Id = id;
         }
 
         public string WindowTitle { set; get; }
-        public string ID { set; get; }
+        public string Id { set; get; }
 
         public List<dynamic> ToJsonList()
         {
             var list = new List<dynamic>();
 
             list.Add(WindowTitle);
-            list.Add(ID);
+            list.Add(Id);
 
             return list;
         }

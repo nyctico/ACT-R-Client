@@ -4,13 +4,13 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Pp : AbstractEvaluationRequest
     {
-        public Pp(List<dynamic> parameters, string model = null) : base("pp",
+        public Pp(List<string> parameters, string model = null) : base("pp",
             model)
         {
             Parameters = parameters;
         }
 
-        public List<dynamic> Parameters { get; set; }
+        public List<string> Parameters { get; set; }
 
         public override List<dynamic> ToParameterList()
         {

@@ -8,8 +8,7 @@ namespace Nyctico.Actr.Client.Data
         [JsonProperty(PropertyName = "method")]
         public string Method { set; get; }
 
-        [JsonProperty(PropertyName = "id")]
-        public int Id { set; get; }
+        [JsonProperty(PropertyName = "id")] public int Id { set; get; }
 
         [JsonProperty(PropertyName = "params")]
         public List<dynamic> Parameters { set; get; }

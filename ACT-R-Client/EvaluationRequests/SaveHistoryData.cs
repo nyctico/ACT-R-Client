@@ -4,28 +4,25 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SaveHistoryData : AbstractEvaluationRequest
     {
-        public SaveHistoryData(string history, bool file, string comments, List<dynamic> parameters,
-            string model = null) : base("save-history-datae",
+        public SaveHistoryData(string historyName, string fileName, List<dynamic> parameters,
+            string model = null) : base("save-history-data",
             model)
         {
-            History = history;
-            File = file;
-            Comments = comments;
+            HistoryName = historyName;
+            FileName = fileName;
             Parameters = parameters;
         }
 
-        public string History { get; set; }
-        public bool File { get; set; }
-        public string Comments { get; set; }
+        public string HistoryName { get; set; }
+        public string FileName { get; set; }
         public List<dynamic> Parameters { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(History);
-            list.Add(File);
-            list.Add(Comments);
+            list.Add(HistoryName);
+            list.Add(FileName);
             list.Add(Parameters);
 
             return list;

@@ -4,20 +4,20 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class GetParameterValue : AbstractEvaluationRequest
     {
-        public GetParameterValue(string parameter, string model = null) : base(
+        public GetParameterValue(string parameterName, string model = null) : base(
             "get-parameter-value",
             model)
         {
-            Parameter = parameter;
+            ParameterName = parameterName;
         }
 
-        public string Parameter { get; set; }
+        public string ParameterName { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Parameter);
+            list.Add(ParameterName);
 
             return list;
         }

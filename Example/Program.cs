@@ -63,7 +63,7 @@ namespace Nyctico.Actr.Example
                 case "2":
                     Console.WriteLine($"Starting Demo2 with model participant");
                     Console.WriteLine("------------------------------------------------");
-                    Demo2.Execute(false);
+                    Demo2.Execute();
                     Console.WriteLine("------------------------------------------------");
                     break;
 

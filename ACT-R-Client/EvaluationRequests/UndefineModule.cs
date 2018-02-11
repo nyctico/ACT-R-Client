@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class UndefineModule : AbstractEvaluationRequest
     {
-        public UndefineModule(string name, string model = null) : base("undefine-module",
+        public UndefineModule(string moduleName, string model = null) : base("undefine-module",
             model)
         {
-            Name = name;
+            ModuleName = moduleName;
         }
 
-        public string Name { get; set; }
+        public string ModuleName { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Name);
+            list.Add(ModuleName);
 
             return list;
         }

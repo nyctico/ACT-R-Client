@@ -4,20 +4,20 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class StopRecordingHistory : AbstractEvaluationRequest
     {
-        public StopRecordingHistory(List<dynamic> parameters, string model = null) : base(
+        public StopRecordingHistory(string historyName, string model = null) : base(
             "stop-recording-history",
             model)
         {
-            Parameters = parameters;
+            HistoryName = historyName;
         }
 
-        public List<dynamic> Parameters { get; set; }
+        public string HistoryName { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Parameters);
+            list.Add(HistoryName);
 
             return list;
         }

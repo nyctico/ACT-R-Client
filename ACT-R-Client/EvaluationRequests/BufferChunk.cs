@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class BufferChunk : AbstractEvaluationRequest
     {
-        public BufferChunk(List<dynamic> parameters, string model = null) : base("buffer-chunk",
+        public BufferChunk(List<string> bufferNames, string model = null) : base("buffer-chunk",
             model)
         {
-            Parameters = parameters;
+            BufferNames = bufferNames;
         }
 
-        public List<dynamic> Parameters { get; set; }
+        public List<string> BufferNames { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Parameters);
+            list.Add(BufferNames);
 
             return list;
         }

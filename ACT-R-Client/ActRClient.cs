@@ -14,7 +14,7 @@ using Nyctico.Actr.Client.MonitorRequests;
 namespace Nyctico.Actr.Client
 {
     /// <summary>
-    ///     Client for interaction with an ACT-R Dispatcher
+    ///     Client for interaction with an ACT-R Dispatcher.
     /// </summary>
     public class ActRClient : IDisposable
     {
@@ -37,6 +37,11 @@ namespace Nyctico.Actr.Client
         private StreamReader _streamReader;
         private StreamWriter _streamWriter;
 
+        /// <summary>
+        ///     Creates a new ACT-R Client
+        /// </summary>
+        /// <param name="host">Host of the ACT-R Environment</param>
+        /// <param name="port">Port of the ACT-R Environment</param>
         public ActRClient(string host, int port)
         {
             _host = host;
@@ -48,6 +53,9 @@ namespace Nyctico.Actr.Client
             StartEvaluatingThread();
         }
 
+        /// <summary>
+        ///     Disconnect client
+        /// </summary>
         public void Dispose()
         {
             _running = false;
@@ -56,6 +64,10 @@ namespace Nyctico.Actr.Client
             _socket.Close();
         }
 
+        /// <summary>
+        ///     Adds a hook to the dispachter (aka add-command)
+        /// </summary>
+        /// <param name="hookRequest">Hook request</param>
         public void AddDispatcherHook(AbstractHookRequest hookRequest)
         {
             var result = SendMessage("check", hookRequest.PublishedNameAsList);
@@ -64,6 +76,10 @@ namespace Nyctico.Actr.Client
             _abstractCommands.TryAdd(hookRequest.PrivateName, hookRequest);
         }
 
+        /// <summary>
+        ///     Removes a hook from the dispatcher (aka remove-command)
+        /// </summary>
+        /// <param name="hookRequest">Hook request</param>
         public void RemoveDispatcherHook(AbstractHookRequest hookRequest)
         {
             var result = SendMessage("check", hookRequest.PublishedNameAsList);
@@ -72,6 +88,11 @@ namespace Nyctico.Actr.Client
             _abstractCommands.TryRemove(hookRequest.PrivateName, out hookRequest);
         }
 
+        /// <summary>
+        ///     Removes a hook from the dispatcher (aka remove-command)
+        /// </summary>
+        /// <param name="privateName">Private name of the hook</param>
+        /// <exception cref="KeyNotFoundException">Thrown when the private name is not found</exception>
         public void RemoveDispatcherHook(string privateName)
         {
             AbstractHookRequest abstractHookRequest;
@@ -80,12 +101,20 @@ namespace Nyctico.Actr.Client
             RemoveDispatcherHook(abstractHookRequest);
         }
 
+        /// <summary>
+        ///     Adds a monitor to the dispatcher (aka monitor)
+        /// </summary>
+        /// <param name="monitorRequest">Monitor request</param>
         public void AddDispatcherMonitor(MonitorRequest monitorRequest)
         {
             SendMessage("monitor", monitorRequest.ToParameterList());
             _monitors.TryAdd(monitorRequest.CommandToMonitor + monitorRequest.CommandToCall, monitorRequest);
         }
 
+        /// <summary>
+        ///     Removes monitor from dispatcher (aka remove-monitor)
+        /// </summary>
+        /// <param name="monitorRequest">Monitor request</param>
         public void RemoveDispatcherMonitor(MonitorRequest monitorRequest)
         {
             SendMessage("remove-monitor", monitorRequest.ToParameterList());
@@ -93,6 +122,11 @@ namespace Nyctico.Actr.Client
                 out monitorRequest);
         }
 
+        /// <summary>
+        ///     Removes monitor from dispatcher (aka remove-monitor)
+        /// </summary>
+        /// <param name="commanToMonitorCommandToCall">Concated string of the commandToMonitor and CommandToCall monitor parameters</param>
+        /// <exception cref="KeyNotFoundException">Thrown when the monitor is not found</exception>
         public void RemoveDispatcherMonitor(string commanToMonitorCommandToCall)
         {
             MonitorRequest monitorRequest;
@@ -101,6 +135,10 @@ namespace Nyctico.Actr.Client
             RemoveDispatcherMonitor(monitorRequest);
         }
 
+        /// <summary>
+        ///     Add hooks and monitor to all traces.
+        /// </summary>
+        /// <param name="traceAction">Function to handle the trace output</param>
         public void StartTraceMonitoring(Action<List<dynamic>> traceAction)
         {
             var commandName = ToString() + "_TraceMonitor";
@@ -121,12 +159,19 @@ namespace Nyctico.Actr.Client
             AddDispatcherMonitor(generalDispatcherMonitor);
         }
 
+        /// <summary>
+        ///     Add hooks and monitor to all traces with a default Console.Write method to print the trace
+        /// </summary>
         public void StartTraceMonitoring()
         {
             StartTraceMonitoring(list => Console.WriteLine(
                 $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
         }
 
+        /// <summary>
+        ///     Remove Monitors and hooks from the Dispatcher, which are use to monitor the ACT-R traces
+        ///     <see cref="StartTraceMonitoring()" />
+        /// </summary>
         public void StopTraceMonitoring()
         {
             var commandName = ToString() + "_TraceMonitor";
@@ -145,11 +190,21 @@ namespace Nyctico.Actr.Client
             SendMessage("evaluate", new List<dynamic> {"reset"});
         }
 
+        /// <summary>
+        ///     Sends an evaluation request to the Dispatcher
+        /// </summary>
+        /// <param name="request">Request</param>
+        /// <returns>Result of the evaluated request</returns>
         public Result SendEvaluationRequest(AbstractEvaluationRequest request)
         {
             return SendMessage("evaluate", request.ToParameterList());
         }
 
+        /// <summary>
+        ///     Wait until a repsond from the dispatcher is received.
+        /// </summary>
+        /// <param name="id">JSON-RPC message id</param>
+        /// <returns>Received respond</returns>
         private Result WaitForResult(int id)
         {
             while (true)
@@ -159,6 +214,9 @@ namespace Nyctico.Actr.Client
             }
         }
 
+        /// <summary>
+        ///     Establish the TCP connection to the dispatcher
+        /// </summary>
         private void StartTcpConnection()
         {
             _socket = new TcpClient();
@@ -167,6 +225,9 @@ namespace Nyctico.Actr.Client
             _streamWriter = new StreamWriter(_socket.GetStream());
         }
 
+        /// <summary>
+        ///     Starts a new thrad for filling the queues with received messages
+        /// </summary>
         private void StartReceivingThread()
         {
             _queueTask = new Task(() =>
@@ -199,6 +260,9 @@ namespace Nyctico.Actr.Client
             _queueTask.Start();
         }
 
+        /// <summary>
+        ///     Starts a new thread for evaluating command form the dispatcher
+        /// </summary>
         private void StartEvaluatingThread()
         {
             _evaluateTask = new Task(() =>
@@ -221,6 +285,10 @@ namespace Nyctico.Actr.Client
             _evaluateTask.Start();
         }
 
+        /// <summary>
+        ///     Evaluates a command from the dispatcher
+        /// </summary>
+        /// <param name="msg"></param>
         private void Evaluate(Hook msg)
         {
             try
@@ -235,6 +303,13 @@ namespace Nyctico.Actr.Client
         }
 
 
+        /// <summary>
+        ///     Sends a message to the dispatcher
+        /// </summary>
+        /// <param name="method">Method of the message</param>
+        /// <param name="parameters">Parameter of the message</param>
+        /// <returns>Received response of the dispathcer</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the dispacther has encounterd an error</exception>
         private Result SendMessage(string method, List<dynamic> parameters)
         {
             var commandMessage = new Hook
@@ -250,6 +325,10 @@ namespace Nyctico.Actr.Client
             return result;
         }
 
+        /// <summary>
+        ///     Sends an successful response to the dispatcher
+        /// </summary>
+        /// <param name="id">Id of the origin message</param>
         private void SendSuccessResult(int id)
         {
             var result = new Result
@@ -262,6 +341,11 @@ namespace Nyctico.Actr.Client
             _streamWriter.Flush();
         }
 
+        /// <summary>
+        ///     Sends an eroor response to the dispatcher
+        /// </summary>
+        /// <param name="id">Id of the origin message</param>
+        /// <param name="error">Error message</param>
         private void SendErrorResult(int id, string error)
         {
             var result = new Result
@@ -307,12 +391,11 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="title">Window title</param>
         /// <param name="isVisible">Indicates, if the window should be visible</param>
-        /// <param name="width">Window withd</param>
-        /// <param name="height">Window height</param>
-        /// <param name="x">Window X-Coordinate</param>
-        /// <param name="y">Window Y-Coordinate</param>
-        /// <param name="useModel">Indicates if a special model should be used</param>
-        /// <param name="model"></param>
+        /// <param name="width">Window withd. Default: 300</param>
+        /// <param name="height">Window height. Default: 300</param>
+        /// <param name="x">Window X-Coordinate. Default: 300</param>
+        /// <param name="y">Window Y-Coordinate. Default: 300</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns></returns>
         public Window OpenExpWindow(string title, bool isVisible, int width = 300, int height = 300, int x = 300,
             int y = 300,
@@ -324,6 +407,18 @@ namespace Nyctico.Actr.Client
             return new Window(returnValue[0], returnValue[1], returnValue[2]);
         }
 
+        /// <summary>
+        ///     Create a text item for the provided experiment window with the features specified and place it in the window.
+        /// </summary>
+        /// <param name="window">Representation of the window</param>
+        /// <param name="text">Text to place in the window</param>
+        /// <param name="x">Text X-Coordinate</param>
+        /// <param name="y">Text Y-Coordinate</param>
+        /// <param name="color">Text color. Default: "black"</param>
+        /// <param name="height">Text height. Default: 50</param>
+        /// <param name="width">Text width. Default: 75</param>
+        /// <param name="fontSize">Text size. Default: 12</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void AddTextToWindow(Window window, string text, int x, int y, string color = "black", int height = 50,
             int width = 75,
             int fontSize = 12, string model = null)
@@ -332,6 +427,18 @@ namespace Nyctico.Actr.Client
                 model));
         }
 
+        /// <summary>
+        ///     Create a button item for the provided experiment window with the features specified and place it in the window.
+        /// </summary>
+        /// <param name="window">Representation of the window</param>
+        /// <param name="text">Text of the button</param>
+        /// <param name="x">Button X-Coordinate</param>
+        /// <param name="y">Button Y-Coordinate</param>
+        /// <param name="action">Command, which should be executed if button is hit. Default: null</param>
+        /// <param name="height">Button height. Default: 50</param>
+        /// <param name="width">Button width. Default: 75</param>
+        /// <param name="color">Button color. Default: "grey"</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void AddButtonToExpWindow(Window window, string text, int x, int y, List<dynamic> action = null,
             int height = 50,
             int width = 75,
@@ -341,6 +448,15 @@ namespace Nyctico.Actr.Client
                 model));
         }
 
+        /// <summary>
+        ///     Create a line for the provided experiment window with the features specified and then place it in that window.
+        /// </summary>
+        /// <param name="window">Representation of the window</param>
+        /// <param name="start">X- and Y-Coordinates of the startpoint</param>
+        /// <param name="end">X- and Y-Coordinates of the endpoint</param>
+        /// <param name="color">Line color. Default: null</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns></returns>
         public Line AddLineToExpWindow(Window window, int[] start, int[] end, string color = null,
             string model = null)
         {
@@ -349,6 +465,14 @@ namespace Nyctico.Actr.Client
             return new Line(returnValue[0], returnValue[1]);
         }
 
+        /// <summary>
+        ///     Change the attributes of a line that was created for an experiment window.
+        /// </summary>
+        /// <param name="line">Representation of the line, which should be modified</param>
+        /// <param name="start">X- and Y-Coordinates of the new startpoint</param>
+        /// <param name="end">X- and Y-Coordinates of the new endpoint</param>
+        /// <param name="color">New Line color. Default: null</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ModifyLineForExpWindow(Line line, int[] start, int[] end, string color = null,
             string model = null)
         {
@@ -356,6 +480,12 @@ namespace Nyctico.Actr.Client
                 model));
         }
 
+        /// <summary>
+        ///     Remove the given items from the window provided.
+        /// </summary>
+        /// <param name="window">Representation of the window</param>
+        /// <param name="item">Item to remove from window</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void RemoveItemFromExpWindow(Window window, IItem item,
             string model = null)
         {
@@ -363,56 +493,127 @@ namespace Nyctico.Actr.Client
             SendEvaluationRequest(removeItemsFromExpWindow);
         }
 
+        /// <summary>
+        ///     Remove all items from the window provided.
+        /// </summary>
+        /// <param name="window">Representation of the window</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ClearExpWindow(Window window, string model = null)
         {
             SendEvaluationRequest(new ClearExpWindow(window, model));
         }
 
+        /// <summary>
+        ///     Compute the correlation between two lists of numbers.
+        /// </summary>
+        /// <param name="results">First list of data (normally the result of the simulation)</param>
+        /// <param name="data">Second list of data (normally the data of a realy world experiment)</param>
+        /// <param name="output">Indicates if the computed value should be written to the output stream. Default: true</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns></returns>
         public double Correlation(List<dynamic> results, List<dynamic> data, bool output = true,
             string model = null)
         {
             return SendEvaluationRequest(new Correlation(results, data, output, model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Compute the RMSD between two lists of numbers.
+        /// </summary>
+        /// <param name="results">First list of data (normally the result of the simulation)</param>
+        /// <param name="data">Second list of data (normally the data of a realy world experiment)</param>
+        /// <param name="output">Indicates if the computed value should be written to the output stream. Default: true</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns></returns>
         public double MeanDeviation(List<dynamic> results, List<dynamic> data, bool output = true,
             string model = null)
         {
             return SendEvaluationRequest(new MeanDeviation(results, data, output, model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Return a random number up to limit using the current model's random stream.
+        /// </summary>
+        /// <param name="value">Upper Limit</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns></returns>
         public long ActrRandom(long value, string model = null)
         {
             return SendEvaluationRequest(new ActrRandom(value, model)).ReturnValue;
         }
 
-        public void InstallDevice(Window window, string model = null)
+        /// <summary>
+        ///     Command to install a device for an interface.
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void InstallDevice(IDevice device, string model = null)
         {
-            SendEvaluationRequest(new InstallDevice(window, model));
+            SendEvaluationRequest(new InstallDevice(device, model));
         }
 
+        /// <summary>
+        ///     Run the ACT-R scheduler for up to a specified amount of time.
+        /// </summary>
+        /// <param name="time">Time for the ACT-R scheduler to run</param>
+        /// <param name="realTime">Indicates if the ACT-R scheduler should be running in real time. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void Run(int time, bool realTime = false, string model = null)
         {
             SendEvaluationRequest(new Run(time, realTime, model));
         }
 
+        /// <summary>
+        ///     Create a new pure tone sound event for the audio module.
+        /// </summary>
+        /// <param name="frequence">Frequence of the tone</param>
+        /// <param name="duration">Duration of the tone</param>
+        /// <param name="onset">Time after the tone sould be created. Default: null</param>
+        /// <param name="timeInMs">Indicates of times are given in milliseconds. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void NewToneSound(int frequence, double duration, double? onset = null, bool timeInMs = false,
             string model = null)
         {
             SendEvaluationRequest(new NewToneSound(frequence, duration, onset, timeInMs, model));
         }
 
+        /// <summary>
+        ///     Create a new word sound event for the audio module.
+        /// </summary>
+        /// <param name="word">Word sound which should be created</param>
+        /// <param name="onset">Time after the tone sould be created. Default: null</param>
+        /// <param name="location">Default: "external"</param>
+        /// <param name="timeInMs">Indicates of times are given in milliseconds. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void NewWordSound(string word, double? onset = null, string location = "external", bool timeInMs = false,
             string model = null)
         {
             SendEvaluationRequest(new NewWordSound(word, onset, location, timeInMs, model));
         }
 
+        /// <summary>
+        ///     Create a new digit sound event for the audio module.
+        /// </summary>
+        /// <param name="digit">Digit sound which should be created</param>
+        /// <param name="onset">Time after the tone sould be created. Default: null</param>
+        /// <param name="timeInMs">Indicates of times are given in milliseconds. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void NewDigitSound(long digit, double? onset = null, bool timeInMs = false,
             string model = null)
         {
             SendEvaluationRequest(new NewDigitSound(digit, onset, timeInMs, model));
         }
 
+        /// <summary>
+        ///     Create an event to occur after the specified time in milliseconds have passed.
+        /// </summary>
+        /// <param name="timeDelay">Time in milliseconds after that the event should be created</param>
+        /// <param name="action">Name of the action that should be exectuted when the event is created</param>
+        /// <param name="parameters">List of parameters for the action</param>
+        /// <param name="module">Default: "NONE"</param>
+        /// <param name="priority">Priority of the scheduled event</param>
+        /// <param name="maintenance">Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ScheduleSimpleEventRelative(long timeDelay, string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null)
@@ -421,6 +622,15 @@ namespace Nyctico.Actr.Client
                 maintenance, model));
         }
 
+        /// <summary>
+        ///     Create an event to occur at the current time.
+        /// </summary>
+        /// <param name="action">Name of the action that should be exectuted when the event is created</param>
+        /// <param name="parameters">List of parameters for the action</param>
+        /// <param name="module">Default: "NONE"</param>
+        /// <param name="priority">Priority of the scheduled event</param>
+        /// <param name="maintenance">Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ScheduleSimpleEventNow(string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null)
@@ -429,6 +639,16 @@ namespace Nyctico.Actr.Client
                 maintenance, model));
         }
 
+        /// <summary>
+        ///     Create an event to occur at the specified time in milliseconds.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="action">Name of the action that should be exectuted when the event is created</param>
+        /// <param name="parameters">List of parameters for the action</param>
+        /// <param name="module">Default: "NONE"</param>
+        /// <param name="priority">Priority of the scheduled event</param>
+        /// <param name="maintenance">Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ScheduleSimpleEvent(long time, string action, List<dynamic> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null)
@@ -437,343 +657,714 @@ namespace Nyctico.Actr.Client
                 maintenance, model));
         }
 
-        public void Reload(bool compile = false, string model = null)
+        /// <summary>
+        ///     Reload the last ACT-R model file which was loaded
+        /// </summary>
+        /// <param name="compile">Default: false</param>
+        public void Reload(bool compile = false)
         {
             SendEvaluationRequest(new Reload(compile));
         }
 
+        /// <summary>
+        ///     Run the ACT-R scheduler for up to a specified amount of time.
+        /// </summary>
+        /// <param name="time">Time for the ACT-R scheduler to run</param>
+        /// <param name="realTime">Indicates if the ACT-R scheduler should be running in real time. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void RunFullTime(int time, bool realTime = false, string model = null)
         {
             SendEvaluationRequest(new RunFullTime(time, realTime, model));
         }
 
+        /// <summary>
+        ///     Run the ACT-R scheduler up to the indicated time.
+        /// </summary>
+        /// <param name="time">Time for the ACT-R scheduler to stop at</param>
+        /// <param name="realTime">Indicates if the ACT-R scheduler should be running in real time. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void RunUntilTime(int time, bool realTime = false, string model = null)
         {
             SendEvaluationRequest(new RunUntilTime(time, realTime, model));
         }
 
+        /// <summary>
+        ///     Run the indicated number of events from the ACT-R scheduler.
+        /// </summary>
+        /// <param name="eventCount">Numberr of events, that the ACT-R scheduler should be running</param>
+        /// <param name="realTime">Indicates if the ACT-R scheduler should be running in real time. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void RunNEvents(long eventCount, bool realTime = false, string model = null)
         {
             SendEvaluationRequest(new RunNEvents(eventCount, realTime, model));
         }
 
+        /// <summary>
+        ///     Run the ACT-R scheduler until the provided function returns a non-nil value.
+        /// </summary>
+        /// <param name="condition">Function, which is evaluated after each event</param>
+        /// <param name="realTime">Indicates if the ACT-R scheduler should be running in real time. Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void RunUntilCondition(string condition, bool realTime = false,
             string model = null)
         {
             SendEvaluationRequest(new RunUntilCondition(condition, realTime, model));
         }
 
-        public void BufferChunk(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Print the contents of specified buffers.
+        /// </summary>
+        /// <param name="bufferNames">Buffer names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void BufferChunk(List<string> bufferNames, string model = null)
         {
-            SendEvaluationRequest(new BufferChunk(parameters, model));
+            SendEvaluationRequest(new BufferChunk(bufferNames, model));
         }
 
-        public List<dynamic> BufferStatus(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Print the status information for a buffer and its module.
+        /// </summary>
+        /// <param name="bufferNames">Buffer names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>List of status infomartion of each specified buffer</returns>
+        public List<dynamic> BufferStatus(List<string> bufferNames, string model = null)
         {
-            return SendEvaluationRequest(new BufferStatus(parameters, model)).ReturnValue;
+            return SendEvaluationRequest(new BufferStatus(bufferNames, model)).ReturnValue;
         }
 
-        public List<dynamic> BufferRead(string buffer, string model = null)
+        /// <summary>
+        ///     Return the name of the chunk in a buffer.
+        /// </summary>
+        /// <param name="bufferName">Buffer name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Chunk name of the chunk in the specified buffer</returns>
+        public string BufferRead(string bufferName, string model = null)
         {
-            return SendEvaluationRequest(new BufferRead(buffer, model)).ReturnValue;
+            return SendEvaluationRequest(new BufferRead(bufferName, model)).ReturnValue;
         }
 
-        public void ClearBuffer(string buffer, string model = null)
+        /// <summary>
+        ///     Clear the chunk from a buffer.
+        /// </summary>
+        /// <param name="bufferName">Buffer name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void ClearBuffer(string bufferName, string model = null)
         {
-            SendEvaluationRequest(new ClearBuffer(buffer, model));
+            SendEvaluationRequest(new ClearBuffer(bufferName, model));
         }
 
-        public void Whynot(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Print the production matching details for specified productions.
+        /// </summary>
+        /// <param name="productionNames">Productions names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Whynot(List<string> productionNames, string model = null)
         {
-            SendEvaluationRequest(new Whynot(parameters, model));
+            SendEvaluationRequest(new Whynot(productionNames, model));
         }
 
-        public void WhynotDm(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Print the declarative memory matching information based on the last retrieval request.
+        /// </summary>
+        /// <param name="chunkNames">Chunk names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void WhynotDm(List<string> chunkNames, string model = null)
         {
-            SendEvaluationRequest(new WhynotDm(parameters, model));
+            SendEvaluationRequest(new WhynotDm(chunkNames, model));
         }
 
-        public void Penable(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Restore the specified productions which were disabled.
+        /// </summary>
+        /// <param name="productionNames">Productions names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Penable(List<string> productionNames, string model = null)
         {
-            SendEvaluationRequest(new Penable(parameters, model));
+            SendEvaluationRequest(new Penable(productionNames, model));
         }
 
-        public void Pdisable(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Prevent the specified productions from being selected.
+        /// </summary>
+        /// <param name="productionNames">Productions names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Pdisable(List<string> productionNames, string model = null)
         {
-            SendEvaluationRequest(new Pdisable(parameters, model));
+            SendEvaluationRequest(new Pdisable(productionNames, model));
         }
 
-        public void GoalFocus(string goal = null, string model = null)
+        /// <summary>
+        ///     Schedule a chunk to enter the goal buffer at the current time or print the current goal buffer chunk.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void GoalFocus(string chunkName, string model = null)
         {
-            SendEvaluationRequest(new GoalFocus(goal, model));
+            SendEvaluationRequest(new GoalFocus(chunkName, model));
         }
 
+        /// <summary>
+        ///     Send a string to the ACT-R warning-trace.
+        /// </summary>
+        /// <param name="warning">Warning to print</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintWarning(string warning, string model = null)
         {
             SendEvaluationRequest(new PrintWarning(warning, model));
         }
 
+        /// <summary>
+        ///     Send a string to the ACT-R general-trace.
+        /// </summary>
+        /// <param name="output">Output to print</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ActrOutput(string output, string model = null)
         {
             SendEvaluationRequest(new ActrOutput(output, model));
         }
 
+        /// <summary>
+        ///     Print all the attributes of the features in the model's visicon.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintVisicon(string model = null)
         {
             SendEvaluationRequest(new PrintVisicon(model));
         }
 
-        public void GetTime(bool modelTime = true, string model = null)
+        /// <summary>
+        ///     Get current absolute model time or relative real time in milliseconds.
+        /// </summary>
+        /// <param name="modelTime">Indicates if model time should be returned. Default: true</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Time in milliseconds</returns>
+        public long GetTime(bool modelTime = true, string model = null)
         {
-            SendEvaluationRequest(new GetTime(modelTime, model));
+            return SendEvaluationRequest(new GetTime(modelTime, model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Create chunks in the current model.
+        /// </summary>
+        /// <param name="chunks">Chunk descriptions</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void DefineChunks(List<dynamic> chunks, string model = null)
         {
             SendEvaluationRequest(new DefineChunks(chunks, model));
         }
 
+        /// <summary>
+        ///     Create chunks in the current model and add them to the model's declarative memory.
+        /// </summary>
+        /// <param name="chunks">Chunk descriptions</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void AddDm(List<dynamic> chunks, string model = null)
         {
             SendEvaluationRequest(new AddDm(chunks, model));
         }
 
-        public void PprintChunks(List<dynamic> chunks, string model = null)
+        /// <summary>
+        ///     Print the indicated chunks.
+        /// </summary>
+        /// <param name="chunkNames">Chunk names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void PprintChunks(List<string> chunkNames, string model = null)
         {
-            SendEvaluationRequest(new PprintChunks(chunks, model));
+            SendEvaluationRequest(new PprintChunks(chunkNames, model));
         }
 
-        public void ChunkSlotValue(string chunkName, string slotName, string model = null)
+        /// <summary>
+        ///     Return the value of a slot in a chunk.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="slotName">Slot name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public dynamic ChunkSlotValue(string chunkName, string slotName, string model = null)
         {
-            SendEvaluationRequest(new ChunkSlotValue(chunkName, slotName, model));
+            return SendEvaluationRequest(new ChunkSlotValue(chunkName, slotName, model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Change the value of a slot in a chunk.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="slotName">Slot name</param>
+        /// <param name="newValue">New slot value</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void SetChunkSlotValue(string chunkName, string slotName, string newValue,
             string model = null)
         {
             SendEvaluationRequest(new SetChunkSlotValue(chunkName, slotName, newValue, model));
         }
 
+        /// <summary>
+        ///     Modify the contents of the specified chunk with the list of slots and values provided.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="mods">Modificatcations as Sloat/Value pairs {slot-name new-slot-value}</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ModChunk(string chunkName, List<dynamic> mods, string model = null)
         {
             SendEvaluationRequest(new ModChunk(chunkName, mods, model));
         }
 
+        /// <summary>
+        ///     Modify the chunk in the goal buffer using the slots and values provided.
+        /// </summary>
+        /// <param name="mods">Modificatcations as Sloat/Value pairs {slot-name new-slot-value}</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ModFocus(List<dynamic> mods, string model = null)
         {
             SendEvaluationRequest(new ModFocus(mods, model));
         }
 
+        /// <summary>
+        ///     Returns whether the given name is the name of a chunk in the model
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ChunkP(string chunkName, string model = null)
         {
             SendEvaluationRequest(new ChunkP(chunkName, model));
         }
 
+        /// <summary>
+        ///     Returns the name of a chunk which is a copy of the chunk name provided.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void CopyChunk(string chunkName, string model = null)
         {
             SendEvaluationRequest(new CopyChunk(chunkName, model));
         }
 
+        /// <summary>
+        ///     Add a new slot name which can be used for any chunk, and if warn is true (the default) then print a warning if the
+        ///     slot specified already exists.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="warn">Indicates if a warning should be printed if the slots already exsits</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ExtendPossibleSlots(string chunkName, bool warn = true, string model = null)
         {
             SendEvaluationRequest(new ExtendPossibleSlots(chunkName, warn, model));
         }
 
+        /// <summary>
+        ///     Send a string to the ACT-R model-trace.
+        /// </summary>
+        /// <param name="output">String to send to model-trace</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ModelOutput(string output, string model = null)
         {
             SendEvaluationRequest(new ModelOutput(output, model));
         }
 
+        /// <summary>
+        ///     Copy a chunk directly into a buffer.
+        /// </summary>
+        /// <param name="bufferName">Buffer name</param>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="requested"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void SetBufferChunk(string bufferName, string chunkName, bool requested = true,
             string model = null)
         {
             SendEvaluationRequest(new SetBufferChunk(bufferName, chunkName, requested, model));
         }
 
+        /// <summary>
+        ///     Have the model place its right hand on the mouse before running.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void StartHandAtMouse(string model = null)
         {
             SendEvaluationRequest(new StartHandAtMouse(model));
         }
 
+        /// <summary>
+        ///     Print out a description of the events currently scheduled to occur optionally indicating which will show in the
+        ///     trace.
+        /// </summary>
+        /// <param name="indicateTraced"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void MpShowQueue(bool indicateTraced, string model = null)
         {
             SendEvaluationRequest(new MpShowQueue(indicateTraced, model));
         }
 
+        /// <summary>
+        ///     Print a table showing any finsts marking recently retrieved chunks in declarative memory.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintDmFinsts(string model = null)
         {
             SendEvaluationRequest(new PrintDmFinsts(model));
         }
 
-        public void Spp(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Set or get production parameters.
+        /// </summary>
+        /// <param name="parameters">See ACT-R manual</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>See ACT-R manual</returns>
+        public dynamic Spp(List<dynamic> parameters, string model = null)
         {
-            SendEvaluationRequest(new Spp(parameters, model));
+            return SendEvaluationRequest(new Spp(parameters, model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Return a list of all existing model names.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void MpModels(string model = null)
         {
             SendEvaluationRequest(new MpModels(model));
         }
 
+        /// <summary>
+        ///     "Returns a list of all the production names in the current model.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void AllProductions(string model = null)
         {
             SendEvaluationRequest(new AllProductions(model));
         }
 
+        /// <summary>
+        ///     Return a list with all the currently defined buffers' names.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void Buffers(string model = null)
         {
             SendEvaluationRequest(new Buffers(model));
         }
 
-        public void PrintedVisicon(string model = null)
+        /// <summary>
+        ///     Return a string with the printed output of all of the attributes of the features in the model's visicon.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Visicon features</returns>
+        public string PrintedVisicon(string model = null)
         {
-            SendEvaluationRequest(new PrintedVisicon(model));
+            return SendEvaluationRequest(new PrintedVisicon(model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Print all the attributes of the features in the model's audicon to command output.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintAudicon(string model = null)
         {
             SendEvaluationRequest(new PrintAudicon(model));
         }
 
-        public void PrintedAudicon(string model = null)
+        /// <summary>
+        ///     Return the string containing all the printed attributes of the features in the model's audicon.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Audicon features</returns>
+        public string PrintedAudicon(string model = null)
         {
-            SendEvaluationRequest(new PrintedAudicon(model));
+            return SendEvaluationRequest(new PrintedAudicon(model)).ReturnValue;
         }
 
-        public void PrintedParameterDetails(string parameter, string model = null)
+        /// <summary>
+        ///     Returns a string of the parameter output for the given parameter's value and details.
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Parameter output</returns>
+        public string PrintedParameterDetails(string parameterName, string model = null)
         {
-            SendEvaluationRequest(new PrintedParameterDetails(parameter, model));
+            return SendEvaluationRequest(new PrintedParameterDetails(parameterName, model)).ReturnValue;
         }
 
-        public void SortedModuleNames(string model = null)
+        /// <summary>
+        ///     Returns a list of the names of all current modules sorted alphabetically.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>List of module names</returns>
+        public List<string> SortedModuleNames(string model = null)
         {
-            SendEvaluationRequest(new SortedModuleNames(model));
+            return SendEvaluationRequest(new SortedModuleNames(model)).ReturnValue;
         }
 
-        public void ModulesParameters(string module, string model = null)
+        /// <summary>
+        ///     Returns a list of the names of all the parameters for the named module sorted alphabetically.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>List of module parameters</returns>
+        public List<string> ModulesParameters(string moduleName, string model = null)
         {
-            SendEvaluationRequest(new ModulesParameters(module, model));
+            return SendEvaluationRequest(new ModulesParameters(moduleName, model)).ReturnValue;
         }
 
-        public void ModulesWithParameters(string model = null)
+        /// <summary>
+        ///     Returns a list of the names of all current modules which provided parameters sorted alphabetically.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>List of modules</returns>
+        public List<dynamic> ModulesWithParameters(string model = null)
         {
-            SendEvaluationRequest(new ModulesWithParameters(model));
+            return SendEvaluationRequest(new ModulesWithParameters(model)).ReturnValue;
         }
 
-        public void UsedProductionBuffers(string model = null)
+        /// <summary>
+        ///     Returns a list of all the buffers which are used in the productions of the current model.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>List of buffer names</returns>
+        public List<string> UsedProductionBuffers(string model = null)
         {
-            SendEvaluationRequest(new UsedProductionBuffers(model));
+            return SendEvaluationRequest(new UsedProductionBuffers(model)).ReturnValue;
         }
 
-        public void RecordHistory(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Start recording the named history information if not already being recorded.
+        /// </summary>
+        /// <param name="historyName">History name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void RecordHistory(string historyName, string model = null)
         {
-            SendEvaluationRequest(new RecordHistory(parameters, model));
+            SendEvaluationRequest(new RecordHistory(historyName, model));
         }
 
-        public void StopRecordingHistory(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Stop recording the named history information if all requested starts have stopped.
+        /// </summary>
+        /// <param name="historyName">History name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void StopRecordingHistory(string historyName, string model = null)
         {
-            SendEvaluationRequest(new StopRecordingHistory(parameters, model));
+            SendEvaluationRequest(new StopRecordingHistory(historyName, model));
         }
 
-        public void GetHistoryData(string history, List<dynamic> parameters, string model = null)
-        {
-            SendEvaluationRequest(new GetHistoryData(history, parameters, model));
-        }
-
-        public void ProcessHistoryData(string processor, bool file, List<dynamic> dataParameters,
-            List<dynamic> processorParameters, string model = null)
-        {
-            SendEvaluationRequest(new ProcessHistoryData(processor, file, dataParameters, processorParameters,
-                model));
-        }
-
-        public void SaveHistoryData(string history, bool file, string comments, List<dynamic> parameters,
+        /// <summary>
+        ///     Return the indicated history stream data from the specfied file or current data using indicated parameters if no
+        ///     file given.
+        /// </summary>
+        /// <param name="historyName">History name</param>
+        /// <param name="fileName">File name or null. Default: null</param>
+        /// <param name="parameters">Additional parameters. Default: null</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>History data</returns>
+        public string GetHistoryData(string historyName, string fileName = null, List<dynamic> parameters = null,
             string model = null)
         {
-            SendEvaluationRequest(new SaveHistoryData(history, file, comments, parameters, model));
+            return SendEvaluationRequest(new GetHistoryData(historyName, fileName, parameters, model)).ReturnValue;
         }
 
-        public void Dm(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Return the result of applying the named processor to the history data from the specfied file or current data using
+        ///     indicated parameters if no file given.
+        /// </summary>
+        /// <param name="processorName">Processor name</param>
+        /// <param name="fileName">File name or null. Default: null</param>
+        /// <param name="parameters">Additional parameters. Default: null</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Result of applyng the processor</returns>
+        public string ProcessHistoryData(string processorName, string fileName = null, List<dynamic> parameters = null,
+            string model = null)
         {
-            SendEvaluationRequest(new Dm(parameters, model));
+            return SendEvaluationRequest(new ProcessHistoryData(processorName, fileName, parameters,
+                model)).ReturnValue;
         }
 
-        public void Sdm(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Save the current history data from the indicated history stream and parameters to the specifed file.
+        /// </summary>
+        /// <param name="historyName">History name</param>
+        /// <param name="fileName">File name or null. Default: null</param>
+        /// <param name="parameters">Additional parameters. Default: null</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void SaveHistoryData(string historyName, string fileName, List<dynamic> parameters,
+            string model = null)
         {
-            SendEvaluationRequest(new Sdm(parameters, model));
+            SendEvaluationRequest(new SaveHistoryData(historyName, fileName, parameters, model));
         }
 
-        public void GetParameterValue(string parameter, string model = null)
+        /// <summary>
+        ///     Print the representation of the chunks from declarative memory with the given names.
+        /// </summary>
+        /// <param name="chunkNames">Chunk names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Dm(List<string> chunkNames, string model = null)
         {
-            SendEvaluationRequest(new GetParameterValue(parameter, model));
+            SendEvaluationRequest(new Dm(chunkNames, model));
         }
 
-        public void SetParameterValue(string parameter, string value, string model = null)
+        /// <summary>
+        ///     Print the chunks from declarative memory which match with the given specification.
+        /// </summary>
+        /// <param name="specifications">{({modifier} &lt;slot-name&gt; &lt;slot-value&gt;),...}</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Sdm(List<dynamic> specifications, string model = null)
         {
-            SendEvaluationRequest(new SetParameterValue(parameter, value, model));
+            SendEvaluationRequest(new Sdm(specifications, model));
         }
 
-        public void GetSystemParameterValue(string parameter, string model = null)
+        /// <summary>
+        ///     Return the current value of a parameter in the current model.
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Current value of the given parameter</returns>
+        public dynamic GetParameterValue(string parameterName, string model = null)
         {
-            SendEvaluationRequest(new GetSystemParameterValue(parameter, model));
+            return SendEvaluationRequest(new GetParameterValue(parameterName, model)).ReturnValue;
         }
 
-        public void SetSystemParameterValue(string parameter, string value, string model = null)
+        /// <summary>
+        ///     Sets the current value of a parameter in the current model.
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="newValue">New value for the given parameter</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void SetParameterValue(string parameterName, dynamic newValue, string model = null)
         {
-            SendEvaluationRequest(new SetSystemParameterValue(parameter, value, model));
+            SendEvaluationRequest(new SetParameterValue(parameterName, newValue, model));
         }
 
-        public void Sdp(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Return the current value of a system parameter. Params: system-parameter-name
+        /// </summary>
+        /// <param name="systemParameterName">System parameter name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Current value of the given system parameter</returns>
+        public dynamic GetSystemParameterValue(string systemParameterName, string model = null)
         {
-            SendEvaluationRequest(new Sdp(parameters, model));
+            return SendEvaluationRequest(new GetSystemParameterValue(systemParameterName, model)).ReturnValue;
         }
 
-        public void SimulateRetrievalRequest(List<dynamic> spec, string model = null)
+        /// <summary>
+        ///     Sets the current value of a system parameter.
+        /// </summary>
+        /// <param name="systemParameterName">System parameter name</param>
+        /// <param name="newValue">New value for the given system parameter</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void SetSystemParameterValue(string systemParameterName, dynamic newValue, string model = null)
         {
-            SendEvaluationRequest(new SimulateRetrievalRequest(spec, model));
+            SendEvaluationRequest(new SetSystemParameterValue(systemParameterName, newValue, model));
         }
 
-        public void SavedActivationHistory(string model = null)
+        /// <summary>
+        ///     Set or get declarative parameters
+        /// </summary>
+        /// <param name="parameters">See ACT-R manual</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>See ACT-R manual</returns>
+        public dynamic Sdp(List<dynamic> parameters, string model = null)
         {
-            SendEvaluationRequest(new SavedActivationHistory(model));
+            return SendEvaluationRequest(new Sdp(parameters, model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Given the specification of a retrieval request, output the activation trace of what would happen if that request
+        ///     were made now.
+        /// </summary>
+        /// <param name="requestDetails"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void SimulateRetrievalRequest(List<dynamic> requestDetails, string model = null)
+        {
+            SendEvaluationRequest(new SimulateRetrievalRequest(requestDetails, model));
+        }
+
+        /// <summary>
+        ///     Returns a list of the lists of times and chunks for which activation data has been recorded.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>List of lists of times and chunks</returns>
+        public List<dynamic> SavedActivationHistory(string model = null)
+        {
+            return SendEvaluationRequest(new SavedActivationHistory(model)).ReturnValue;
+        }
+
+        /// <summary>
+        ///     Prints out the activation trace from the saved data at the specified time.
+        /// </summary>
+        /// <param name="time">Time</param>
+        /// <param name="ms">Indicates if time is in milliseconds. Default: true</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintActivationTrace(int time, bool ms = true, string model = null)
         {
             SendEvaluationRequest(new PrintActivationTrace(time, ms, model));
         }
 
+        /// <summary>
+        ///     Prints out the activation trace from the saved data for a specific chunk at the specified time.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="time">Time</param>
+        /// <param name="ms">Indicates if time is in milliseconds. Default: true</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintChunkActivationTrace(string chunkName, int time, bool ms = true,
             string model = null)
         {
             SendEvaluationRequest(new PrintChunkActivationTrace(chunkName, time, ms, model));
         }
 
-        public void Pp(List<dynamic> parameters, string model = null)
+        /// <summary>
+        ///     Prints the internal representation of the productions with the given names or all if none provided.
+        /// </summary>
+        /// <param name="productionNames">List of producation names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Pp(List<string> productionNames, string model = null)
         {
-            SendEvaluationRequest(new Pp(parameters, model));
+            SendEvaluationRequest(new Pp(productionNames, model));
         }
 
-        public void TriggerReward(string reward, bool maintenance = false, string model = null)
+        /// <summary>
+        ///     Provide a reward signal for utility learning.
+        /// </summary>
+        /// <param name="rewardValue">RewardValue</param>
+        /// <param name="maintenance"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void TriggerReward(long rewardValue, bool maintenance = false, string model = null)
         {
-            SendEvaluationRequest(new TriggerReward(reward, maintenance, model));
+            SendEvaluationRequest(new TriggerReward(rewardValue, maintenance, model));
         }
 
-        public void DefineChunkSpec(List<dynamic> spec, string model = null)
+        /// <summary>
+        ///     Create a chunk-spec and return its id.
+        /// </summary>
+        /// <param name="spec">{{{mod} slot value},...}</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public string DefineChunkSpec(List<dynamic> spec, string model = null)
         {
-            SendEvaluationRequest(new DefineChunkSpec(spec, model));
+            return SendEvaluationRequest(new DefineChunkSpec(spec, model)).ReturnValue;
         }
 
-        public void ChunkSpecToChunkDef(string specId, string model = null)
+        /// <summary>
+        ///     Convert a chunk-spec id to a list of slot value pairs.
+        /// </summary>
+        /// <param name="chunkSpecId">Chunk-spec id</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void ChunkSpecToChunkDef(string chunkSpecId, string model = null)
         {
-            SendEvaluationRequest(new ChunkSpecToChunkDef(specId, model));
+            SendEvaluationRequest(new ChunkSpecToChunkDef(chunkSpecId, model));
         }
 
-        public void ReleaseChunkSpecId(string specId, string model = null)
+        /// <summary>
+        ///     Release the chunk-spec associated with the provided id.
+        /// </summary>
+        /// <param name="chunkSpecId"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void ReleaseChunkSpecId(string chunkSpecId, string model = null)
         {
-            SendEvaluationRequest(new ReleaseChunkSpecId(specId, model));
+            SendEvaluationRequest(new ReleaseChunkSpecId(chunkSpecId, model));
         }
 
+        /// <summary>
+        ///     Create an event to occur after the next event by a specified module.
+        /// </summary>
+        /// <param name="afterModule">After module</param>
+        /// <param name="action">Name of the action that should be exectuted when the event is created</param>
+        /// <param name="parameters">List of parameters for the action</param>
+        /// <param name="module">Default: "NONE"</param>
+        /// <param name="maintenance">Default: false</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ScheduleSimpleEventAfterModule(string afterModule, string action, List<dynamic> parameters = null,
             string module = "NONE", bool maintenance = false,
             string model = null)
@@ -782,6 +1373,16 @@ namespace Nyctico.Actr.Client
                 maintenance, model));
         }
 
+        /// <summary>
+        ///     Schedule a chunk to be placed into a buffer.
+        /// </summary>
+        /// <param name="buffer">Buffer</param>
+        /// <param name="chunk">Chunk to place</param>
+        /// <param name="time">Time</param>
+        /// <param name="module">Default: "NONE"</param>
+        /// <param name="priority">Priority of the scheduled event. Default: 0</param>
+        /// <param name="requested"></param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ScheduleSimpleSetBufferChunk(string buffer, string chunk, int time,
             string module = "NONE", int priority = 0, bool requested = false,
             string model = null)
@@ -790,6 +1391,15 @@ namespace Nyctico.Actr.Client
                 requested, model));
         }
 
+        /// <summary>
+        ///     Schedule the modification of a buffer chunk.
+        /// </summary>
+        /// <param name="buffer">Buffer</param>
+        /// <param name="modListOrSpec"></param>
+        /// <param name="time">Time</param>
+        /// <param name="module">Default: "NONE"</param>
+        /// <param name="priority">Priority of the scheduled event. Default: 0</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ScheduleSimpleModBufferChunk(string buffer, List<dynamic> modListOrSpec, int time,
             string module = "NONE", int priority = 0,
             string model = null)
@@ -798,77 +1408,151 @@ namespace Nyctico.Actr.Client
                 model));
         }
 
-        public void UndefineModule(string name, string model = null)
+        /// <summary>
+        ///     Remove the named module from the system.
+        /// </summary>
+        /// <param name="moduleName">Module name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void UndefineModule(string moduleName, string model = null)
         {
-            SendEvaluationRequest(new UndefineModule(name, model));
+            SendEvaluationRequest(new UndefineModule(moduleName, model));
         }
 
-        public void DeleteChunk(string name, string model = null)
+        /// <summary>
+        ///     Delete a chunk from the model.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void DeleteChunk(string chunkName, string model = null)
         {
-            SendEvaluationRequest(new DeleteChunk(name, model));
+            SendEvaluationRequest(new DeleteChunk(chunkName, model));
         }
 
-        public void PurgeChunk(string name, string model = null)
+        /// <summary>
+        ///     Delete a chunk from the model and release the name.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void PurgeChunk(string chunkName, string model = null)
         {
-            SendEvaluationRequest(new PurgeChunk(name, model));
+            SendEvaluationRequest(new PurgeChunk(chunkName, model));
         }
 
+        /// <summary>
+        ///     Create a new module.
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <param name="buffers">Buffers</param>
+        /// <param name="parameters">Parameter</param>
+        /// <param name="version">Version</param>
+        /// <param name="doc">Documentation</param>
+        /// <param name="inter">Interface</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void DefineModule(string name, List<dynamic> buffers, List<dynamic> parameters, string version,
             string doc, string inter, string model = null)
         {
-            SendEvaluationRequest(new DefineModule(name, buffers, parameters, version, doc, inter));
+            SendEvaluationRequest(new DefineModule(name, buffers, parameters, version, doc, inter, model));
         }
 
-        public void CompleteRequest(string specId, string model = null)
+        /// <summary>
+        ///     Indicate that a request has completed.
+        /// </summary>
+        /// <param name="chunkSpecId">Chunk-spec id</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void CompleteRequest(string chunkSpecId, string model = null)
         {
-            SendEvaluationRequest(new CompleteRequest(specId, model));
+            SendEvaluationRequest(new CompleteRequest(chunkSpecId, model));
         }
 
+        /// <summary>
+        ///     Indicate that all requests for a buffer are complete.
+        /// </summary>
+        /// <param name="bufferName">Buffer name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void CompleteAllBufferRequests(string bufferName,
             string model = null)
         {
             SendEvaluationRequest(new CompleteAllBufferRequests(bufferName, model));
         }
 
+        /// <summary>
+        ///     Indicate that all requests for a module are complete.
+        /// </summary>
+        /// <param name="moduleName">Module name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void CompleteAllModuleRequests(string moduleName,
             string model = null)
         {
             SendEvaluationRequest(new CompleteAllModuleRequests(moduleName, model));
         }
 
-        public void CommandOutput(string command, string model = null)
+        /// <summary>
+        ///     Send a string to the ACT-R command-trace
+        /// </summary>
+        /// <param name="commandOutput">String to put in the command-trace</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void CommandOutput(string commandOutput, string model = null)
         {
-            SendEvaluationRequest(new CommandOutput(command, model));
+            SendEvaluationRequest(new CommandOutput(commandOutput, model));
         }
 
-        public void ChunkCopiedFrom(string chunkName, string model = null)
+        /// <summary>
+        ///     Returns the name of the chunk from which the given chunk was copied.
+        /// </summary>
+        /// <param name="chunkName">Chunk name</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public string ChunkCopiedFrom(string chunkName, string model = null)
         {
-            SendEvaluationRequest(new ChunkCopiedFrom(chunkName, model));
+            return SendEvaluationRequest(new ChunkCopiedFrom(chunkName, model)).ReturnValue;
         }
 
-        public void MpTime(string model = null)
+        /// <summary>
+        ///     Return the current simulation time in seconds.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Simulation time in seconds</returns>
+        public long MpTime(string model = null)
         {
-            SendEvaluationRequest(new MpTime(model));
+            return SendEvaluationRequest(new MpTime(model)).ReturnValue;
         }
 
-        public void MpTimeMs(string model = null)
+        /// <summary>
+        ///     Return the current simulation time in milliseconds.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        /// <returns>Simulation time in milliseconds</returns>
+        public long MpTimeMs(string model = null)
         {
-            SendEvaluationRequest(new MpTimeMs(model));
+            return SendEvaluationRequest(new MpTimeMs(model)).ReturnValue;
         }
 
+        /// <summary>
+        ///     Print the BOLD response data for the currently recorded buffers.
+        /// </summary>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void PrintBoldResponseData(string model = null)
         {
             SendEvaluationRequest(new PrintBoldResponseData(model));
         }
 
-        public void Pbreak(string model = null)
+        /// <summary>
+        ///     Pbreak causes the scheduler to stop when the specified productions are selected.
+        /// </summary>
+        /// <param name="productionNames">Production names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Pbreak(List<string> productionNames, string model = null)
         {
-            SendEvaluationRequest(new Pbreak(model));
+            SendEvaluationRequest(new Pbreak(productionNames, model));
         }
 
-        public void Punbreak(string model = null)
+        /// <summary>
+        ///     Punbreak removes the break flag from the specified productions.
+        /// </summary>
+        /// <param name="productionNames">Production names</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void Punbreak(List<string> productionNames, string model = null)
         {
-            SendEvaluationRequest(new Punbreak(model));
+            SendEvaluationRequest(new Punbreak(productionNames, model));
         }
     }
 }

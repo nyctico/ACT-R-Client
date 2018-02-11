@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModulesParameters : AbstractEvaluationRequest
     {
-        public ModulesParameters(string module, string model = null) : base("modules-parameters",
+        public ModulesParameters(string moduleName, string model = null) : base("modules-parameters",
             model)
         {
-            Module = module;
+            ModuleName = moduleName;
         }
 
-        public string Module { get; set; }
+        public string ModuleName { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(Module);
+            list.Add(ModuleName);
 
             return list;
         }

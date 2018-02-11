@@ -4,20 +4,20 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ReleaseChunkSpecId : AbstractEvaluationRequest
     {
-        public ReleaseChunkSpecId(string specId, string model = null) : base(
+        public ReleaseChunkSpecId(string chunkSpecId, string model = null) : base(
             "release-chunk-spec-id",
             model)
         {
-            SpecId = specId;
+            ChunkSpecId = chunkSpecId;
         }
 
-        public string SpecId { get; set; }
+        public string ChunkSpecId { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(SpecId);
+            list.Add(ChunkSpecId);
 
             return list;
         }

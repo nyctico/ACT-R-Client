@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class CommandOutput : AbstractEvaluationRequest
     {
-        public CommandOutput(string command = null, string model = null) : base("command-output",
+        public CommandOutput(string output = null, string model = null) : base("command-output",
             model)
         {
-            command = command;
+            Output = output;
         }
 
-        public string command { get; set; }
+        public string Output { get; set; }
 
         public override List<dynamic> ToParameterList()
         {
             var list = BaseParameterList();
 
-            list.Add(command);
+            list.Add(Output);
 
             return list;
         }

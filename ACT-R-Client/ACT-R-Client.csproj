@@ -12,6 +12,7 @@
     <AssemblyName>ACT-R-Client</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActRClient.cs" />
+    <Compile Include="Data\IDevice.cs" />
     <Compile Include="Data\IItem.cs" />
     <Compile Include="Data\Line.cs" />
     <Compile Include="EvaluationRequests\ActrOutput.cs" />
