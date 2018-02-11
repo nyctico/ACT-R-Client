@@ -1,1 +1,0 @@
-#ACT-R Client for interaction with the ACT-R Dispatcher
