@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ACT-R-Client")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Client for interaction with the ACT-R Dispatcher")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Patrick Lindel")]
 [assembly: AssemblyProduct("ACT-R-Client")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright ©  2018 Patrick Lindel")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
