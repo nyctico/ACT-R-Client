@@ -15,8 +15,12 @@ namespace Nyctico.Actr.Client.HookRequests
             LispCmd = lispCmd;
         }
 
-        public string PublishedName { get; }
-        public List<object> PublishedNameAsList => new List<object> {PublishedName};
+        public string PublishedName { get; set; }
+        public List<object> PublishedNameAsList
+        {
+            get { return new List<object> {PublishedName}; }
+        }
+
         public string PrivateName { set; get; }
         public string Documentation { set; get; }
         public string MultipleInstanceErrorMessage { set; get; }

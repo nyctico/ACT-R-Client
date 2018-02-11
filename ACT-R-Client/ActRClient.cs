@@ -164,8 +164,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         public void StartTraceMonitoring()
         {
-            StartTraceMonitoring(list => Console.WriteLine(
-                $"{(string) list[1]}: {((string) list[2]).Replace("\n", "")}"));
+            StartTraceMonitoring(list => Console.WriteLine("{0}: {1}", (string) list[1], ((string) list[2]).Replace("\n", "")));
         }
 
         /// <summary>
@@ -209,7 +208,8 @@ namespace Nyctico.Actr.Client
         {
             while (true)
             {
-                if (_resultQueue.TryRemove(id, out var result)) return result;
+                Result result;
+                if (_resultQueue.TryRemove(id, out result)) return result;
                 Thread.Sleep(1);
             }
         }
