@@ -59,8 +59,6 @@ namespace Nyctico.Actr.Client
         public void Dispose()
         {
             _running = false;
-            _queueTask.Dispose();
-            _evaluateTask.Dispose();
             _streamReader.Dispose();
             _streamWriter.Dispose();
             _socket.Close();
@@ -234,29 +232,33 @@ namespace Nyctico.Actr.Client
         {
             _queueTask = new Task(() =>
             {
+                var tmp = "";
                 while (_running)
                 {
-                    var tmp = "";
-                    while (true)
+                    char readChar;
+                    try
                     {
-                        var readChar = (char) _streamReader.Read();
-                        if (readChar.Equals('\x04'))
-                        {
-                            if (tmp.Contains("\"result\":"))
-                            {
-                                var result = JsonConvert.DeserializeObject<Result>(tmp);
-                                _resultQueue.TryAdd(result.Id, result);
-                            }
-                            else
-                            {
-                                _messageQueue.Add(JsonConvert.DeserializeObject<Hook>(tmp));
-                            }
-
-                            break;
-                        }
-
-                        tmp += readChar;
+                        readChar = (char)_streamReader.Read();
                     }
+                    catch (System.IO.IOException e)
+                    {
+                        break; // TODO implement better solution
+                    }
+                    if (readChar.Equals('\x04'))
+                    {
+                        if (tmp.Contains("\"result\":"))
+                        {
+                            var result = JsonConvert.DeserializeObject<Result>(tmp);
+                            _resultQueue.TryAdd(result.Id, result);
+                        }
+                        else
+                        {
+                            _messageQueue.Add(JsonConvert.DeserializeObject<Hook>(tmp));
+                        }
+                        tmp = "";
+                    }
+                    else
+                        tmp += readChar;
                 }
             });
             _queueTask.Start();
