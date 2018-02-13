@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SetSystemParameterValue : AbstractEvaluationRequest
     {
-        public SetSystemParameterValue(string systemParameterName, dynamic newValue, string model = null) :
+        public SetSystemParameterValue(string systemParameterName, object newValue, string model = null) :
             base("set-system-parameter-value",
                 model)
         {
@@ -13,9 +13,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         }
 
         public string SystemParameterName { get; set; }
-        public dynamic NewValue { get; set; }
+        public object NewValue { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

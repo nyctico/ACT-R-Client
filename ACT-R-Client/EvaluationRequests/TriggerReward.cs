@@ -15,7 +15,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public long RewardValue { get; set; }
         public bool Maintenance { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

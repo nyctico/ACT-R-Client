@@ -4,15 +4,15 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModFocus : AbstractEvaluationRequest
     {
-        public ModFocus(List<dynamic> mods, string model = null) : base("mod-focus",
+        public ModFocus(List<object> mods, string model = null) : base("mod-focus",
             model)
         {
             Mods = mods;
         }
 
-        public List<dynamic> Mods { get; set; }
+        public List<object> Mods { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

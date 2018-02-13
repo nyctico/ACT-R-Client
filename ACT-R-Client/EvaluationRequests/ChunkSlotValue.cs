@@ -14,7 +14,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string ChunkName { get; set; }
         public string SlotName { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

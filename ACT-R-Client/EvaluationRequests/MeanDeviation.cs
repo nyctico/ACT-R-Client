@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class MeanDeviation : AbstractEvaluationRequest
     {
-        public MeanDeviation(List<dynamic> results, List<dynamic> data, bool output = true,
+        public MeanDeviation(List<double> results, List<double> data, bool output = true,
             string model = null) : base("mean-deviation", model)
         {
             Results = results;
@@ -12,11 +12,11 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             Output = output;
         }
 
-        public List<dynamic> Results { set; get; }
-        public List<dynamic> Data { set; get; }
+        public List<double> Results { set; get; }
+        public List<double> Data { set; get; }
         public bool Output { set; get; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

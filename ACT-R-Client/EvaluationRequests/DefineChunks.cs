@@ -4,15 +4,15 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineChunks : AbstractEvaluationRequest
     {
-        public DefineChunks(List<dynamic> chunks, string model = null) : base("define-chunks",
+        public DefineChunks(List<object> chunks, string model = null) : base("define-chunks",
             model)
         {
             Chunks = chunks;
         }
 
-        public List<dynamic> Chunks { get; set; }
+        public List<object> Chunks { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

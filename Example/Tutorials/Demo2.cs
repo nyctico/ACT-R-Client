@@ -26,11 +26,11 @@ namespace Nyctico.Actr.Example.Tutorials
                 actr.LoadActrModel("ACT-R:tutorial;unit2;demo2-model.lisp");
                 actr.Reset();
 
-                var numberList = new List<dynamic>();
+                var numberList = new List<object>();
                 for (var i = 0; i < items.Length; ++i) numberList.Add(i);
                 var indexes = actr.PermuteList(numberList);
 
-                var targetItem = items[indexes[0]];
+                var targetItem = items[(long) indexes[0]];
 
                 var window = actr.OpenExpWindow("Letter difference", true);
 
@@ -63,7 +63,7 @@ namespace Nyctico.Actr.Example.Tutorials
             }
         }
 
-        private static void KeyPressAction(List<dynamic> list)
+        private static void KeyPressAction(List<object> list)
         {
             _pressedKey = (string) list[3];
             Console.WriteLine($"Key pressed by model: {_pressedKey}");

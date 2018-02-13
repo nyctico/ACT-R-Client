@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SetParameterValue : AbstractEvaluationRequest
     {
-        public SetParameterValue(string parameterName, dynamic newValue, string model = null) : base(
+        public SetParameterValue(string parameterName, object newValue, string model = null) : base(
             "set-parameter-value",
             model)
         {
@@ -13,9 +13,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         }
 
         public string ParameterName { get; set; }
-        public dynamic NewValue { get; set; }
+        public object NewValue { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

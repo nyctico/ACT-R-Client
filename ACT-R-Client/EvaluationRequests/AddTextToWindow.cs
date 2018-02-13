@@ -29,7 +29,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Width { set; get; }
         public int FontSize { set; get; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

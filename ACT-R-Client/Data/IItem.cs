@@ -4,6 +4,6 @@ namespace Nyctico.Actr.Client.Data
 {
     public interface IItem
     {
-        List<dynamic> ToJsonList();
+        List<object> ToJsonList();
     }
 }

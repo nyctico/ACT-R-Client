@@ -16,6 +16,7 @@ namespace Nyctico.Actr.Client.HookRequests
         }
 
         public string PublishedName { get; set; }
+
         public List<object> PublishedNameAsList
         {
             get { return new List<object> {PublishedName}; }
@@ -26,9 +27,9 @@ namespace Nyctico.Actr.Client.HookRequests
         public string MultipleInstanceErrorMessage { set; get; }
         public string LispCmd { set; get; }
 
-        public List<dynamic> ToParameterList()
+        public List<object> ToParameterList()
         {
-            var list = new List<dynamic>();
+            var list = new List<object>();
 
             list.Add(PublishedName);
             list.Add(PrivateName);
@@ -40,6 +41,6 @@ namespace Nyctico.Actr.Client.HookRequests
             return list;
         }
 
-        public abstract void Execute(List<dynamic> parameters);
+        public abstract void Execute(List<object> parameters);
     }
 }

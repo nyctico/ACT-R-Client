@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ScheduleSimpleEventNow : AbstractEvaluationRequest
     {
-        public ScheduleSimpleEventNow(string action, List<dynamic> parameters = null,
+        public ScheduleSimpleEventNow(string action, List<object> parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null) : base("schedule-simple-event-now", model)
         {
@@ -16,12 +16,12 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         }
 
         public string Action { set; get; }
-        public List<dynamic> Parameters { set; get; }
+        public List<object> Parameters { set; get; }
         public string Module { set; get; }
         public int Priority { set; get; }
         public bool Maintenance { set; get; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

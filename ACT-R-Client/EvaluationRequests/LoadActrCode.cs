@@ -12,7 +12,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public string Path { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

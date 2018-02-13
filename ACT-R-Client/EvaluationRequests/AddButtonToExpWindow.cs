@@ -5,7 +5,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class AddButtonToExpWindow : AbstractEvaluationRequest
     {
-        public AddButtonToExpWindow(Window window, string text, int x, int y, List<dynamic> action = null,
+        public AddButtonToExpWindow(Window window, string text, int x, int y, List<object> action = null,
             int height = 50,
             int width = 75,
             string color = "gray", string model = null) : base("add-button-to-exp-window",
@@ -25,12 +25,12 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string Text { set; get; }
         public int X { set; get; }
         public int Y { set; get; }
-        public List<dynamic> Action { set; get; }
+        public List<object> Action { set; get; }
         public int Height { set; get; }
         public int Width { set; get; }
         public string Color { set; get; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

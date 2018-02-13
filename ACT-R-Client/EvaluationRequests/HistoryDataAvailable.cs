@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class HistoryDataAvailable : AbstractEvaluationRequest
     {
-        public HistoryDataAvailable(string history, bool file, List<dynamic> parameters,
+        public HistoryDataAvailable(string history, bool file, List<object> parameters,
             string model = null) : base("history-data-available",
             model)
         {
@@ -15,9 +15,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public string History { get; set; }
         public bool File { get; set; }
-        public List<dynamic> Parameters { get; set; }
+        public List<object> Parameters { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

@@ -13,7 +13,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public string SystemParameterName { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

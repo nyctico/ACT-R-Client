@@ -16,7 +16,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Time { get; set; }
         public bool Ms { get; set; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

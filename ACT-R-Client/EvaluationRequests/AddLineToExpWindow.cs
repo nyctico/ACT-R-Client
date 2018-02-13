@@ -20,7 +20,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int[] End { set; get; }
         public string Color { set; get; }
 
-        public override List<dynamic> ToParameterList()
+        public override List<object> ToParameterList()
         {
             var list = BaseParameterList();
 

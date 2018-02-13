@@ -11,7 +11,7 @@ namespace Nyctico.Actr.Client.Data
         [JsonProperty(PropertyName = "id")] public int Id { set; get; }
 
         [JsonProperty(PropertyName = "params")]
-        public List<dynamic> Parameters { set; get; }
+        public List<object> Parameters { set; get; }
 
         public string ToJson()
         {

@@ -15,9 +15,9 @@ namespace Nyctico.Actr.Client.MonitorRequests
         public string CommandToCall { get; set; }
         public string MonitorStyle { set; get; }
 
-        public List<dynamic> ToParameterList()
+        public List<object> ToParameterList()
         {
-            var list = new List<dynamic> {CommandToMonitor, CommandToCall};
+            var list = new List<object> {CommandToMonitor, CommandToCall};
 
             if (MonitorStyle != null) list.Add(MonitorStyle);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Nyctico.Actr.Client;
 using Nyctico.Actr.Client.HookRequests;
 using Nyctico.Actr.Client.MonitorRequests;
@@ -10,8 +11,8 @@ namespace Nyctico.Actr.Example.Tutorials
     {
         private static List<string> _answers;
         private static List<string> _responses;
-        private static readonly List<dynamic> Results = new List<dynamic> {0.0, 0.0, 0.0, 0.0};
-        private static readonly List<dynamic> Onsets = new List<dynamic> {0.0, .15, .3, 1.0};
+        private static readonly List<double> Results = new List<double> {0.0, 0.0, 0.0, 0.0};
+        private static readonly List<double> Onsets = new List<double> {0.0, .15, .3, 1.0};
 
         public static void Execute(bool realTime, int numberOfRuns)
         {
@@ -23,7 +24,7 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 for (var i = 0; i < numberOfRuns; ++i) OneBlock(actr, realTime);
 
-                var expData = new List<dynamic> {3.03, 2.4, 2.03, 1.5};
+                var expData = new List<double> {3.03, 2.4, 2.03, 1.5};
                 for (var i = 0; i < Results.Count; ++i) Results[i] = Results[i] / numberOfRuns;
 
                 actr.Correlation(Results, expData);
@@ -39,7 +40,7 @@ namespace Nyctico.Actr.Example.Tutorials
         private static void OneBlock(ActRClient actr, bool runInRealTime)
         {
             var result = new List<double>();
-            var permuteList = actr.PermuteList(Onsets);
+            var permuteList = actr.PermuteList(Onsets.Select<double, object>(i => i).ToList());
 
             foreach (double r in permuteList) result.Add(Trial(actr, runInRealTime, r));
             result.Sort((d, d1) => d1.CompareTo(d));
@@ -59,7 +60,7 @@ namespace Nyctico.Actr.Example.Tutorials
 
             var window = actr.OpenExpWindow("Sperling Experiment", runInRealTime);
 
-            var letters = new List<dynamic>
+            var letters = new List<object>
             {
                 "B",
                 "C",
@@ -89,8 +90,8 @@ namespace Nyctico.Actr.Example.Tutorials
             {
                 var txt = letters[i + j * 4];
                 if (i == row)
-                    _answers.Add(txt);
-                actr.AddTextToWindow(window, txt, 75 + j * 50, 101 + i * 50);
+                    _answers.Add((string) txt);
+                actr.AddTextToWindow(window, (string) txt, 75 + j * 50, 101 + i * 50);
             }
 
             actr.InstallDevice(window);
@@ -110,7 +111,7 @@ namespace Nyctico.Actr.Example.Tutorials
             actr.NewToneSound(freq, 0.5, onset);
             actr.ScheduleSimpleEventRelative(
                 900 + actr.ActrRandom(200), "clear-exp-window",
-                new List<dynamic> {window.Title});
+                new List<object> {window.Title});
 
             AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                 "sperling-response",
@@ -140,7 +141,7 @@ namespace Nyctico.Actr.Example.Tutorials
             return score;
         }
 
-        private static void KeyPressAction(List<dynamic> list)
+        private static void KeyPressAction(List<object> list)
         {
             var pressedKey = (string) list[3];
             if (!pressedKey.Equals("space"))
