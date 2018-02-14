@@ -155,7 +155,7 @@
     <Compile Include="HookRequests\LambdaHookRequest.cs" />
     <Compile Include="Data\Window.cs" />
     <Compile Include="Data\Error.cs" />
-    <Compile Include="Data\Hook.cs" />
+    <Compile Include="Data\Message.cs" />
     <Compile Include="Data\Result.cs" />
     <Compile Include="EvaluationRequests\AbstractEvaluationRequest.cs" />
     <Compile Include="EvaluationRequests\AddTextToWindow.cs" />

@@ -2,7 +2,7 @@
 
 namespace Nyctico.Actr.Client.Data
 {
-    public class Hook
+    public class Message
     {
         [JsonProperty(PropertyName = "method")]
         public string Method { set; get; }

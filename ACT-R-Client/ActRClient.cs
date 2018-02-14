@@ -22,7 +22,7 @@ namespace Nyctico.Actr.Client
             new ConcurrentDictionary<string, AbstractHookRequest>();
 
         private readonly string _host;
-        private readonly BlockingCollection<Hook> _messageQueue = new BlockingCollection<Hook>();
+        private readonly BlockingCollection<Message> _messageQueue = new BlockingCollection<Message>();
 
         private readonly ConcurrentDictionary<string, MonitorRequest> _monitors =
             new ConcurrentDictionary<string, MonitorRequest>();
@@ -255,7 +255,7 @@ namespace Nyctico.Actr.Client
                         }
                         else
                         {
-                            _messageQueue.Add(JsonConvert.DeserializeObject<Hook>(tmp));
+                            _messageQueue.Add(JsonConvert.DeserializeObject<Message>(tmp));
                         }
 
                         tmp = "";
@@ -298,7 +298,7 @@ namespace Nyctico.Actr.Client
         ///     Evaluates a command from the dispatcher
         /// </summary>
         /// <param name="msg"></param>
-        private void Evaluate(Hook msg)
+        private void Evaluate(Message msg)
         {
             try
             {
@@ -321,7 +321,7 @@ namespace Nyctico.Actr.Client
         /// <exception cref="InvalidOperationException">Thrown when the dispacther has encounterd an error</exception>
         private Result SendMessage(string method, object[] parameters)
         {
-            var commandMessage = new Hook
+            var commandMessage = new Message
             {
                 Id = _idCount++,
                 Method = method,
