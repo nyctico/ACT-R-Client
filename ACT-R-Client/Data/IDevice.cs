@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.Data
+﻿namespace Nyctico.Actr.Client.Data
 {
     public interface IDevice
     {
-        List<object> ToJsonList();
+        object[] ToJsonList();
     }
 }

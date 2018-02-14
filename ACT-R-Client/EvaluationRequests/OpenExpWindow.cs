@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class OpenExpWindow : AbstractEvaluationRequest
     {
@@ -22,7 +20,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int X { set; get; }
         public int Y { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -33,7 +31,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(X);
             list.Add(Y);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

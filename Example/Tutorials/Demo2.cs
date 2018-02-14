@@ -28,7 +28,7 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 var numberList = new List<object>();
                 for (var i = 0; i < items.Length; ++i) numberList.Add(i);
-                var indexes = actr.PermuteList(numberList);
+                var indexes = actr.PermuteList(numberList.ToArray());
 
                 var targetItem = items[(long) indexes[0]];
 
@@ -63,7 +63,7 @@ namespace Nyctico.Actr.Example.Tutorials
             }
         }
 
-        private static void KeyPressAction(List<object> list)
+        private static void KeyPressAction(object[] list)
         {
             _pressedKey = (string) list[3];
             Console.WriteLine($"Key pressed by model: {_pressedKey}");

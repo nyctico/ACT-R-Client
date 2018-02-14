@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineModule : AbstractEvaluationRequest
     {
-        public DefineModule(string name, List<object> buffers, List<object> parameters, string version, string doc,
+        public DefineModule(string name, object[] buffers, object[] parameters, string version, string doc,
             string inter, string model = null) : base("define-module",
             model)
         {
@@ -17,13 +15,13 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         }
 
         public string Name { get; set; }
-        public List<object> Buffers { get; set; }
-        public List<object> Parameters { get; set; }
+        public object[] Buffers { get; set; }
+        public object[] Parameters { get; set; }
         public string Version { get; set; }
         public string Doc { get; set; }
         public string Inter { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -34,7 +32,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Doc);
             list.Add(Inter);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

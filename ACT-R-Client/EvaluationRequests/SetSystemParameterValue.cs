@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SetSystemParameterValue : AbstractEvaluationRequest
     {
@@ -15,14 +13,14 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string SystemParameterName { get; set; }
         public object NewValue { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(SystemParameterName);
             list.Add(NewValue);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

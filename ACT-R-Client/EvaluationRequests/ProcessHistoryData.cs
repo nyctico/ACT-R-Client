@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ProcessHistoryData : AbstractEvaluationRequest
     {
-        public ProcessHistoryData(string processor, string fileName = null, List<object> parameters = null,
+        public ProcessHistoryData(string processor, string fileName = null, object[] parameters = null,
             string model = null) : base(
             "process-history-data",
             model)
@@ -16,9 +14,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public string Processor { get; set; }
         public string FileName { get; set; }
-        public List<object> Parameters { get; set; }
+        public object[] Parameters { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -26,7 +24,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(FileName);
             list.Add(Parameters);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

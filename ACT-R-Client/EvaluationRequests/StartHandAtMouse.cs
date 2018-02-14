@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class StartHandAtMouse : AbstractEvaluationRequest
     {
@@ -9,10 +7,10 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         {
         }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
-            return list;
+            return list.ToArray();
         }
     }
 }

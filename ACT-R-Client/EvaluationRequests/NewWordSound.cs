@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class NewWordSound : AbstractEvaluationRequest
     {
@@ -18,7 +16,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string Location { get; set; }
         public bool TimeInMs { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -27,7 +25,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Location);
             list.Add(TimeInMs);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

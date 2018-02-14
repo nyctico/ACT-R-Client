@@ -40,7 +40,7 @@ namespace Nyctico.Actr.Example.Tutorials
         private static void OneBlock(ActRClient actr, bool runInRealTime)
         {
             var result = new List<double>();
-            var permuteList = actr.PermuteList(Onsets.Select<double, object>(i => i).ToList());
+            var permuteList = actr.PermuteList(Onsets.Select<double, object>(i => i).ToArray());
 
             foreach (double r in permuteList) result.Add(Trial(actr, runInRealTime, r));
             result.Sort((d, d1) => d1.CompareTo(d));
@@ -60,7 +60,7 @@ namespace Nyctico.Actr.Example.Tutorials
 
             var window = actr.OpenExpWindow("Sperling Experiment", runInRealTime);
 
-            var letters = new List<object>
+            var letters = new object[]
             {
                 "B",
                 "C",
@@ -111,7 +111,7 @@ namespace Nyctico.Actr.Example.Tutorials
             actr.NewToneSound(freq, 0.5, onset);
             actr.ScheduleSimpleEventRelative(
                 900 + actr.ActrRandom(200), "clear-exp-window",
-                new List<object> {window.Title});
+                new object[] {window.Title});
 
             AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
                 "sperling-response",
@@ -141,7 +141,7 @@ namespace Nyctico.Actr.Example.Tutorials
             return score;
         }
 
-        private static void KeyPressAction(List<object> list)
+        private static void KeyPressAction(object[] list)
         {
             var pressedKey = (string) list[3];
             if (!pressedKey.Equals("space"))

@@ -139,7 +139,7 @@ namespace Nyctico.Actr.Client
         ///     Add hooks and monitor to all traces.
         /// </summary>
         /// <param name="traceAction">Function to handle the trace output</param>
-        public void StartTraceMonitoring(Action<List<object>> traceAction)
+        public void StartTraceMonitoring(Action<object[]> traceAction)
         {
             var commandName = ToString() + "_TraceMonitor";
             AbstractHookRequest hookRequest =
@@ -187,7 +187,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         public void Reset()
         {
-            SendMessage("evaluate", new List<object> {"reset"});
+            SendMessage("evaluate", new object[] {"reset"});
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Nyctico.Actr.Client
         /// <param name="parameters">Parameter of the message</param>
         /// <returns>Received response of the dispathcer</returns>
         /// <exception cref="InvalidOperationException">Thrown when the dispacther has encounterd an error</exception>
-        private Result SendMessage(string method, List<object> parameters)
+        private Result SendMessage(string method, object[] parameters)
         {
             var commandMessage = new Hook
             {
@@ -343,7 +343,7 @@ namespace Nyctico.Actr.Client
             var result = new Result
             {
                 Id = id,
-                AllRetruns = new List<object> {true},
+                AllRetruns = new object[] {true},
                 Error = null
             };
             _streamWriter.Write(result.ToJson());
@@ -390,7 +390,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="list">List, which sould be randomized</param>
         /// <returns>Randomized List</returns>
-        public List<object> PermuteList(List<object> list)
+        public object[] PermuteList(object[] list)
         {
             return SendEvaluationRequest(new PermuteList(list)).ReturnList;
         }
@@ -448,7 +448,7 @@ namespace Nyctico.Actr.Client
         /// <param name="width">Button width. Default: 75</param>
         /// <param name="color">Button color. Default: "grey"</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void AddButtonToExpWindow(Window window, string text, int x, int y, List<object> action = null,
+        public void AddButtonToExpWindow(Window window, string text, int x, int y, object[] action = null,
             int height = 50,
             int width = 75,
             string color = "gray", string model = null)
@@ -623,7 +623,7 @@ namespace Nyctico.Actr.Client
         /// <param name="priority">Priority of the scheduled event</param>
         /// <param name="maintenance">Default: false</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ScheduleSimpleEventRelative(long timeDelay, string action, List<object> parameters = null,
+        public void ScheduleSimpleEventRelative(long timeDelay, string action, object[] parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null)
         {
@@ -640,7 +640,7 @@ namespace Nyctico.Actr.Client
         /// <param name="priority">Priority of the scheduled event</param>
         /// <param name="maintenance">Default: false</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ScheduleSimpleEventNow(string action, List<object> parameters = null,
+        public void ScheduleSimpleEventNow(string action, object[] parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null)
         {
@@ -658,7 +658,7 @@ namespace Nyctico.Actr.Client
         /// <param name="priority">Priority of the scheduled event</param>
         /// <param name="maintenance">Default: false</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ScheduleSimpleEvent(long time, string action, List<object> parameters = null,
+        public void ScheduleSimpleEvent(long time, string action, object[] parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null)
         {
@@ -736,7 +736,7 @@ namespace Nyctico.Actr.Client
         /// <param name="bufferNames">Buffer names</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>List of status infomartion of each specified buffer</returns>
-        public List<object> BufferStatus(List<string> bufferNames, string model = null)
+        public object[] BufferStatus(List<string> bufferNames, string model = null)
         {
             return SendEvaluationRequest(new BufferStatus(bufferNames, model)).ReturnList;
         }
@@ -857,7 +857,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="chunks">Chunk descriptions</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void DefineChunks(List<object> chunks, string model = null)
+        public void DefineChunks(object[] chunks, string model = null)
         {
             SendEvaluationRequest(new DefineChunks(chunks, model));
         }
@@ -867,7 +867,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="chunks">Chunk descriptions</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void AddDm(List<object> chunks, string model = null)
+        public void AddDm(object[] chunks, string model = null)
         {
             SendEvaluationRequest(new AddDm(chunks, model));
         }
@@ -912,7 +912,7 @@ namespace Nyctico.Actr.Client
         /// <param name="chunkName">Chunk name</param>
         /// <param name="mods">Modificatcations as Sloat/Value pairs {slot-name new-slot-value}</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ModChunk(string chunkName, List<object> mods, string model = null)
+        public void ModChunk(string chunkName, object[] mods, string model = null)
         {
             SendEvaluationRequest(new ModChunk(chunkName, mods, model));
         }
@@ -922,7 +922,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="mods">Modificatcations as Sloat/Value pairs {slot-name new-slot-value}</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ModFocus(List<object> mods, string model = null)
+        public void ModFocus(object[] mods, string model = null)
         {
             SendEvaluationRequest(new ModFocus(mods, model));
         }
@@ -1017,7 +1017,7 @@ namespace Nyctico.Actr.Client
         /// <param name="parameters">See ACT-R manual</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>See ACT-R manual</returns>
-        public object Spp(List<object> parameters, string model = null)
+        public object Spp(object[] parameters, string model = null)
         {
             return SendEvaluationRequest(new Spp(parameters, model)).ReturnObject;
         }
@@ -1094,7 +1094,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>List of module names</returns>
-        public List<object> SortedModuleNames(string model = null)
+        public object[] SortedModuleNames(string model = null)
         {
             return SendEvaluationRequest(new SortedModuleNames(model)).ReturnList;
         }
@@ -1105,7 +1105,7 @@ namespace Nyctico.Actr.Client
         /// <param name="moduleName"></param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>List of module parameters</returns>
-        public List<object> ModulesParameters(string moduleName, string model = null)
+        public object[] ModulesParameters(string moduleName, string model = null)
         {
             return SendEvaluationRequest(new ModulesParameters(moduleName, model)).ReturnList;
         }
@@ -1115,7 +1115,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>List of modules</returns>
-        public List<object> ModulesWithParameters(string model = null)
+        public object[] ModulesWithParameters(string model = null)
         {
             return SendEvaluationRequest(new ModulesWithParameters(model)).ReturnList;
         }
@@ -1125,7 +1125,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>List of buffer names</returns>
-        public List<object> UsedProductionBuffers(string model = null)
+        public object[] UsedProductionBuffers(string model = null)
         {
             return SendEvaluationRequest(new UsedProductionBuffers(model)).ReturnList;
         }
@@ -1159,7 +1159,7 @@ namespace Nyctico.Actr.Client
         /// <param name="parameters">Additional parameters. Default: null</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>History data</returns>
-        public string GetHistoryData(string historyName, string fileName = null, List<object> parameters = null,
+        public string GetHistoryData(string historyName, string fileName = null, object[] parameters = null,
             string model = null)
         {
             return SendEvaluationRequest(new GetHistoryData(historyName, fileName, parameters, model)).ReturnString;
@@ -1174,7 +1174,7 @@ namespace Nyctico.Actr.Client
         /// <param name="parameters">Additional parameters. Default: null</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>Result of applyng the processor</returns>
-        public string ProcessHistoryData(string processorName, string fileName = null, List<object> parameters = null,
+        public string ProcessHistoryData(string processorName, string fileName = null, object[] parameters = null,
             string model = null)
         {
             return SendEvaluationRequest(new ProcessHistoryData(processorName, fileName, parameters,
@@ -1188,7 +1188,7 @@ namespace Nyctico.Actr.Client
         /// <param name="fileName">File name or null. Default: null</param>
         /// <param name="parameters">Additional parameters. Default: null</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void SaveHistoryData(string historyName, string fileName, List<object> parameters,
+        public void SaveHistoryData(string historyName, string fileName, object[] parameters,
             string model = null)
         {
             SendEvaluationRequest(new SaveHistoryData(historyName, fileName, parameters, model));
@@ -1209,7 +1209,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="specifications">{({modifier} &lt;slot-name&gt; &lt;slot-value&gt;),...}</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void Sdm(List<object> specifications, string model = null)
+        public void Sdm(object[] specifications, string model = null)
         {
             SendEvaluationRequest(new Sdm(specifications, model));
         }
@@ -1264,7 +1264,7 @@ namespace Nyctico.Actr.Client
         /// <param name="parameters">See ACT-R manual</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>See ACT-R manual</returns>
-        public object Sdp(List<object> parameters, string model = null)
+        public object Sdp(object[] parameters, string model = null)
         {
             return SendEvaluationRequest(new Sdp(parameters, model)).ReturnObject;
         }
@@ -1275,7 +1275,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="requestDetails"></param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void SimulateRetrievalRequest(List<object> requestDetails, string model = null)
+        public void SimulateRetrievalRequest(object[] requestDetails, string model = null)
         {
             SendEvaluationRequest(new SimulateRetrievalRequest(requestDetails, model));
         }
@@ -1285,7 +1285,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         /// <returns>List of lists of times and chunks</returns>
-        public List<object> SavedActivationHistory(string model = null)
+        public object[] SavedActivationHistory(string model = null)
         {
             return SendEvaluationRequest(new SavedActivationHistory(model)).ReturnList;
         }
@@ -1340,7 +1340,7 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="spec">{{{mod} slot value},...}</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public string DefineChunkSpec(List<object> spec, string model = null)
+        public string DefineChunkSpec(object[] spec, string model = null)
         {
             return SendEvaluationRequest(new DefineChunkSpec(spec, model)).ReturnString;
         }
@@ -1374,7 +1374,7 @@ namespace Nyctico.Actr.Client
         /// <param name="module">Default: "NONE"</param>
         /// <param name="maintenance">Default: false</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ScheduleSimpleEventAfterModule(string afterModule, string action, List<object> parameters = null,
+        public void ScheduleSimpleEventAfterModule(string afterModule, string action, object[] parameters = null,
             string module = "NONE", bool maintenance = false,
             string model = null)
         {
@@ -1409,7 +1409,7 @@ namespace Nyctico.Actr.Client
         /// <param name="module">Default: "NONE"</param>
         /// <param name="priority">Priority of the scheduled event. Default: 0</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void ScheduleSimpleModBufferChunk(string buffer, List<object> modListOrSpec, int time,
+        public void ScheduleSimpleModBufferChunk(string buffer, object[] modListOrSpec, int time,
             string module = "NONE", int priority = 0,
             string model = null)
         {
@@ -1457,7 +1457,7 @@ namespace Nyctico.Actr.Client
         /// <param name="doc">Documentation</param>
         /// <param name="inter">Interface</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void DefineModule(string name, List<object> buffers, List<object> parameters, string version,
+        public void DefineModule(string name, object[] buffers, object[] parameters, string version,
             string doc, string inter, string model = null)
         {
             SendEvaluationRequest(new DefineModule(name, buffers, parameters, version, doc, inter, model));

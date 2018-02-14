@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class RunUntilCondition : AbstractEvaluationRequest
     {
@@ -14,14 +12,14 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string Condition { set; get; }
         public bool RealTime { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Condition);
             list.Add(RealTime);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

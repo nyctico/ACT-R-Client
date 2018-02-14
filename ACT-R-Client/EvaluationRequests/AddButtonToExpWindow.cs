@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Nyctico.Actr.Client.Data;
+﻿using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class AddButtonToExpWindow : AbstractEvaluationRequest
     {
-        public AddButtonToExpWindow(Window window, string text, int x, int y, List<object> action = null,
+        public AddButtonToExpWindow(Window window, string text, int x, int y, object[] action = null,
             int height = 50,
             int width = 75,
             string color = "gray", string model = null) : base("add-button-to-exp-window",
@@ -25,12 +24,12 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string Text { set; get; }
         public int X { set; get; }
         public int Y { set; get; }
-        public List<object> Action { set; get; }
+        public object[] Action { set; get; }
         public int Height { set; get; }
         public int Width { set; get; }
         public string Color { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -43,7 +42,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Width);
             list.Add(Color);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

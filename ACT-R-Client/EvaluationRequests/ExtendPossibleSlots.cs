@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ExtendPossibleSlots : AbstractEvaluationRequest
     {
@@ -14,14 +12,14 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string ChunkName { get; set; }
         public bool Warn { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(ChunkName);
             list.Add(Warn);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

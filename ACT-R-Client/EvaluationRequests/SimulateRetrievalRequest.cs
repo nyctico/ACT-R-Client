@@ -1,25 +1,23 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SimulateRetrievalRequest : AbstractEvaluationRequest
     {
-        public SimulateRetrievalRequest(List<object> requestDetails, string model = null) : base(
+        public SimulateRetrievalRequest(object[] requestDetails, string model = null) : base(
             "simulate-retrieval-request",
             model)
         {
             RequestDetails = requestDetails;
         }
 
-        public List<object> RequestDetails { get; set; }
+        public object[] RequestDetails { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(RequestDetails);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

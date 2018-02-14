@@ -24,6 +24,6 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             return list;
         }
 
-        public abstract List<object> ToParameterList();
+        public abstract object[] ToParameterList();
     }
 }

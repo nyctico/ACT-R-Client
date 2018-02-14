@@ -15,7 +15,7 @@ namespace Nyctico.Actr.Client.Data
         public string Method { set; get; }
         public string Title { set; get; }
 
-        public List<object> ToJsonList()
+        public object[] ToJsonList()
         {
             var list = new List<object>();
 
@@ -23,7 +23,7 @@ namespace Nyctico.Actr.Client.Data
             list.Add(Method);
             list.Add(Title);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Reload : AbstractEvaluationRequest
     {
@@ -11,13 +9,13 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public bool Compile { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Compile);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineChunks : AbstractEvaluationRequest
     {
-        public DefineChunks(List<object> chunks, string model = null) : base("define-chunks",
+        public DefineChunks(object[] chunks, string model = null) : base("define-chunks",
             model)
         {
             Chunks = chunks;
         }
 
-        public List<object> Chunks { get; set; }
+        public object[] Chunks { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Chunks);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Sdp : AbstractEvaluationRequest
     {
-        public Sdp(List<object> parameters, string model = null) : base("sdp",
+        public Sdp(object[] parameters, string model = null) : base("sdp",
             model)
         {
             Parameters = parameters;
         }
 
-        public List<object> Parameters { get; set; }
+        public object[] Parameters { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Parameters);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

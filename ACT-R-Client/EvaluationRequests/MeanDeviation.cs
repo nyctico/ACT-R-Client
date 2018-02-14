@@ -16,7 +16,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public List<double> Data { set; get; }
         public bool Output { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -24,7 +24,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Data);
             list.Add(Output);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class MpShowQueue : AbstractEvaluationRequest
     {
@@ -13,13 +11,13 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public bool IndicateTraced { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(IndicateTraced);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

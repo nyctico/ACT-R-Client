@@ -15,13 +15,13 @@ namespace Nyctico.Actr.Client.MonitorRequests
         public string CommandToCall { get; set; }
         public string MonitorStyle { set; get; }
 
-        public List<object> ToParameterList()
+        public object[] ToParameterList()
         {
             var list = new List<object> {CommandToMonitor, CommandToCall};
 
             if (MonitorStyle != null) list.Add(MonitorStyle);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

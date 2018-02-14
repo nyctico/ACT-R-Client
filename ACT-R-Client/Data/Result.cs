@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Nyctico.Actr.Client.Data
@@ -7,7 +6,7 @@ namespace Nyctico.Actr.Client.Data
     public class Result
     {
         [JsonProperty(PropertyName = "result")]
-        public List<object> AllRetruns { set; get; }
+        public object[] AllRetruns { set; get; }
 
         [JsonIgnore]
         public long ReturnLong
@@ -40,9 +39,9 @@ namespace Nyctico.Actr.Client.Data
         }
 
         [JsonIgnore]
-        public List<object> ReturnList
+        public object[] ReturnList
         {
-            get { return ((JArray) AllRetruns[0]).ToObject<List<object>>(); }
+            get { return ((JArray) AllRetruns[0]).ToObject<object[]>(); }
         }
 
         [JsonProperty(PropertyName = "error")] public Error Error { set; get; }

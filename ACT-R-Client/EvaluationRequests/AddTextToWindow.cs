@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Nyctico.Actr.Client.Data;
+﻿using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
@@ -29,7 +28,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Width { set; get; }
         public int FontSize { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -42,7 +41,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Width);
             list.Add(FontSize);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Sdm : AbstractEvaluationRequest
     {
-        public Sdm(List<object> specifications, string model = null) : base("sdm",
+        public Sdm(object[] specifications, string model = null) : base("sdm",
             model)
         {
             Specifications = specifications;
         }
 
-        public List<object> Specifications { get; set; }
+        public object[] Specifications { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Specifications);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

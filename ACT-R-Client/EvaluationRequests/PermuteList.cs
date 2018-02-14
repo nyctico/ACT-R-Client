@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PermuteList : AbstractEvaluationRequest
     {
-        public PermuteList(List<object> indexes, string model = null) : base("permute-list",
+        public PermuteList(object[] indexes, string model = null) : base("permute-list",
             model)
         {
             Indexes = indexes;
         }
 
-        public List<object> Indexes { set; get; }
+        public object[] Indexes { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Indexes);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

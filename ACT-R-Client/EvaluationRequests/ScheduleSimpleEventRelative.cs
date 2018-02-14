@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ScheduleSimpleEventRelative : AbstractEvaluationRequest
     {
-        public ScheduleSimpleEventRelative(long timeDelay, string action, List<object> parameters = null,
+        public ScheduleSimpleEventRelative(long timeDelay, string action, object[] parameters = null,
             string module = "NONE", int priority = 0, bool maintenance = false,
             string model = null) : base("schedule-simple-event-relative", model)
         {
@@ -18,12 +16,12 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public long TimeDelay { set; get; }
         public string Action { set; get; }
-        public List<object> Parameters { set; get; }
+        public object[] Parameters { set; get; }
         public string Module { set; get; }
         public int Priority { set; get; }
         public bool Maintenance { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -34,7 +32,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(Priority);
             list.Add(Maintenance);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class TriggerReward : AbstractEvaluationRequest
     {
@@ -15,14 +13,14 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public long RewardValue { get; set; }
         public bool Maintenance { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(RewardValue);
             list.Add(Maintenance);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

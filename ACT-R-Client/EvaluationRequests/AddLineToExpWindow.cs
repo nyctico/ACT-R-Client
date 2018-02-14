@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Nyctico.Actr.Client.Data;
+﻿using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
@@ -20,7 +19,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int[] End { set; get; }
         public string Color { set; get; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
@@ -29,7 +28,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             list.Add(End);
             if (Color != null) list.Add(Color);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

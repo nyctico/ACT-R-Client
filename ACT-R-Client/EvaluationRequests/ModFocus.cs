@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModFocus : AbstractEvaluationRequest
     {
-        public ModFocus(List<object> mods, string model = null) : base("mod-focus",
+        public ModFocus(object[] mods, string model = null) : base("mod-focus",
             model)
         {
             Mods = mods;
         }
 
-        public List<object> Mods { get; set; }
+        public object[] Mods { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Mods);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

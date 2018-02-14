@@ -12,13 +12,13 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public List<string> Parameters { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(Parameters);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

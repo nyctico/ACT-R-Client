@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ChunkSlotValue : AbstractEvaluationRequest
     {
@@ -14,14 +12,14 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string ChunkName { get; set; }
         public string SlotName { get; set; }
 
-        public override List<object> ToParameterList()
+        public override object[] ToParameterList()
         {
             var list = BaseParameterList();
 
             list.Add(ChunkName);
             list.Add(SlotName);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

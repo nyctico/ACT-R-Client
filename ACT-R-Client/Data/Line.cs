@@ -13,14 +13,14 @@ namespace Nyctico.Actr.Client.Data
         public string WindowTitle { set; get; }
         public string Id { set; get; }
 
-        public List<object> ToJsonList()
+        public object[] ToJsonList()
         {
             var list = new List<object>();
 
             list.Add(WindowTitle);
             list.Add(Id);
 
-            return list;
+            return list.ToArray();
         }
     }
 }

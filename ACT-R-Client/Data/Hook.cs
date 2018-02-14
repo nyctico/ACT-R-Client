@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Nyctico.Actr.Client.Data
 {
@@ -11,7 +10,7 @@ namespace Nyctico.Actr.Client.Data
         [JsonProperty(PropertyName = "id")] public int Id { set; get; }
 
         [JsonProperty(PropertyName = "params")]
-        public List<object> Parameters { set; get; }
+        public object[] Parameters { set; get; }
 
         public string ToJson()
         {
