@@ -14,7 +14,7 @@
         public int Time { get; set; }
         public bool Ms { get; set; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

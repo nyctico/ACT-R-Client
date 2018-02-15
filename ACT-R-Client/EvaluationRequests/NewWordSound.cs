@@ -16,7 +16,7 @@
         public string Location { get; set; }
         public bool TimeInMs { set; get; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

@@ -14,7 +14,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public Window Window { set; get; }
         public IItem Item { get; set; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

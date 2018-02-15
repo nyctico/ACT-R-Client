@@ -13,7 +13,7 @@
         public long RewardValue { get; set; }
         public bool Maintenance { get; set; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

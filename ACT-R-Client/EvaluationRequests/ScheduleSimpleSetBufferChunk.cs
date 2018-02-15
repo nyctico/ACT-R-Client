@@ -21,7 +21,7 @@
         public int Priority { set; get; }
         public bool Requested { set; get; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

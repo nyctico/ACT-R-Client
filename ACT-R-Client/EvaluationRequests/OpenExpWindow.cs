@@ -20,7 +20,7 @@
         public int X { set; get; }
         public int Y { set; get; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

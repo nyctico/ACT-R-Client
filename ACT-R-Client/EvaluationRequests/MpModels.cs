@@ -6,7 +6,7 @@
         {
         }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
             return list.ToArray();

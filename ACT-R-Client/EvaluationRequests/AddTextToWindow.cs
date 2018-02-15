@@ -28,7 +28,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Width { set; get; }
         public int FontSize { set; get; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

@@ -12,7 +12,7 @@
         public int Time { set; get; }
         public bool RealTime { set; get; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

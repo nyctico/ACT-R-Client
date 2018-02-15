@@ -12,7 +12,7 @@
         public string ChunkName { get; set; }
         public string SlotName { get; set; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

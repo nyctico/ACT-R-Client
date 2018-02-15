@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.HookRequests;
+using Nyctico.Actr.Client.AddCommandRequests;
 using Nyctico.Actr.Client.MonitorRequests;
 
 namespace Nyctico.Actr.Example.Tutorials
@@ -36,12 +36,12 @@ namespace Nyctico.Actr.Example.Tutorials
 
                 actr.AddTextToWindow(window, targetItem, 125, 150);
 
-                AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
+                AbstractAddCommandRequest addCommandRequest = new AddCommandRequest(KeyPressAction,
                     "unit2-key-press",
-                    "output-key",
+                    "unit2-key-press",
                     "Assignment 2 task output-key monitor");
 
-                actr.AddDispatcherHook(hookRequest);
+                actr.AddDispatcherCommand(addCommandRequest);
                 var modelDispatcherMonitor = new MonitorRequest("output-key", "unit2-key-press");
                 actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
@@ -55,8 +55,9 @@ namespace Nyctico.Actr.Example.Tutorials
                     while (_pressedKey.Equals("")) Thread.Sleep(1);
                 }
 
-                actr.RemoveDispatcherMonitor("output-keyunit2-key-press");
-                actr.RemoveDispatcherHook("output-key");
+                //actr.RemoveDispatcherMonitor("output-key", "unit2-key-press");
+                actr.RemoveDispatcherMonitor(modelDispatcherMonitor);
+                actr.RemoveDispatcherCommand("unit2-key-press");
 
                 actr.StopTraceMonitoring();
                 Console.WriteLine(targetItem.ToLower().Equals(_pressedKey.ToLower()));

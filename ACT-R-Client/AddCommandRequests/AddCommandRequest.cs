@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Nyctico.Actr.Client.HookRequests
+namespace Nyctico.Actr.Client.AddCommandRequests
 {
-    public class LambdaHookRequest : AbstractHookRequest
+    public class AddCommandRequest : AbstractAddCommandRequest
     {
         private readonly Action<object[]> _execFunc;
 
-        public LambdaHookRequest(Action<object[]> execFunc, string publishedName, string privateName,
+        public AddCommandRequest(Action<object[]> execFunc, string publishedName, string privateName,
             string documentation, string multipleInstanceErrorMessage = null, string lispCmd = null) : base(
             publishedName, privateName, documentation, multipleInstanceErrorMessage, lispCmd)
         {

@@ -150,8 +150,8 @@
     <Compile Include="EvaluationRequests\UsedProductionBuffers.cs" />
     <Compile Include="EvaluationRequests\Whynot.cs" />
     <Compile Include="EvaluationRequests\WhynotDm.cs" />
-    <Compile Include="HookRequests\AbstractHookRequest.cs" />
-    <Compile Include="HookRequests\LambdaHookRequest.cs" />
+    <Compile Include="AddCommandRequests\AbstractAddCommandRequest.cs" />
+    <Compile Include="AddCommandRequests\AddCommandRequest.cs" />
     <Compile Include="Data\Window.cs" />
     <Compile Include="Data\Error.cs" />
     <Compile Include="Data\Message.cs" />

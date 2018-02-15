@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Nyctico.Actr.Client.HookRequests
+namespace Nyctico.Actr.Client.AddCommandRequests
 {
-    public abstract class AbstractHookRequest
+    public abstract class AbstractAddCommandRequest
     {
-        protected AbstractHookRequest(string publishedName, string privateName,
+        protected AbstractAddCommandRequest(string publishedName, string privateName,
             string documentation = "No documentation provided.",
             string multipleInstanceErrorMessage = null, string lispCmd = null)
         {

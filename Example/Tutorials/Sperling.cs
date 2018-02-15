@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nyctico.Actr.Client;
-using Nyctico.Actr.Client.HookRequests;
+using Nyctico.Actr.Client.AddCommandRequests;
 using Nyctico.Actr.Client.MonitorRequests;
 
 namespace Nyctico.Actr.Example.Tutorials
@@ -113,18 +113,18 @@ namespace Nyctico.Actr.Example.Tutorials
                 900 + actr.ActrRandom(200), "clear-exp-window",
                 new object[] {window.Title});
 
-            AbstractHookRequest hookRequest = new LambdaHookRequest(list => KeyPressAction(list),
+            AbstractAddCommandRequest addCommandRequest = new AddCommandRequest(list => KeyPressAction(list),
                 "sperling-response",
                 "KeyPressAction",
                 "Sperling task key press response monitor");
-            actr.AddDispatcherHook(hookRequest);
+            actr.AddDispatcherCommand(addCommandRequest);
             var modelDispatcherMonitor = new MonitorRequest("output-key", "sperling-response");
             actr.AddDispatcherMonitor(modelDispatcherMonitor);
 
             actr.Run(30, runInRealTime);
 
-            actr.RemoveDispatcherMonitor("output-keysperling-response");
-            actr.RemoveDispatcherHook("KeyPressAction");
+            actr.RemoveDispatcherMonitor("output-key", "sperling-response");
+            actr.RemoveDispatcherCommand("KeyPressAction");
 
             var score = 0;
 

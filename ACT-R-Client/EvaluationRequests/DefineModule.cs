@@ -21,7 +21,7 @@
         public string Doc { get; set; }
         public string Inter { get; set; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

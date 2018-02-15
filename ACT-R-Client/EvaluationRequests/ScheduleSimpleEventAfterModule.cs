@@ -19,7 +19,7 @@
         public string Module { set; get; }
         public bool Maintenance { set; get; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

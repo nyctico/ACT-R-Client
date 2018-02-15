@@ -11,7 +11,7 @@
 
         public string ParameterName { get; set; }
 
-        public override object[] ToParameterList()
+        public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 

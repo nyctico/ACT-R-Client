@@ -6,9 +6,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Nyctico.Actr.Client.AddCommandRequests;
 using Nyctico.Actr.Client.Data;
 using Nyctico.Actr.Client.EvaluationRequests;
-using Nyctico.Actr.Client.HookRequests;
 using Nyctico.Actr.Client.MonitorRequests;
 
 namespace Nyctico.Actr.Client
@@ -18,8 +18,8 @@ namespace Nyctico.Actr.Client
     /// </summary>
     public class ActRClient : IDisposable
     {
-        private readonly ConcurrentDictionary<string, AbstractHookRequest> _abstractCommands =
-            new ConcurrentDictionary<string, AbstractHookRequest>();
+        private readonly ConcurrentDictionary<string, AbstractAddCommandRequest> _abstractCommands =
+            new ConcurrentDictionary<string, AbstractAddCommandRequest>();
 
         private readonly string _host;
         private readonly BlockingCollection<Message> _messageQueue = new BlockingCollection<Message>();
@@ -67,25 +67,25 @@ namespace Nyctico.Actr.Client
         /// <summary>
         ///     Adds a hook to the dispachter (aka add-command)
         /// </summary>
-        /// <param name="hookRequest">Hook request</param>
-        public void AddDispatcherHook(AbstractHookRequest hookRequest)
+        /// <param name="addCommandRequest">Hook request</param>
+        public void AddDispatcherCommand(AbstractAddCommandRequest addCommandRequest)
         {
-            var result = SendMessage("check", hookRequest.PublishedNameAsList);
+            var result = SendMessage("check", addCommandRequest.PublishedNameAsList);
             if (result.AllRetruns != null && result.ReturnObject != null) return;
-            SendMessage("add", hookRequest.ToParameterList());
-            _abstractCommands.TryAdd(hookRequest.PrivateName, hookRequest);
+            SendMessage("add", addCommandRequest.ToParameterList());
+            _abstractCommands.TryAdd(addCommandRequest.PrivateName, addCommandRequest);
         }
 
         /// <summary>
         ///     Removes a hook from the dispatcher (aka remove-command)
         /// </summary>
-        /// <param name="hookRequest">Hook request</param>
-        public void RemoveDispatcherHook(AbstractHookRequest hookRequest)
+        /// <param name="addCommandRequest">Hook request</param>
+        public void RemoveDispatcherCommand(AbstractAddCommandRequest addCommandRequest)
         {
-            var result = SendMessage("check", hookRequest.PublishedNameAsList);
+            var result = SendMessage("check", addCommandRequest.PublishedNameAsList);
             if (result.AllRetruns == null || result.ReturnObject == null) return;
-            SendMessage("remove", hookRequest.PublishedNameAsList);
-            _abstractCommands.TryRemove(hookRequest.PrivateName, out hookRequest);
+            SendMessage("remove", addCommandRequest.PublishedNameAsList);
+            _abstractCommands.TryRemove(addCommandRequest.PrivateName, out addCommandRequest);
         }
 
         /// <summary>
@@ -93,12 +93,12 @@ namespace Nyctico.Actr.Client
         /// </summary>
         /// <param name="privateName">Private name of the hook</param>
         /// <exception cref="KeyNotFoundException">Thrown when the private name is not found</exception>
-        public void RemoveDispatcherHook(string privateName)
+        public void RemoveDispatcherCommand(string privateName)
         {
-            AbstractHookRequest abstractHookRequest;
-            if (!_abstractCommands.TryRemove(privateName, out abstractHookRequest))
+            AbstractAddCommandRequest abstractAddCommandRequest;
+            if (!_abstractCommands.TryRemove(privateName, out abstractAddCommandRequest))
                 throw new KeyNotFoundException("DispatcherHook not found!");
-            RemoveDispatcherHook(abstractHookRequest);
+            RemoveDispatcherCommand(abstractAddCommandRequest);
         }
 
         /// <summary>
@@ -125,12 +125,13 @@ namespace Nyctico.Actr.Client
         /// <summary>
         ///     Removes monitor from dispatcher (aka remove-monitor)
         /// </summary>
-        /// <param name="commanToMonitorCommandToCall">Concated string of the commandToMonitor and CommandToCall monitor parameters</param>
+        /// <param name="commanToMonitor">Command to monitor</param>
+        /// <param name="commandToCall">Command to call</param>
         /// <exception cref="KeyNotFoundException">Thrown when the monitor is not found</exception>
-        public void RemoveDispatcherMonitor(string commanToMonitorCommandToCall)
+        public void RemoveDispatcherMonitor(string commanToMonitor, string commandToCall)
         {
             MonitorRequest monitorRequest;
-            if (!_monitors.TryRemove(commanToMonitorCommandToCall, out monitorRequest))
+            if (!_monitors.TryRemove(commanToMonitor+commandToCall, out monitorRequest))
                 throw new KeyNotFoundException("Monitor not found!");
             RemoveDispatcherMonitor(monitorRequest);
         }
@@ -142,9 +143,9 @@ namespace Nyctico.Actr.Client
         public void StartTraceMonitoring(Action<object[]> traceAction)
         {
             var commandName = ToString() + "_TraceMonitor";
-            AbstractHookRequest hookRequest =
-                new LambdaHookRequest(traceAction, commandName, "printTrace", "Trace monitoring");
-            AddDispatcherHook(hookRequest);
+            AbstractAddCommandRequest addCommandRequest =
+                new AddCommandRequest(traceAction, commandName, "printTrace", "Trace monitoring");
+            AddDispatcherCommand(addCommandRequest);
 
             var modelDispatcherMonitor = new MonitorRequest("model-trace", commandName);
             AddDispatcherMonitor(modelDispatcherMonitor);
@@ -175,11 +176,11 @@ namespace Nyctico.Actr.Client
         public void StopTraceMonitoring()
         {
             var commandName = ToString() + "_TraceMonitor";
-            RemoveDispatcherMonitor("model-trace" + commandName);
-            RemoveDispatcherMonitor("command-trace" + commandName);
-            RemoveDispatcherMonitor("warning-trace" + commandName);
-            RemoveDispatcherMonitor("general-trace" + commandName);
-            RemoveDispatcherHook("printTrace");
+            RemoveDispatcherMonitor("model-trace", commandName);
+            RemoveDispatcherMonitor("command-trace", commandName);
+            RemoveDispatcherMonitor("warning-trace", commandName);
+            RemoveDispatcherMonitor("general-trace", commandName);
+            RemoveDispatcherCommand("printTrace");
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace Nyctico.Actr.Client
         /// <returns>Result of the evaluated request</returns>
         public Result SendEvaluationRequest(AbstractEvaluationRequest request)
         {
-            return SendMessage("evaluate", request.ToParameterList());
+            return SendMessage("evaluate", request.ToParameterArray());
         }
 
         /// <summary>
@@ -243,7 +244,7 @@ namespace Nyctico.Actr.Client
                     }
                     catch (IOException)
                     {
-                        break; // TODO implement better solution
+                        break;
                     }
 
                     if (readChar.Equals('\x04'))
@@ -569,7 +570,8 @@ namespace Nyctico.Actr.Client
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void Run(int time, bool realTime = false, string model = null)
         {
-            SendEvaluationRequest(new Run(time, realTime, model));
+            AbstractEvaluationRequest abstractEvaluationRequest = new Run(time, realTime, model);
+            SendEvaluationRequest(abstractEvaluationRequest);
         }
 
         /// <summary>
