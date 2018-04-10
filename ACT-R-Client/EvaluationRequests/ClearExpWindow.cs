@@ -4,19 +4,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ClearExpWindow : AbstractEvaluationRequest
     {
-        public ClearExpWindow(Window window = null, string model = null) : base(
+        public ClearExpWindow(string windowTitle = null, string model = null) : base(
             "clear-exp-window", model)
         {
-            Window = window;
+            windowTitle = windowTitle;
         }
 
-        public Window Window { set; get; }
+        public string WindowTitle { set; get; }
 
         public override object[] ToParameterArray()
         {
             var list = BaseParameterList();
 
-            list.Add(Window);
+            list.Add(WindowTitle);
 
             return list.ToArray();
         }

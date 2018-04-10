@@ -510,7 +510,17 @@ namespace Nyctico.Actr.Client
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
         public void ClearExpWindow(Window window, string model = null)
         {
-            SendEvaluationRequest(new ClearExpWindow(window, model));
+            ClearExpWindow(window.Title, model);
+        }
+        
+        /// <summary>
+        ///     Remove all items from the window provided.
+        /// </summary>
+        /// <param name="windowTitle">Title of the window</param>
+        /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
+        public void ClearExpWindow(string windowTitle, string model = null)
+        {
+            SendEvaluationRequest(new ClearExpWindow(windowTitle, model));
         }
 
         /// <summary>
