@@ -429,12 +429,14 @@ namespace Nyctico.Actr.Client
         /// <param name="width">Text width. Default: 75</param>
         /// <param name="fontSize">Text size. Default: 12</param>
         /// <param name="model">Indicates if a specific model is requierd. If null, the current model will be used. Default: null</param>
-        public void AddTextToWindow(Window window, string text, int x, int y, string color = "black", int height = 50,
+        /// <returns></returns>
+        public Text AddTextToWindow(Window window, string text, int x, int y, string color = "black", int height = 50,
             int width = 75,
             int fontSize = 12, string model = null)
         {
-            SendEvaluationRequest(new AddTextToWindow(window, text, x, y, color, height, width, fontSize,
-                model));
+            var returnValues = SendEvaluationRequest(new AddTextToWindow(window, text, x, y, color, height, width, fontSize,
+                model)).ReturnList;
+            return new Text((string) returnValues[0], (string) returnValues[1]);
         }
 
         /// <summary>
