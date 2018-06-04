@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/nyctico/ACT-R-Client</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Alpha release</releaseNotes>
+    <releaseNotes>Beta release</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>act-r json-rpc</tags>
   </metadata>
