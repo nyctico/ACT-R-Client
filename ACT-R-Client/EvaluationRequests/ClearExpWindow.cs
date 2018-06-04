@@ -1,6 +1,4 @@
-﻿using Nyctico.Actr.Client.Data;
-
-namespace Nyctico.Actr.Client.EvaluationRequests
+﻿namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ClearExpWindow : AbstractEvaluationRequest
     {

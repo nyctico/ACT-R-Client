@@ -22,7 +22,8 @@ namespace Nyctico.Actr.Client
             new ConcurrentDictionary<string, AbstractAddCommandRequest>();
 
         private readonly string _host;
-        private readonly BlockingCollection<Message> _messageQueue = new BlockingCollection<Message>();
+        private readonly BlockingCollection<Message> _messageQueueIncoming = new BlockingCollection<Message>();
+        private readonly BlockingCollection<object> _messageQueueOutgoing = new BlockingCollection<object>();
 
         private readonly ConcurrentDictionary<string, MonitorRequest> _monitors =
             new ConcurrentDictionary<string, MonitorRequest>();
@@ -31,7 +32,8 @@ namespace Nyctico.Actr.Client
         private readonly ConcurrentDictionary<int, Result> _resultQueue = new ConcurrentDictionary<int, Result>();
         private Task _evaluateTask;
         private int _idCount;
-        private Task _queueTask;
+        private Task _incomingTask;
+        private Task _outgoingTask;
         private bool _running = true;
         private TcpClient _socket;
         private StreamReader _streamReader;
@@ -51,6 +53,7 @@ namespace Nyctico.Actr.Client
             StartTcpConnection();
             StartReceivingThread();
             StartEvaluatingThread();
+            StartOutgoingThread();
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace Nyctico.Actr.Client
         public void RemoveDispatcherMonitor(string commanToMonitor, string commandToCall)
         {
             MonitorRequest monitorRequest;
-            if (!_monitors.TryRemove(commanToMonitor+commandToCall, out monitorRequest))
+            if (!_monitors.TryRemove(commanToMonitor + commandToCall, out monitorRequest))
                 throw new KeyNotFoundException("Monitor not found!");
             RemoveDispatcherMonitor(monitorRequest);
         }
@@ -232,20 +235,13 @@ namespace Nyctico.Actr.Client
         /// </summary>
         private void StartReceivingThread()
         {
-            _queueTask = new Task(() =>
+            _incomingTask = new Task(() =>
             {
                 var tmp = "";
                 while (_running)
                 {
                     char readChar;
-                    try
-                    {
-                        readChar = (char) _streamReader.Read();
-                    }
-                    catch (IOException)
-                    {
-                        break;
-                    }
+                    readChar = (char) _streamReader.Read();
 
                     if (readChar.Equals('\x04'))
                     {
@@ -256,7 +252,7 @@ namespace Nyctico.Actr.Client
                         }
                         else
                         {
-                            _messageQueue.Add(JsonConvert.DeserializeObject<Message>(tmp));
+                            _messageQueueIncoming.Add(JsonConvert.DeserializeObject<Message>(tmp));
                         }
 
                         tmp = "";
@@ -267,11 +263,11 @@ namespace Nyctico.Actr.Client
                     }
                 }
             });
-            _queueTask.Start(TaskScheduler.Default);
+            _incomingTask.Start(TaskScheduler.Default);
         }
 
         /// <summary>
-        ///     Starts a new thread for evaluating command form the dispatcher
+        ///     Starts a new thread for evaluating commands form the dispatcher
         /// </summary>
         private void StartEvaluatingThread()
         {
@@ -279,7 +275,7 @@ namespace Nyctico.Actr.Client
             {
                 while (_running)
                 {
-                    var msg = _messageQueue.Take();
+                    var msg = _messageQueueIncoming.Take();
 
                     switch (msg.Method)
                     {
@@ -312,6 +308,26 @@ namespace Nyctico.Actr.Client
             }
         }
 
+        /// <summary>
+        ///     Starts a new thread for sending messages to the dispatcher
+        /// </summary>
+        private void StartOutgoingThread()
+        {
+            _outgoingTask = new Task(() =>
+            {
+                while (_running)
+                {
+                    var msg = _messageQueueOutgoing.Take();
+                    if (msg.GetType() == typeof(Message))
+                        _streamWriter.Write(((Message) msg).ToJson());
+                    if (msg.GetType() == typeof(Result))
+                        _streamWriter.Write(((Result) msg).ToJson());
+                    _streamWriter.Flush();
+                }
+            });
+            _outgoingTask.Start(TaskScheduler.Default);
+        }
+
 
         /// <summary>
         ///     Sends a message to the dispatcher
@@ -328,8 +344,7 @@ namespace Nyctico.Actr.Client
                 Method = method,
                 Parameters = parameters
             };
-            _streamWriter.Write(commandMessage.ToJson());
-            _streamWriter.Flush();
+            _messageQueueOutgoing.Add(commandMessage);
             var result = WaitForResult(commandMessage.Id);
             if (result.Error != null) throw new InvalidOperationException(result.Error.Message);
             return result;
@@ -347,8 +362,7 @@ namespace Nyctico.Actr.Client
                 AllRetruns = new object[] {true},
                 Error = null
             };
-            _streamWriter.Write(result.ToJson());
-            _streamWriter.Flush();
+            _messageQueueOutgoing.Add(result);
         }
 
         /// <summary>
@@ -364,8 +378,7 @@ namespace Nyctico.Actr.Client
                 AllRetruns = null,
                 Error = new Error(error)
             };
-            _streamWriter.Write(result.ToJson());
-            _streamWriter.Flush();
+            _messageQueueOutgoing.Add(result);
         }
 
         /// <summary>
@@ -434,7 +447,8 @@ namespace Nyctico.Actr.Client
             int width = 75,
             int fontSize = 12, string model = null)
         {
-            var returnValues = SendEvaluationRequest(new AddTextToWindow(window, text, x, y, color, height, width, fontSize,
+            var returnValues = SendEvaluationRequest(new AddTextToWindow(window, text, x, y, color, height, width,
+                fontSize,
                 model)).ReturnList;
             return new Text((string) returnValues[0], (string) returnValues[1]);
         }
@@ -514,7 +528,7 @@ namespace Nyctico.Actr.Client
         {
             ClearExpWindow(window.Title, model);
         }
-        
+
         /// <summary>
         ///     Remove all items from the window provided.
         /// </summary>
