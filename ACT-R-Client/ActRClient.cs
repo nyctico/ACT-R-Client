@@ -22,18 +22,19 @@ namespace Nyctico.Actr.Client
             new ConcurrentDictionary<string, AbstractAddCommandRequest>();
 
         private readonly string _host;
+        private readonly int _port;
+
         private readonly BlockingCollection<Message> _messageQueueIncoming = new BlockingCollection<Message>();
         private readonly BlockingCollection<object> _messageQueueOutgoing = new BlockingCollection<object>();
-
         private readonly ConcurrentDictionary<string, MonitorRequest> _monitors =
             new ConcurrentDictionary<string, MonitorRequest>();
-
-        private readonly int _port;
         private readonly ConcurrentDictionary<int, Result> _resultQueue = new ConcurrentDictionary<int, Result>();
+        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+
         private Task _evaluateTask;
-        private int _idCount;
         private Task _incomingTask;
         private Task _outgoingTask;
+        private int _idCount = 1;
         private bool _running = true;
         private TcpClient _socket;
         private StreamReader _streamReader;
@@ -48,7 +49,6 @@ namespace Nyctico.Actr.Client
         {
             _host = host;
             _port = port;
-            _idCount = 1;
 
             StartTcpConnection();
             StartReceivingThread();
@@ -62,9 +62,13 @@ namespace Nyctico.Actr.Client
         public void Dispose()
         {
             _running = false;
-            _streamReader.Dispose();
-            _streamWriter.Dispose();
+            _cancellationTokenSource.Cancel(false);
+            _streamWriter.Close();
+            _streamReader.Close();
             _socket.Close();
+            _evaluateTask.Wait();
+            _outgoingTask.Wait();
+            _incomingTask.Wait();
         }
 
         /// <summary>
@@ -211,12 +215,20 @@ namespace Nyctico.Actr.Client
         /// <returns>Received respond</returns>
         private Result WaitForResult(int id)
         {
-            while (true)
+            while (_running)
             {
                 Result result;
                 if (_resultQueue.TryRemove(id, out result)) return result;
                 Thread.Sleep(1);
             }
+
+            // should never be executed
+            return new Result
+            {
+                Id = id,
+                AllRetruns = null,
+                Error = new Error("Client is closing!")
+            };
         }
 
         /// <summary>
@@ -240,27 +252,31 @@ namespace Nyctico.Actr.Client
                 var tmp = "";
                 while (_running)
                 {
-                    char readChar;
-                    readChar = (char) _streamReader.Read();
-
-                    if (readChar.Equals('\x04'))
+                    try
                     {
-                        if (tmp.Contains("\"result\":"))
+                        char readChar;
+                        readChar = (char) _streamReader.Read();
+    
+                        if (readChar.Equals('\x04'))
                         {
-                            var result = JsonConvert.DeserializeObject<Result>(tmp);
-                            _resultQueue.TryAdd(result.Id, result);
+                            if (tmp.Contains("\"result\":"))
+                            {
+                                var result = JsonConvert.DeserializeObject<Result>(tmp);
+                                _resultQueue.TryAdd(result.Id, result);
+                            }
+                            else
+                            {
+                                _messageQueueIncoming.Add(JsonConvert.DeserializeObject<Message>(tmp));
+                            }
+    
+                            tmp = "";
                         }
                         else
                         {
-                            _messageQueueIncoming.Add(JsonConvert.DeserializeObject<Message>(tmp));
+                            tmp += readChar;
                         }
-
-                        tmp = "";
                     }
-                    else
-                    {
-                        tmp += readChar;
-                    }
+                    catch (IOException ){} // Socket is closed; Client is closing
                 }
             });
             _incomingTask.Start(TaskScheduler.Default);
@@ -275,17 +291,20 @@ namespace Nyctico.Actr.Client
             {
                 while (_running)
                 {
-                    var msg = _messageQueueIncoming.Take();
-
-                    switch (msg.Method)
+                    try
                     {
-                        case "evaluate":
-                            Evaluate(msg);
-                            break;
-                        default:
-                            SendErrorResult(msg.Id, "Method not found: " + msg.Method);
-                            break;
+                        var msg = _messageQueueIncoming.Take(_cancellationTokenSource.Token);
+                        switch (msg.Method)
+                        {
+                            case "evaluate":
+                                Evaluate(msg);
+                                break;
+                            default:
+                                SendErrorResult(msg.Id, "Method not found: " + msg.Method);
+                                break;
+                        }
                     }
+                    catch (OperationCanceledException){} // Client is closing
                 }
             });
             _evaluateTask.Start(TaskScheduler.Default);
@@ -317,12 +336,16 @@ namespace Nyctico.Actr.Client
             {
                 while (_running)
                 {
-                    var msg = _messageQueueOutgoing.Take();
-                    if (msg.GetType() == typeof(Message))
-                        _streamWriter.Write(((Message) msg).ToJson());
-                    if (msg.GetType() == typeof(Result))
-                        _streamWriter.Write(((Result) msg).ToJson());
-                    _streamWriter.Flush();
+                    try
+                    {
+                        var msg = _messageQueueOutgoing.Take(_cancellationTokenSource.Token);
+                        if (msg.GetType() == typeof(Message))
+                            _streamWriter.Write(((Message) msg).ToJson());
+                        if (msg.GetType() == typeof(Result))
+                            _streamWriter.Write(((Result) msg).ToJson());
+                        _streamWriter.Flush();
+                    }
+                    catch (OperationCanceledException){} // Client is closing
                 }
             });
             _outgoingTask.Start(TaskScheduler.Default);

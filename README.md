@@ -87,7 +87,7 @@ public class MyCommand : AbstractEvaluationRequest
     list.Add(StringPara);
 
     return list.ToArray();
-    }
+  }
 }
 
 // let the dispatcher evaluate my-command
