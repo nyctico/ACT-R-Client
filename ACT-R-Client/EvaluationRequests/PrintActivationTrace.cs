@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintActivationTrace : AbstractEvaluationRequest
     {
@@ -13,14 +15,10 @@
         public int Time { set; get; }
         public bool Ms { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Time);
-            list.Add(Ms);
-
-            return list.ToArray();
+            parameterList.Add(Time);
+            parameterList.Add(Ms);
         }
     }
 }

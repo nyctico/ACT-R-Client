@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PermuteList : AbstractEvaluationRequest
     {
@@ -10,13 +12,9 @@
 
         public object[] Indexes { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Indexes);
-
-            return list.ToArray();
+            parameterList.Add(Indexes);
         }
     }
 }

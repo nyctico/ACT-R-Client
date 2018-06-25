@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SetBufferChunk : AbstractEvaluationRequest
     {
@@ -14,15 +16,11 @@
         public string ChunkName { get; set; }
         public bool Requested { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(BufferName);
-            list.Add(ChunkName);
-            list.Add(Requested);
-
-            return list.ToArray();
+            parameterList.Add(BufferName);
+            parameterList.Add(ChunkName);
+            parameterList.Add(Requested);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class SaveHistoryData : AbstractEvaluationRequest
     {
@@ -15,15 +17,11 @@
         public string FileName { get; set; }
         public object[] Parameters { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(HistoryName);
-            list.Add(FileName);
-            list.Add(Parameters);
-
-            return list.ToArray();
+            parameterList.Add(HistoryName);
+            parameterList.Add(FileName);
+            parameterList.Add(Parameters);
         }
     }
 }

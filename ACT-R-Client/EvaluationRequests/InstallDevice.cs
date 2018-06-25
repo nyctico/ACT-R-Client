@@ -1,4 +1,5 @@
-﻿using Nyctico.Actr.Client.Data;
+﻿using System.Collections.Generic;
+using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
@@ -12,13 +13,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public IDevice Window { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Window.ToJsonList());
-
-            return list.ToArray();
+            parameterList.Add(Window.ToJsonList());
         }
     }
 }

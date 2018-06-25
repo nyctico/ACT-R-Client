@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModelOutput : AbstractEvaluationRequest
     {
@@ -10,13 +12,9 @@
 
         public string Output { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Output);
-
-            return list.ToArray();
+            parameterList.Add(Output);
         }
     }
 }

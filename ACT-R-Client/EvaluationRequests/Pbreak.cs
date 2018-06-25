@@ -11,13 +11,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public List<string> ProductionNames { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(ProductionNames);
-
-            return list.ToArray();
+            parameterList.Add(ProductionNames);
         }
     }
 }

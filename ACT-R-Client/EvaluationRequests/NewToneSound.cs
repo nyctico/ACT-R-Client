@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class NewToneSound : AbstractEvaluationRequest
     {
@@ -16,16 +18,12 @@
         public double? Onset { get; set; }
         public bool TimeInMs { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Frequence);
-            list.Add(Duration);
-            list.Add(Onset);
-            list.Add(TimeInMs);
-
-            return list.ToArray();
+            parameterList.Add(Frequence);
+            parameterList.Add(Duration);
+            parameterList.Add(Onset);
+            parameterList.Add(TimeInMs);
         }
     }
 }

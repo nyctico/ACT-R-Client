@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintBoldResponseData : AbstractEvaluationRequest
     {
@@ -7,10 +9,6 @@
         {
         }
 
-        public override object[] ToParameterArray()
-        {
-            var list = BaseParameterList();
-            return list.ToArray();
-        }
+        public override void AddParameterToList(List<object> parameterList){}
     }
 }

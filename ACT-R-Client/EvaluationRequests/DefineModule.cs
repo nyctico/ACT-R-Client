@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineModule : AbstractEvaluationRequest
     {
@@ -21,18 +23,14 @@
         public string Doc { get; set; }
         public string Inter { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Name);
-            list.Add(Buffers);
-            list.Add(Parameters);
-            list.Add(Version);
-            list.Add(Doc);
-            list.Add(Inter);
-
-            return list.ToArray();
+            parameterList.Add(Name);
+            parameterList.Add(Buffers);
+            parameterList.Add(Parameters);
+            parameterList.Add(Version);
+            parameterList.Add(Doc);
+            parameterList.Add(Inter);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ScheduleSimpleEventRelative : AbstractEvaluationRequest
     {
@@ -21,18 +23,14 @@
         public int Priority { set; get; }
         public bool Maintenance { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(TimeDelay);
-            list.Add(Action);
-            list.Add(Parameters);
-            list.Add(Module);
-            list.Add(Priority);
-            list.Add(Maintenance);
-
-            return list.ToArray();
+            parameterList.Add(TimeDelay);
+            parameterList.Add(Action);
+            parameterList.Add(Parameters);
+            parameterList.Add(Module);
+            parameterList.Add(Priority);
+            parameterList.Add(Maintenance);
         }
     }
 }

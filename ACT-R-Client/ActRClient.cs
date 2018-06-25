@@ -205,7 +205,7 @@ namespace Nyctico.Actr.Client
         /// <returns>Result of the evaluated request</returns>
         public Result SendEvaluationRequest(AbstractEvaluationRequest request)
         {
-            return SendMessage("evaluate", request.ToParameterArray());
+            return SendMessage("evaluate", request.Parameterlist);
         }
 
         /// <summary>

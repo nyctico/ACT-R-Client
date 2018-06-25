@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class NewDigitSound : AbstractEvaluationRequest
     {
@@ -14,15 +16,11 @@
         public double? Onset { get; set; }
         public bool TimeInMs { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Digit);
-            list.Add(Onset);
-            list.Add(TimeInMs);
-
-            return list.ToArray();
+            parameterList.Add(Digit);
+            parameterList.Add(Onset);
+            parameterList.Add(TimeInMs);
         }
     }
 }

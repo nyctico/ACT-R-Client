@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintChunkActivationTrace : AbstractEvaluationRequest
     {
@@ -14,15 +16,11 @@
         public int Time { get; set; }
         public bool Ms { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(ChunkName);
-            list.Add(Time);
-            list.Add(Ms);
-
-            return list.ToArray();
+            parameterList.Add(ChunkName);
+            parameterList.Add(Time);
+            parameterList.Add(Ms);
         }
     }
 }

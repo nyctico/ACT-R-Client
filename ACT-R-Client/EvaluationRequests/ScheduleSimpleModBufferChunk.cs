@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ScheduleSimpleModBufferChunk : AbstractEvaluationRequest
     {
@@ -19,17 +21,13 @@
         public string Module { set; get; }
         public int Priority { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Buffer);
-            list.Add(ModListOrSpec);
-            list.Add(Time);
-            list.Add(Module);
-            list.Add(Priority);
-
-            return list.ToArray();
+            parameterList.Add(Buffer);
+            parameterList.Add(ModListOrSpec);
+            parameterList.Add(Time);
+            parameterList.Add(Module);
+            parameterList.Add(Priority);
         }
     }
 }

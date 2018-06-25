@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ChunkP : AbstractEvaluationRequest
     {
@@ -9,13 +11,9 @@
 
         public string ChunkName { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(ChunkName);
-
-            return list.ToArray();
+            parameterList.Add(ChunkName);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class PrintWarning : AbstractEvaluationRequest
     {
@@ -10,13 +12,9 @@
 
         public string Warning { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Warning);
-
-            return list.ToArray();
+            parameterList.Add(Warning);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ScheduleSimpleSetBufferChunk : AbstractEvaluationRequest
     {
@@ -21,18 +23,14 @@
         public int Priority { set; get; }
         public bool Requested { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Buffer);
-            list.Add(Chunk);
-            list.Add(Time);
-            list.Add(Module);
-            list.Add(Priority);
-            list.Add(Requested);
-
-            return list.ToArray();
+            parameterList.Add(Buffer);
+            parameterList.Add(Chunk);
+            parameterList.Add(Time);
+            parameterList.Add(Module);
+            parameterList.Add(Priority);
+            parameterList.Add(Requested);
         }
     }
 }

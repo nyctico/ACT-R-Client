@@ -1,4 +1,5 @@
-﻿using Nyctico.Actr.Client.Data;
+﻿using System.Collections.Generic;
+using Nyctico.Actr.Client.Data;
 
 namespace Nyctico.Actr.Client.EvaluationRequests
 {
@@ -28,20 +29,16 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Width { set; get; }
         public int FontSize { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Window.ToJsonList());
-            list.Add(Text);
-            list.Add(X);
-            list.Add(Y);
-            list.Add(Color);
-            list.Add(Height);
-            list.Add(Width);
-            list.Add(FontSize);
-
-            return list.ToArray();
+            parameterList.Add(Window.ToJsonList());
+            parameterList.Add(Text);
+            parameterList.Add(X);
+            parameterList.Add(Y);
+            parameterList.Add(Color);
+            parameterList.Add(Height);
+            parameterList.Add(Width);
+            parameterList.Add(FontSize);
         }
     }
 }

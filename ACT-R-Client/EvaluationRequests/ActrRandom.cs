@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ActrRandom : AbstractEvaluationRequest
     {
@@ -10,13 +12,9 @@
 
         public long Value { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Value);
-
-            return list.ToArray();
+            parameterList.Add(Value);
         }
     }
 }

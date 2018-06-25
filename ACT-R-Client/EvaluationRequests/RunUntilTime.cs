@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class RunUntilTime : AbstractEvaluationRequest
     {
@@ -12,14 +14,10 @@
         public int Time { set; get; }
         public bool RealTime { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(Time);
-            list.Add(RealTime);
-
-            return list.ToArray();
+            parameterList.Add(Time);
+            parameterList.Add(RealTime);
         }
     }
 }

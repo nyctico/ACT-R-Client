@@ -14,6 +14,16 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public bool UseModel { set; get; }
         public string Model { set; get; }
 
+        public object[] Parameterlist
+        {
+            get
+            {
+                List<object> parameterList = BaseParameterList();
+                AddParameterToList(parameterList);
+                return parameterList.ToArray();
+            }
+        }
+
         protected List<object> BaseParameterList()
         {
             var list = new List<object> {Command};
@@ -24,6 +34,6 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             return list;
         }
 
-        public abstract object[] ToParameterArray();
+        public abstract void AddParameterToList(List<object> parameterList);
     }
 }

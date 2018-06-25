@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class RunNEvents : AbstractEvaluationRequest
     {
@@ -12,14 +14,10 @@
         public long EventCount { set; get; }
         public bool RealTime { set; get; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(EventCount);
-            list.Add(RealTime);
-
-            return list.ToArray();
+            parameterList.Add(EventCount);
+            parameterList.Add(RealTime);
         }
     }
 }

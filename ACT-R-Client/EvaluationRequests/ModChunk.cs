@@ -1,4 +1,6 @@
-﻿namespace Nyctico.Actr.Client.EvaluationRequests
+﻿using System.Collections.Generic;
+
+namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModChunk : AbstractEvaluationRequest
     {
@@ -12,14 +14,10 @@
         public string ChunkName { get; set; }
         public object[] Mods { get; set; }
 
-        public override object[] ToParameterArray()
+        public override void AddParameterToList(List<object> parameterList)
         {
-            var list = BaseParameterList();
-
-            list.Add(ChunkName);
-            list.Add(Mods);
-
-            return list.ToArray();
+            parameterList.Add(ChunkName);
+            parameterList.Add(Mods);
         }
     }
 }
