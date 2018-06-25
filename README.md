@@ -63,7 +63,7 @@ actr.InstallDevice(window);
 actr.Run(10, true);
 ```
 At the moment only a few are tested, so erros can be occure (please let me know if you found one and i will fix it).
-If you want to make a different request you have to implement the abstract class *AbstractEvaluationRequest*, adding all necessary parameter to the *BaseParameterList* within the *ToParameterArray* method. This *AbstractEvaluationRequest* can then be send to the dispatcher.
+If you want to make a different request you have to implement the abstract class *AbstractEvaluationRequest*, adding all necessary parameter to the given *parameterList* within the *AddParameterToList* method. This *AbstractEvaluationRequest* can then be send to the dispatcher.
 ```csharp
 // example AbstractEvaluationRequest implementation for the "my-command"
 public class MyCommand : AbstractEvaluationRequest
@@ -78,15 +78,11 @@ public class MyCommand : AbstractEvaluationRequest
   public bool BoolPara { set; get; }
   public string StringPara { set; get; }
 
-  public override object[] ToParameterArray()
+  public override void AddParameterToList(List<object> parameterList)
   {
-    var list = BaseParameterList();
-
-    list.Add(IntPara);
-    list.Add(BoolPara);
-    list.Add(StringPara);
-
-    return list.ToArray();
+    parameterList.Add(IntPara);
+    parameterList.Add(BoolPara);
+    parameterList.Add(StringPara);
   }
 }
 
