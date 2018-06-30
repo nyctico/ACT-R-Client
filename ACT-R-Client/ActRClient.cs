@@ -70,6 +70,14 @@ namespace Nyctico.Actr.Client
             _outgoingTask.Wait();
             _incomingTask.Wait();
         }
+        
+        /// <summary>
+        ///     Close client
+        /// </summary>
+        public void Close()
+        {
+            Dispose();
+        }
 
         /// <summary>
         ///     Adds a hook to the dispachter (aka add-command)
