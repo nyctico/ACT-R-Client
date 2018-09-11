@@ -4,15 +4,15 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Spp : AbstractEvaluationRequest
     {
-        public Spp(object[] parameters, string model = null) : base("spp",
+        public Spp(dynamic[] parameters, string model = null) : base("spp",
             model)
         {
             Parameters = parameters;
         }
 
-        public object[] Parameters { get; set; }
+        public dynamic[] Parameters { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Parameters);
         }

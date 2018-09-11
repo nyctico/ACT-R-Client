@@ -12,7 +12,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public string ChunkName { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(ChunkName);
         }

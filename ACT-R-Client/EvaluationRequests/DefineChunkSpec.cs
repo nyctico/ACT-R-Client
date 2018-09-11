@@ -4,16 +4,16 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class DefineChunkSpec : AbstractEvaluationRequest
     {
-        public DefineChunkSpec(object[] spec, string model = null) : base(
+        public DefineChunkSpec(dynamic[] spec, string model = null) : base(
             "define-chunk-spec",
             model)
         {
             Spec = spec;
         }
 
-        public object[] Spec { get; set; }
+        public dynamic[] Spec { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Spec);
         }

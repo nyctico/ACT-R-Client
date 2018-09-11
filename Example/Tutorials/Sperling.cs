@@ -14,9 +14,9 @@ namespace Nyctico.Actr.Example.Tutorials
         private static readonly List<double> Results = new List<double> {0.0, 0.0, 0.0, 0.0};
         private static readonly List<double> Onsets = new List<double> {0.0, .15, .3, 1.0};
 
-        public static void Execute(bool realTime, int numberOfRuns)
+        public static void Execute(string ip, int port, bool realTime, int numberOfRuns)
         {
-            using (var actr = new ActRClient("127.0.0.1", 2650))
+            using (var actr = new ActRClient(ip, port))
             {
                 actr.StartTraceMonitoring();
                 actr.LoadActrModel("ACT-R:tutorial;unit3;sperling-model.lisp");
@@ -60,7 +60,7 @@ namespace Nyctico.Actr.Example.Tutorials
 
             var window = actr.OpenExpWindow("Sperling Experiment", runInRealTime);
 
-            var letters = new object[]
+            var letters = new dynamic[]
             {
                 "B",
                 "C",
@@ -109,9 +109,9 @@ namespace Nyctico.Actr.Example.Tutorials
             }
 
             actr.NewToneSound(freq, 0.5, onset);
-            actr.ScheduleSimpleEventRelative(
+            actr.ScheduleEventRelative(
                 900 + actr.ActrRandom(200), "clear-exp-window",
-                new object[] {window.Title});
+                new dynamic[] {window.Title});
 
             AbstractAddCommandRequest addCommandRequest = new AddCommandRequest(list => KeyPressAction(list),
                 "sperling-response",
@@ -141,7 +141,7 @@ namespace Nyctico.Actr.Example.Tutorials
             return score;
         }
 
-        private static void KeyPressAction(object[] list)
+        private static void KeyPressAction(dynamic[] list)
         {
             var pressedKey = (string) list[3];
             if (!pressedKey.Equals("space"))

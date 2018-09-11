@@ -16,7 +16,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Time { get; set; }
         public bool Ms { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(ChunkName);
             parameterList.Add(Time);

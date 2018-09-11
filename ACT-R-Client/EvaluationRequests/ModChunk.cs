@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class ModChunk : AbstractEvaluationRequest
     {
-        public ModChunk(string chunkName, object[] mods, string model = null) : base(
+        public ModChunk(string chunkName, dynamic[] mods, string model = null) : base(
             "mod-chunk", model)
         {
             ChunkName = chunkName;
@@ -12,9 +12,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         }
 
         public string ChunkName { get; set; }
-        public object[] Mods { get; set; }
+        public dynamic[] Mods { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(ChunkName);
             parameterList.Add(Mods);

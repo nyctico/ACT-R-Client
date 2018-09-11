@@ -12,6 +12,7 @@
     <AssemblyName>Example</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ACT-R-Client\ACT-R-Client.csproj">
-      <Project>{271FFD74-AC17-4A8C-8727-51B6CF9F8107}</Project>
+      <Project>{271ffd74-ac17-4a8c-8727-51b6cf9f8107}</Project>
       <Name>ACT-R-Client</Name>
     </ProjectReference>
   </ItemGroup>

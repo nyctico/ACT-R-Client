@@ -11,7 +11,7 @@ namespace Nyctico.Actr.Example.Tutorials
     {
         private static string _pressedKey = "";
 
-        public static void Execute(bool human = false)
+        public static void Execute(string ip, int port, bool human = false)
         {
             _pressedKey = "";
             var items = new[]
@@ -20,13 +20,13 @@ namespace Nyctico.Actr.Example.Tutorials
                 "M", "N", "P", "Q", "R", "S", "T", "V", "W",
                 "X", "Y", "Z"
             };
-            using (var actr = new ActRClient("127.0.0.1", 2650))
+            using (var actr = new ActRClient(ip, port))
             {
                 actr.StartTraceMonitoring();
                 actr.LoadActrModel("ACT-R:tutorial;unit2;demo2-model.lisp");
                 actr.Reset();
 
-                var numberList = new List<object>();
+                var numberList = new List<dynamic>();
                 for (var i = 0; i < items.Length; ++i) numberList.Add(i);
                 var indexes = actr.PermuteList(numberList.ToArray());
 
@@ -64,7 +64,7 @@ namespace Nyctico.Actr.Example.Tutorials
             }
         }
 
-        private static void KeyPressAction(object[] list)
+        private static void KeyPressAction(dynamic[] list)
         {
             _pressedKey = (string) list[3];
             Console.WriteLine($"Key pressed by model: {_pressedKey}");

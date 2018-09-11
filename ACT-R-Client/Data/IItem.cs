@@ -2,6 +2,6 @@
 {
     public interface IItem
     {
-        object[] ToJsonList();
+        dynamic[] ToJsonList();
     }
 }

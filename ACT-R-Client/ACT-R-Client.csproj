@@ -10,9 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nyctico.Actr.Client</RootNamespace>
     <AssemblyName>ACT-R-Client</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <LangVersion>4</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,12 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Unity.Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Unity.Newtonsoft.Json.7.0.0.0\lib\net35-Client\Unity.Newtonsoft.Json.dll</HintPath>
@@ -129,10 +127,10 @@
     <Compile Include="EvaluationRequests\RunUntilTime.cs" />
     <Compile Include="EvaluationRequests\SavedActivationHistory.cs" />
     <Compile Include="EvaluationRequests\SaveHistoryData.cs" />
-    <Compile Include="EvaluationRequests\ScheduleSimpleEvent.cs" />
-    <Compile Include="EvaluationRequests\ScheduleSimpleEventAfterModule.cs" />
-    <Compile Include="EvaluationRequests\ScheduleSimpleEventNow.cs" />
-    <Compile Include="EvaluationRequests\ScheduleSimpleEventRelative.cs" />
+    <Compile Include="EvaluationRequests\ScheduleEvent.cs" />
+    <Compile Include="EvaluationRequests\ScheduleEventAfterModule.cs" />
+    <Compile Include="EvaluationRequests\ScheduleEventNow.cs" />
+    <Compile Include="EvaluationRequests\ScheduleEventRelative.cs" />
     <Compile Include="EvaluationRequests\ScheduleSimpleModBufferChunk.cs" />
     <Compile Include="EvaluationRequests\ScheduleSimpleSetBufferChunk.cs" />
     <Compile Include="EvaluationRequests\Sdm.cs" />

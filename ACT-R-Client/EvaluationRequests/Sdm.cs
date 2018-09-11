@@ -4,15 +4,15 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class Sdm : AbstractEvaluationRequest
     {
-        public Sdm(object[] specifications, string model = null) : base("sdm",
+        public Sdm(dynamic[] specifications, string model = null) : base("sdm",
             model)
         {
             Specifications = specifications;
         }
 
-        public object[] Specifications { get; set; }
+        public dynamic[] Specifications { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Specifications);
         }

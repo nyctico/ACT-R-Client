@@ -23,7 +23,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Priority { set; get; }
         public bool Requested { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Buffer);
             parameterList.Add(Chunk);

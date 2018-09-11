@@ -9,6 +9,8 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         {
         }
 
-        public override void AddParameterToList(List<object> parameterList){}
+        public override void AddParameterToList(List<dynamic> parameterList)
+        {
+        }
     }
 }

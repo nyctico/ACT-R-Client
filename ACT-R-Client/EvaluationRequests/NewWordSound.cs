@@ -18,7 +18,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string Location { get; set; }
         public bool TimeInMs { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Word);
             parameterList.Add(Onset);

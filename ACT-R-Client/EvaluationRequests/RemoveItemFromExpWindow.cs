@@ -15,7 +15,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public Window Window { set; get; }
         public IItem Item { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Window.ToJsonList());
             parameterList.Add(Item.ToJsonList());

@@ -15,7 +15,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string ParameterName { get; set; }
         public object NewValue { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(ParameterName);
             parameterList.Add(NewValue);

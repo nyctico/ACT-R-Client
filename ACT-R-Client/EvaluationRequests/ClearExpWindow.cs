@@ -7,12 +7,12 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public ClearExpWindow(string windowTitle = null, string model = null) : base(
             "clear-exp-window", model)
         {
-            windowTitle = windowTitle;
+            WindowTitle = windowTitle;
         }
 
         public string WindowTitle { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(WindowTitle);
         }

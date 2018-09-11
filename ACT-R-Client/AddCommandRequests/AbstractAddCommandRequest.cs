@@ -17,19 +17,16 @@ namespace Nyctico.Actr.Client.AddCommandRequests
 
         public string PublishedName { get; set; }
 
-        public object[] PublishedNameAsList
-        {
-            get { return new object[] {PublishedName}; }
-        }
+        public dynamic[] PublishedNameAsList => new dynamic[] {PublishedName};
 
         public string PrivateName { set; get; }
         public string Documentation { set; get; }
         public string MultipleInstanceErrorMessage { set; get; }
         public string LispCmd { set; get; }
 
-        public object[] ToParameterList()
+        public dynamic[] ToParameterList()
         {
-            var list = new List<object>();
+            var list = new List<dynamic>();
 
             list.Add(PublishedName);
             list.Add(PrivateName);
@@ -41,6 +38,6 @@ namespace Nyctico.Actr.Client.AddCommandRequests
             return list.ToArray();
         }
 
-        public abstract void Execute(object[] parameters);
+        public abstract void Execute(dynamic[] parameters);
     }
 }

@@ -4,7 +4,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 {
     public class GetHistoryData : AbstractEvaluationRequest
     {
-        public GetHistoryData(string history, string fileName = null, object[] parameters = null,
+        public GetHistoryData(string history, string fileName = null, dynamic[] parameters = null,
             string model = null) :
             base("get-history-data",
                 model)
@@ -16,9 +16,9 @@ namespace Nyctico.Actr.Client.EvaluationRequests
 
         public string History { get; set; }
         public string FileName { get; set; }
-        public object[] Parameters { get; set; }
+        public dynamic[] Parameters { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(History);
             parameterList.Add(FileName);

@@ -29,16 +29,51 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int Width { set; get; }
         public int FontSize { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        private List<dynamic> SubParameterList
+        {
+            get
+            {
+                var subParameterList = new List<dynamic>();
+
+                var colorList = new List<dynamic>();
+                colorList.Add("color");
+                colorList.Add(Color);
+                subParameterList.Add(colorList);
+
+                var widthList = new List<dynamic>();
+                widthList.Add("width");
+                widthList.Add(Width);
+                subParameterList.Add(widthList);
+
+                var heightList = new List<dynamic>();
+                heightList.Add("height");
+                heightList.Add(Height);
+                subParameterList.Add(heightList);
+
+                var xList = new List<dynamic>();
+                xList.Add("x");
+                xList.Add(X);
+                subParameterList.Add(xList);
+
+                var yList = new List<dynamic>();
+                yList.Add("y");
+                yList.Add(Y);
+                subParameterList.Add(yList);
+
+                var fontSizeList = new List<dynamic>();
+                fontSizeList.Add("font-size");
+                fontSizeList.Add(FontSize);
+                subParameterList.Add(fontSizeList);
+
+                return subParameterList;
+            }
+        }
+
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Window.ToJsonList());
             parameterList.Add(Text);
-            parameterList.Add(X);
-            parameterList.Add(Y);
-            parameterList.Add(Color);
-            parameterList.Add(Height);
-            parameterList.Add(Width);
-            parameterList.Add(FontSize);
+            parameterList.Add(SubParameterList);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public List<double> Data { set; get; }
         public bool Output { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Results);
             parameterList.Add(Data);

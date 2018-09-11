@@ -5,6 +5,9 @@ namespace Nyctico.Actr.Example
 {
     internal static class Program
     {
+        private static readonly string _IP = "127.0.0.1";
+        private static readonly int _PORT = 2650;
+        
         public static void Main()
         {
             var quitNow = false;
@@ -56,14 +59,14 @@ namespace Nyctico.Actr.Example
                 case "1":
                     Console.WriteLine($"Starting Demo2 with human participant");
                     Console.WriteLine("------------------------------------------------");
-                    Demo2.Execute(true);
+                    Demo2.Execute(_IP, _PORT, true);
                     Console.WriteLine("------------------------------------------------");
                     break;
 
                 case "2":
                     Console.WriteLine($"Starting Demo2 with model participant");
                     Console.WriteLine("------------------------------------------------");
-                    Demo2.Execute();
+                    Demo2.Execute(_IP, _PORT);
                     Console.WriteLine("------------------------------------------------");
                     break;
 
@@ -90,7 +93,7 @@ namespace Nyctico.Actr.Example
                     numberOfBlocks = NumberOfBlocks();
                     Console.WriteLine($"Starting Sperling with {numberOfBlocks} Blocks in Real Time");
                     Console.WriteLine("------------------------------------------------");
-                    Sperling.Execute(true, numberOfBlocks);
+                    Sperling.Execute(_IP, _PORT, true, numberOfBlocks);
                     Console.WriteLine("------------------------------------------------");
                     break;
 
@@ -98,7 +101,7 @@ namespace Nyctico.Actr.Example
                     numberOfBlocks = NumberOfBlocks();
                     Console.WriteLine($"Starting Sperling with {numberOfBlocks} Blocks");
                     Console.WriteLine("------------------------------------------------");
-                    Sperling.Execute(false, numberOfBlocks);
+                    Sperling.Execute(_IP, _PORT, false, numberOfBlocks);
                     Console.WriteLine("------------------------------------------------");
                     break;
 

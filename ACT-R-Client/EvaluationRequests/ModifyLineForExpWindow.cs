@@ -19,7 +19,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public int[] End { set; get; }
         public string Color { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Line.ToJsonList());
             parameterList.Add(Start);

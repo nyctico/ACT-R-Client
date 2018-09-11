@@ -6,43 +6,19 @@ namespace Nyctico.Actr.Client.Data
     public class Result
     {
         [JsonProperty(PropertyName = "result")]
-        public object[] AllRetruns { set; get; }
+        public dynamic[] AllRetruns { set; get; }
 
-        [JsonIgnore]
-        public long ReturnLong
-        {
-            get { return (long) AllRetruns[0]; }
-        }
+        [JsonIgnore] public long ReturnLong => (long) AllRetruns[0];
 
-        [JsonIgnore]
-        public double ReturnDouble
-        {
-            get { return (double) AllRetruns[0]; }
-        }
+        [JsonIgnore] public double ReturnDouble => (double) AllRetruns[0];
 
-        [JsonIgnore]
-        public string ReturnString
-        {
-            get { return (string) AllRetruns[0]; }
-        }
+        [JsonIgnore] public string ReturnString => (string) AllRetruns[0];
 
-        [JsonIgnore]
-        public object ReturnObject
-        {
-            get { return AllRetruns[0]; }
-        }
+        [JsonIgnore] public object ReturnObject => AllRetruns[0];
 
-        [JsonIgnore]
-        public JArray ReturnValue
-        {
-            get { return (JArray) AllRetruns[0]; }
-        }
+        [JsonIgnore] public JArray ReturnValue => (JArray) AllRetruns[0];
 
-        [JsonIgnore]
-        public object[] ReturnList
-        {
-            get { return ((JArray) AllRetruns[0]).ToObject<object[]>(); }
-        }
+        [JsonIgnore] public dynamic[] ReturnList => ((JArray) AllRetruns[0]).ToObject<dynamic[]>();
 
         [JsonProperty(PropertyName = "error")] public Error Error { set; get; }
 

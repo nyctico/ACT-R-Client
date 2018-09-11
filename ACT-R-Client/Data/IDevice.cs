@@ -2,6 +2,6 @@
 {
     public interface IDevice
     {
-        object[] ToJsonList();
+        dynamic[] ToJsonList();
     }
 }

@@ -1,5 +1,5 @@
 # ACT-R-Client (**under development**)
-This library makes an ACT-R Client available for .NET (>= 3.5) projects.
+This library makes an ACT-R Client available for .NET (>= 4.5) projects.
 It needs [ACT-R Version 7.6](http://act-r.psy.cmu.edu/act-r-7-6/) (currently in beta) or higher since this is the first version with the new JSON-RPC interface called dispatcher.
 I highly recommend to read the *ACT-R RPC Interface Documentation* for a better understandig how the ACT-R dispatcher works.
 

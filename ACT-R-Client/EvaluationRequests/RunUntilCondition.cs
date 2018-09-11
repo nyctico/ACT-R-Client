@@ -14,7 +14,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public string Condition { set; get; }
         public bool RealTime { set; get; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(Condition);
             parameterList.Add(RealTime);

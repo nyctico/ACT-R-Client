@@ -15,9 +15,9 @@ namespace Nyctico.Actr.Client.Data
         public string Method { set; get; }
         public string Title { set; get; }
 
-        public object[] ToJsonList()
+        public dynamic[] ToJsonList()
         {
-            var list = new List<object>();
+            var list = new List<dynamic>();
 
             list.Add(Modul);
             list.Add(Method);

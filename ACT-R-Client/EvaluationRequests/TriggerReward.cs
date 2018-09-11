@@ -15,7 +15,7 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public long RewardValue { get; set; }
         public bool Maintenance { get; set; }
 
-        public override void AddParameterToList(List<object> parameterList)
+        public override void AddParameterToList(List<dynamic> parameterList)
         {
             parameterList.Add(RewardValue);
             parameterList.Add(Maintenance);

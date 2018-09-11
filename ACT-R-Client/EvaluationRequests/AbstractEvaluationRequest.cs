@@ -14,19 +14,19 @@ namespace Nyctico.Actr.Client.EvaluationRequests
         public bool UseModel { set; get; }
         public string Model { set; get; }
 
-        public object[] Parameterlist
+        public dynamic[] Parameterlist
         {
             get
             {
-                List<object> parameterList = BaseParameterList();
+                var parameterList = BaseParameterList();
                 AddParameterToList(parameterList);
                 return parameterList.ToArray();
             }
         }
 
-        protected List<object> BaseParameterList()
+        protected List<dynamic> BaseParameterList()
         {
-            var list = new List<object> {Command};
+            var list = new List<dynamic> {Command};
 
             if (Model == null) list.Add(false);
             else list.Add(Model);
@@ -34,6 +34,6 @@ namespace Nyctico.Actr.Client.EvaluationRequests
             return list;
         }
 
-        public abstract void AddParameterToList(List<object> parameterList);
+        public abstract void AddParameterToList(List<dynamic> parameterList);
     }
 }

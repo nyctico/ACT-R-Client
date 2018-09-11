@@ -10,7 +10,7 @@ namespace Nyctico.Actr.Client.Data
         [JsonProperty(PropertyName = "id")] public int Id { set; get; }
 
         [JsonProperty(PropertyName = "params")]
-        public object[] Parameters { set; get; }
+        public dynamic[] Parameters { set; get; }
 
         public string ToJson()
         {
